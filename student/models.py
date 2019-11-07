@@ -6,19 +6,19 @@ class Student(models.Model):
 
 
 class Analysis(models.Model):
-    user_id = models.IntegerField()
-    sub_id = models.IntegerField()
-    topic_id = models.IntegerField()
-    mot_id = models.IntegerField()
-    confidence = models.IntegerField()
-    confidence_s = models.IntegerField()
-    que_id = models.IntegerField()
-    correct = models.IntegerField()
-    attempt = models.IntegerField()
-    time = models.IntegerField()
-    last_time = models.IntegerField()
-    best_time = models.IntegerField()
-    effort = models.IntegerField()
+    user_id = models.IntegerField(null=True)
+    sub_id = models.IntegerField(null=True)
+    topic_id = models.IntegerField(null=True)
+    mot_id = models.IntegerField(null=True)
+    confidence = models.IntegerField(null=True)
+    confidence_s = models.IntegerField(null=True)
+    que_id = models.IntegerField(null=True)
+    correct = models.IntegerField(null=True)
+    attempt = models.IntegerField(null=True)
+    time = models.IntegerField(null=True)
+    last_time = models.IntegerField(null=True)
+    best_time = models.IntegerField(null=True)
+    effort = models.IntegerField(null=True)
 
 class Subject(models.Model):
     sub_id = models.IntegerField()
