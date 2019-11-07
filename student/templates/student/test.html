@@ -1,0 +1,66 @@
+{% extends "student/index2.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-10">
+            {% for que,hint,op1,op2,op3,op4,qid in z %}
+        <div class="card card-outline-info ">
+            <div class="card-header">
+                <h1 class="m-b-0 text-white">Card Title</h1></div>
+            <div class="card-body">
+                <h2 class="card-title">Special title treatment</h2>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <form class="form">
+                    <div class="row">
+                    <div class="input-group mx-0 mx-md-3">
+                            <div class="input-group-prepend">
+                        <div><input name="group5" type="radio" id="radio_30{{qid}}" class="with-gap radio-col-deep-purple" />
+                        <label for="radio_30{{qid}}">{{op1}}</label></div>
+                        </div></div></div>
+                        <div class="row">
+                    <div class="input-group mx-0 mx-md-3">
+                            <div class="input-group-prepend">
+                        <div><input name="group5" type="radio" id="radio_31{{qid}}" class="with-gap radio-col-deep-purple" />
+                        <label for="radio_31{{qid}}">{{op2}}</label></div>
+                        </div></div></div>
+                        <div class="row">
+                    <div class="input-group mx-0 mx-md-3">
+                            <div class="input-group-prepend">
+                        <div><input name="group5" type="radio" id="radio_32{{qid}}" class="with-gap radio-col-deep-purple" />
+                        <label for="radio_32{{qid}}">{{op3}}</label></div>
+                        </div></div></div>
+                        <div class="row">
+                    <div class="input-group mx-0 mx-md-3">
+                            <div class="input-group-prepend">
+                        <div><input name="group5" type="radio" id="radio_33{{qid}}" class="with-gap radio-col-deep-purple" />
+                        <label for="radio_33{{qid}}">{{op4}}</label></div>
+                        </div></div></div>
+                        <div class="row justify-content-center"><div class="col-2"><button class="btn btn-red btn-block" type="submit">Next</button></div>
+                        <div class="col-1"></div>
+                        <div class="col-2"><button class="btn btn-red btn-block">Previous</button></div>
+                        </div>
+                        </form>
+            </div>
+            <div class="card-footer text-center">
+                    <a data-toggle="collapse" href="#que{{qid}}" aria-expanded="true" aria-controls="collapse-example" id="heading-example" class="d-block">
+                            <i class="fa fa-chevron-down pull-right"></i>
+                            Hint!
+                    </a>
+                    <div id="que{{qid}}" class="collapse" aria-labelledby="heading-example">
+
+                                {{hint}}
+                        </div>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</div>
+</div>
+
+
+{% endblock %}
