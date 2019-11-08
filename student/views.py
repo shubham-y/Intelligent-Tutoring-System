@@ -117,7 +117,7 @@ def test(request,ana_id,que_id):
     # sub_id = ana[0].sub_id
     # top_id = ana[0].topic_id
     # print(ana,ana_id,sub_id,top_id)
-    ele=Quetions.objects.all()
+    ele=Quetions.objects.all().filter(que_id=que_id)
     print(ele)
     q = []
     h = []
@@ -127,6 +127,7 @@ def test(request,ana_id,que_id):
     o4 = []
     c = 0
     qi = []
+    ai = []
     for i in ele:
         qi.append(i.que_id)
         q.append(i.question)
@@ -135,9 +136,10 @@ def test(request,ana_id,que_id):
         o2.append(i.opt_2)
         o3.append(i.opt_3)
         o4.append(i.opt_4)
+        ai.append(ana_id)
         c = c + 1
     print(q,h,o1,o2,o3,o4,c,qi)
-    z = zip(q,h,o1,o2,o3,o4,qi)
+    z = zip(q,h,o1,o2,o3,o4,qi,ai)
     return render(request,'student/test.html',{"z":z})
 
 def analyse(request,sub_id):

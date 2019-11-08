@@ -6,14 +6,14 @@
 
 <div class="row justify-content-center">
     <div class="col-md-10">
-            {% for que,hint,op1,op2,op3,op4,qid in z %}
+            {% for que,hint,op1,op2,op3,op4,qid,aid in z %}
         <div class="card card-outline-info ">
             <div class="card-header">
-                <h1 class="m-b-0 text-white">Card Title</h1></div>
+                <h1 class="m-b-0 text-white">Q{{qid}}.</h1></div>
             <div class="card-body">
-                <h2 class="card-title">Special title treatment</h2>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <form class="form">
+                <h2 class="card-title">{{que}}</h2>
+                <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
+                <form class="form" action="{% url 'test' aid qid|add:1 %}">
                     <div class="row">
                     <div class="input-group mx-0 mx-md-3">
                             <div class="input-group-prepend">
@@ -40,7 +40,7 @@
                         </div></div></div>
                         <div class="row justify-content-center"><div class="col-2"><button class="btn btn-red btn-block" type="submit">Next</button></div>
                         <div class="col-1"></div>
-                        <div class="col-2"><button class="btn btn-red btn-block">Previous</button></div>
+                        <div class="col-2"><button class="btn btn-red btn-block" formaction="{% url 'test' aid qid|add:"-1" %}">Previous</button></div>
                         </div>
                         </form>
             </div>
