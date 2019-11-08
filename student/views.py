@@ -4,7 +4,71 @@ from django.urls import reverse
 from student.models import Quetions,Subject,topic,Analysis
 
 def home(request):
-    return render(request,'student/index2.html')
+    subject = Subject.objects.all()
+    sid = []
+    sname = []
+    for i in subject:
+        sid.append(i.sub_id)
+        sname.append(i.sub_name)
+    print(sid,sname)
+    # sub = zip(sid,sname)
+    tid = []
+    tname = []
+    for i in sid:
+        topics = topic.objects.all().filter(sub_id = i)
+        talid = []
+        talnm = []
+        for i in topics:
+            talid.append(i.top_id)
+            talnm.append(i.top_name)
+        tid.append(talid)
+        tname.append(talnm)
+    print(tid,tname)
+    acc = []
+    c = []
+    
+    for i in sid:
+        act = []
+        ct=[]
+        co=0
+        for j in tid[i-1]:
+            que = Analysis.objects.all().filter(sub_id = i,topic_id=j)
+            print(que)
+            q = []
+            for k in que:
+                if k.que_id != None:
+                    q.append(k.que_id)
+            mxa = max(q)
+            ques = Quetions.objects.all().filter(sub_id = i,top_id=j)
+            q1 = []
+            for k1 in ques:
+                q1.append(k1.que_id)
+            mx = max(q1)
+            mn = min(q1)
+            p = mxa - mn + 1
+            cp = mx - mn +1
+            
+            act.append(int((p/cp)*100))
+            ct.append(co)
+            co=co+1
+        acc.append(act)
+        c.append(ct)
+    print(acc,c)
+    final = []
+    for i in range(len(acc)):
+        s = []
+        for j in range(len(acc[i])):
+            s1 = []
+            s1.append(tname[i][j])
+            s1.append(acc[i][j])
+            s.append(s1)
+        final.append(s)
+    print(final)
+    z = zip(sid,sname,tid,final)
+    print(z)
+
+
+    return render(request,'student/dash.html',{"z":z})
 
 def start_test(request):
     subject = Subject.objects.all()
@@ -76,4 +140,43 @@ def test(request,ana_id,que_id):
     z = zip(q,h,o1,o2,o3,o4,qi)
     return render(request,'student/test.html',{"z":z})
 
-# "q":q,"h":h."o1":o1,"o2":o2,"o3":o3,"o4":o4
+def analyse(request,sub_id):
+    topics = topic.objects.all().filter(sub_id=sub_id).distinct()
+    print(topics)
+    tid = []
+    tname = []
+    for i in topics:
+        tid.append(i.top_id)
+        tname.append(i.top_name)
+    print(tid,tname)
+    mx = []
+    for j in tid:
+        que = Analysis.objects.all().filter(sub_id = sub_id,topic_id=j).values("que_id")
+        print(que)
+        q = []
+        for i in que:
+            if i["que_id"] != None:
+                q.append(i["que_id"])
+        print(q,max(q))
+        mx.append(max(q))
+    print(mx)
+    quet = []
+    for i in range(len(tid)):
+        ques = Quetions.objects.all().filter(sub_id = sub_id,top_id=tid[i])
+        # time = Analysis.objects.all().filter(sub_id = sub_id,topic_id=tid[i])
+        qte = []
+        for j in ques:
+            qt = []
+            qt.append(j.que_id)
+            qt.append(j.question)
+            qt.append(j.ans)
+            qte.append(qt)
+        quet.append(qte)
+    print(quet)
+    sub = Subject.objects.all().filter(sub_id = sub_id).values("sub_name")
+    sub_nm = sub[0]["sub_name"]
+    print(sub_nm)
+    tt = zip(tid,tname,quet)
+
+    
+    return render(request,'student/analyse.html',{"sub_nm":sub_nm,"tt":tt})

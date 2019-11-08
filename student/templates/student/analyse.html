@@ -1,0 +1,116 @@
+{% extends "student/index2.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="row">
+    {% for tid,tname,j in tt %}
+        <div class="col-12">
+            <div class="card card-outline-info">
+                <div class="card-header text-center text-white">
+                    <h2 class="pt-1"><a data-toggle="collapse" href="#que{{tid}}" aria-expanded="true" aria-controls="collapse-example" id="heading-example" class="d-block"><span class="text-white">
+                            {{sub_nm}} - {{tname}}</span></a></h2></div>
+                    
+                    <div id="que{{tid}}" class="collapse" aria-labelledby="heading-example">
+                            <div class="card-body text-center">
+                    <div class="table-responsive m-t-40">
+                        <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Question No.</th>
+                                    <th>Question</th>
+                                    <th>Correct Ans.</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Question No.</th>
+                                    <th>Question</th>
+                                    <th>Correct Ans.</th>
+                                    
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                {% for k in j %}
+                                <tr>
+                                    <td>{{k.0}}</td>
+                                    <td>{{k.1}}</td>
+                                    <td>{{k.2}}</td>
+                                    
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+        <!-- This is data table -->
+     <script src="{% static 'student/assets/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+     <!-- start - This is for export functionality only -->
+     <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+     <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+     <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+     <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+     <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+     <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+     
+     <!-- end - This is for export functionality only -->
+
+        <script>
+                $(document).ready(function() {
+                    $('#example23').DataTable();
+                    $(document).ready(function() {
+                        var table = $('#example23').DataTable({
+                            "columnDefs": [{
+                                "visible": false,
+                                "targets": 2
+                            }],
+                            "order": [
+                                [2, 'asc']
+                            ],
+                            "displayLength": 25,
+                            "drawCallback": function(settings) {
+                                var api = this.api();
+                                var rows = api.rows({
+                                    page: 'current'
+                                }).nodes();
+                                var last = null;
+                                api.column(2, {
+                                    page: 'current'
+                                }).data().each(function(group, i) {
+                                    if (last !== group) {
+                                        $(rows).eq(i).before('<tr class="group"><td colspan="5">' + group + '</td></tr>');
+                                        last = group;
+                                    }
+                                });
+                            }
+                        });
+                        // Order by the grouping
+                        $('#example23 tbody').on('click', 'tr.group', function() {
+                            var currentOrder = table.order()[0];
+                            if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
+                                table.order([2, 'desc']).draw();
+                            } else {
+                                table.order([2, 'asc']).draw();
+                            }
+                        });
+                    });
+                });
+                $('#example23').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
+                </script>
+        
+{% endblock %}

@@ -30,6 +30,7 @@ class topic(models.Model):
     top_id = models.IntegerField()
     top_name = models.CharField(max_length=1000 , null=False)
     level = models.IntegerField()
+    sub_id = models.IntegerField()
 
 class Motivation(models.Model):
     mot_id = models.IntegerField()
