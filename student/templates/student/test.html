@@ -13,34 +13,35 @@
             <div class="card-body">
                 <h2 class="card-title">{{que}}</h2>
                 <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
-                <form class="form" action="{% url 'test' aid qid|add:1 %}">
+                <form class="form" method="post" action="{% url 'test' aid qid %}">
+                        {% csrf_token %}
                     <div class="row">
                     <div class="input-group mx-0 mx-md-3">
                             <div class="input-group-prepend">
-                        <div><input name="group5" type="radio" id="radio_30{{qid}}" class="with-gap radio-col-deep-purple" />
+                        <div><input name="opt" type="radio" id="radio_30{{qid}}" class="with-gap radio-col-deep-purple" value="1"/>
                         <label for="radio_30{{qid}}">{{op1}}</label></div>
                         </div></div></div>
                         <div class="row">
                     <div class="input-group mx-0 mx-md-3">
                             <div class="input-group-prepend">
-                        <div><input name="group5" type="radio" id="radio_31{{qid}}" class="with-gap radio-col-deep-purple" />
+                        <div><input name="opt" type="radio" id="radio_31{{qid}}" class="with-gap radio-col-deep-purple" value="2"/>
                         <label for="radio_31{{qid}}">{{op2}}</label></div>
                         </div></div></div>
                         <div class="row">
                     <div class="input-group mx-0 mx-md-3">
                             <div class="input-group-prepend">
-                        <div><input name="group5" type="radio" id="radio_32{{qid}}" class="with-gap radio-col-deep-purple" />
+                        <div><input name="opt" type="radio" id="radio_32{{qid}}" class="with-gap radio-col-deep-purple" value="3" />
                         <label for="radio_32{{qid}}">{{op3}}</label></div>
                         </div></div></div>
                         <div class="row">
                     <div class="input-group mx-0 mx-md-3">
                             <div class="input-group-prepend">
-                        <div><input name="group5" type="radio" id="radio_33{{qid}}" class="with-gap radio-col-deep-purple" />
+                        <div><input name="opt" type="radio" id="radio_33{{qid}}" class="with-gap radio-col-deep-purple" value="4" />
                         <label for="radio_33{{qid}}">{{op4}}</label></div>
                         </div></div></div>
                         <div class="row justify-content-center"><div class="col-2"><button class="btn btn-red btn-block" type="submit">Next</button></div>
                         <div class="col-1"></div>
-                        <div class="col-2"><button class="btn btn-red btn-block" formaction="{% url 'test' aid qid|add:"-1" %}">Previous</button></div>
+                        <div class="col-2"><button class="btn btn-red btn-block" >Previous</button></div>
                         </div>
                         </form>
             </div>
