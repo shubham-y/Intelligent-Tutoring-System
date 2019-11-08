@@ -3,6 +3,12 @@ from django.db import models
 class Student(models.Model):
     user_id = models.IntegerField()
     username = models.CharField(max_length=100 , null=False)
+    phn_no = models.IntegerField()
+    email = models.CharField(max_length=100 , null=False)
+    inst = models.CharField(max_length=100 , null=False)
+    age = models.IntegerField()
+    standard = models.IntegerField()
+
 
 
 class Analysis(models.Model):

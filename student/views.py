@@ -118,7 +118,7 @@ def test(request,ana_id,que_id):
     # top_id = ana[0].topic_id
     # print(ana,ana_id,sub_id,top_id)
     ele=Quetions.objects.all().filter(que_id=que_id)
-    print(ele)
+    # print(ele)
     q = []
     h = []
     o1 = []
@@ -138,8 +138,21 @@ def test(request,ana_id,que_id):
         o4.append(i.opt_4)
         ai.append(ana_id)
         c = c + 1
-    print(q,h,o1,o2,o3,o4,c,qi)
+    # print(q,h,o1,o2,o3,o4,c,qi)
     z = zip(q,h,o1,o2,o3,o4,qi,ai)
+    if request.method == 'POST':
+        opt = request.POST.get('opt', '')
+        print(type(opt))
+        anss = Quetions.objects.all().filter(que_id=que_id)
+        print(anss)
+        ans = anss[0].ans
+        print(ans)
+        if ans == int(opt):
+            que_id = que_id + 1
+            return HttpResponseRedirect(reverse('test', args=(ana_id,que_id,)))
+
+
+        return HttpResponseRedirect(reverse('test', args=(ana_id,que_id,)))
     return render(request,'student/test.html',{"z":z})
 
 def analyse(request,sub_id):
