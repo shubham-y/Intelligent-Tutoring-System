@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="{% static 'student/fonts/material-icon/css/material-design-iconic-font.min.css' %}">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="{% static 'student/css/style_sign.css' %}">
+</head>
+<body>
+
+    <div class="main">
+
+        <!-- Sign up form -->
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <h2 class="form-title">Sign up</h2>
+                        <form method="POST" action="{% url 'register_action' %}" class="register-form" id="register-form">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="name" id="name" placeholder="Your Name" required/>
+                            </div>
+                            <!-- <div class="form-group">
+                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="Username" id="username" placeholder="Your Username" required/>
+                            </div> -->
+                            <div class="form-group">
+                                <label for="email"><i class="zmdi zmdi-email"></i></label>
+                                <input type="email" name="email" id="email" placeholder="Your Email" required/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="age"><i class="zmdi zmdi-pin-drop"></i></label>
+                                <input type="number" name="age" id="age" placeholder="Your age" required/>
+                               
+                            </div>
+                            <div class="form-group">
+                                <label for="standard"><i class="zmdi zmdi-account-circle"></i></label>
+                                <input type="number" name="standard" id="standard" placeholder="Your Standard" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="institute"><i class="zmdi zmdi-phone"></i></label>
+                                <input type="text" name="institute" id="institute" placeholder="Your Institute"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="password"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="password" id="password" placeholder="Password" required/>
+                            </div>
+                            <!-- <div class="form-group">
+                                <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
+                                <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password"/>
+                            </div> -->
+                            <!-- <div class="form-group">
+                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+
+                            </div> -->
+                            <!-- <div>
+                                 <a href="signin.html" class="signup-image-link">I am already member</a>
+                            </div> -->
+                            <div class="form-group form-button">
+                                <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
+
+                            </div>
+
+                        </form>
+                        
+
+                    </div>
+                    <div class="signup-image">
+                        <figure><img src="{% static 'student/images/signup-image.jpg' %}" alt="sing up image"></figure>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+    </div>
+    
+    {% ifequal registered False %}
+        <script type="text/javascript">alert("Email already exists")</script>
+    {% endifequal %}
+    <!-- JS -->
+    <script src="{% static 'student/js/jquery.min.js' %}"></script>
+    <script src="{% static 'student/js/main.js' %}"></script>
+    <script src="{% static 'student/js/countries.js' %}"></script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

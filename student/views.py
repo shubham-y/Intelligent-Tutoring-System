@@ -1,76 +1,124 @@
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
-from student.models import Quetions,Subject,topic,Analysis
+from student.models import Quetions,Subject,topic,Analysis,Student
+from django.contrib.auth import authenticate, login, logout
+
+def login(request):
+    return render(request,'student/signin.html')
+
+def login_action(request):
+    email=request.POST['email']
+    password=request.POST['password']
+
+    l=Student.objects.filter(email=email,password=password)
+
+    if len(l):
+        request.session['email']=email #session started
+        return HttpResponseRedirect(reverse('home'))
+    else:
+        return HttpResponseRedirect(reverse('login')+'?login_failure=true')
+
+def register(request):
+    return render(request,'student/signup.html')
+
+def register_action(request):
+    registered = False
+
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        age = request.POST.get('age')
+        standard = request.POST.get('standard')
+        institute = request.POST.get('institute')
+        password = request.POST.get('password')
+        if not len(Student.objects.filter(email=email)): 
+            if all(values is not None for values in [name,email,password,age,standard]):
+                log = Student(name=name,email=email,age=age,standard=standard,institute=institute,password=password)
+                log.save()
+            registered = True 
+            print("registered!")      
+            return render(request,'student/signin.html',{"registered":registered,})
+        else:
+            return render(request,'student/signup.html',{"registered":registered,})
+
+def logout(request):
+    request.session.flush()
+    return HttpResponseRedirect(reverse('login'))
 
 def home(request):
-    subject = Subject.objects.all()
-    sid = []
-    sname = []
-    for i in subject:
-        sid.append(i.sub_id)
-        sname.append(i.sub_name)
-    print(sid,sname)
-    # sub = zip(sid,sname)
-    tid = []
-    tname = []
-    for i in sid:
-        topics = topic.objects.all().filter(sub_id = i)
-        talid = []
-        talnm = []
-        for i in topics:
-            talid.append(i.top_id)
-            talnm.append(i.top_name)
-        tid.append(talid)
-        tname.append(talnm)
-    print(tid,tname)
-    acc = []
-    c = []
-    
-    for i in sid:
-        act = []
-        ct=[]
-        co=0
-        for j in tid[i-1]:
-            que = Analysis.objects.all().filter(sub_id = i,topic_id=j)
-            print(que)
-            q = []
-            for k in que:
-                if k.que_id != None:
-                    q.append(k.que_id)
-            mxa = max(q)
-            ques = Quetions.objects.all().filter(sub_id = i,top_id=j)
-            q1 = []
-            for k1 in ques:
-                q1.append(k1.que_id)
-            mx = max(q1)
-            mn = min(q1)
-            p = mxa - mn + 1
-            cp = mx - mn +1
-            
-            act.append(int((p/cp)*100))
-            ct.append(co)
-            co=co+1
-        acc.append(act)
-        c.append(ct)
-    print(acc,c)
-    final = []
-    for i in range(len(acc)):
-        s = []
-        for j in range(len(acc[i])):
-            s1 = []
-            s1.append(tname[i][j])
-            s1.append(acc[i][j])
-            s.append(s1)
-        final.append(s)
-    print(final)
-    z = zip(sid,sname,tid,final)
-    print(z)
+    if 'email' not in request.session:
+        return HttpResponseRedirect(reverse('login'))
+    else:
+        subject = Subject.objects.all()
+        sid = []
+        sname = []
+        for i in subject:
+            sid.append(i.sub_id)
+            sname.append(i.sub_name)
+        print(sid,sname)
+        # sub = zip(sid,sname)
+        tid = []
+        tname = []
+        for i in sid:
+            topics = topic.objects.all().filter(sub_id = i)
+            talid = []
+            talnm = []
+            for i in topics:
+                talid.append(i.top_id)
+                talnm.append(i.top_name)
+            tid.append(talid)
+            tname.append(talnm)
+        print(tid,tname)
+        acc = []
+        c = []
+
+        for i in sid:
+            act = []
+            ct=[]
+            co=0
+            for j in tid[i-1]:
+                que = Analysis.objects.all().filter(sub_id = i,topic_id=j)
+                print(que)
+                q = []
+                for k in que:
+                    if k.que_id != None:
+                        q.append(k.que_id)
+                mxa = max(q)
+                ques = Quetions.objects.all().filter(sub_id = i,top_id=j)
+                q1 = []
+                for k1 in ques:
+                    q1.append(k1.que_id)
+                mx = max(q1)
+                mn = min(q1)
+                p = mxa - mn + 1
+                cp = mx - mn +1
+                
+                act.append(int((p/cp)*100))
+                ct.append(co)
+                co=co+1
+            acc.append(act)
+            c.append(ct)
+        print(acc,c)
+        final = []
+        for i in range(len(acc)):
+            s = []
+            for j in range(len(acc[i])):
+                s1 = []
+                s1.append(tname[i][j])
+                s1.append(acc[i][j])
+                s.append(s1)
+            final.append(s)
+        print(final)
+        z = zip(sid,sname,tid,final)
+        print(z)
 
 
-    return render(request,'student/dash.html',{"z":z})
+        return render(request,'student/dash.html',{"z":z})
 
 def start_test(request):
+    if 'email' not in request.session:
+        return HttpResponseRedirect(reverse('login'))
     subject = Subject.objects.all()
     sid = []
     sname = []
@@ -112,6 +160,8 @@ def start_test(request):
     return render(request,'student/start_test.html',{"sub":sub,"top":top})
 
 def test(request,ana_id,que_id):
+    if 'email' not in request.session:
+        return HttpResponseRedirect(reverse('login'))
     # ana = Analysis.objects.all().filter(id = ana_id)
     # print(ana)
     # sub_id = ana[0].sub_id

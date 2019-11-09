@@ -1,13 +1,15 @@
 from django.db import models
 
 class Student(models.Model):
-    user_id = models.IntegerField()
-    username = models.CharField(max_length=100 , null=False)
-    phn_no = models.IntegerField()
-    email = models.CharField(max_length=100 , null=False)
-    inst = models.CharField(max_length=100 , null=False)
-    age = models.IntegerField()
-    standard = models.IntegerField()
+    # user_id = models.IntegerField()
+    # username = models.CharField(max_length=100)
+    # phn_no = models.IntegerField()
+    name = models.CharField(max_length=30,default='')
+    email = models.CharField(max_length=100,default='')
+    password = models.CharField(max_length=100,default='')
+    institute = models.CharField(max_length=100, null=True)
+    age = models.IntegerField(default=10)
+    standard = models.IntegerField(default=5)
 
 
 
