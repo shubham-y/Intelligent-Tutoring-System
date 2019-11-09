@@ -210,6 +210,8 @@ def test(request,ana_id,que_id):
         if request.method == 'POST':
             opt = request.POST.get('opt', '')
             hint = request.POST.get('hint', '0')
+            time = request.POST.get('time', '0')
+            print("timeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",time)
             a = ana[0].attempt
             a = a + 1
             log = Analysis(id = ana_id,que_id=que_id,user_id=1,sub_id = sub_id,topic_id=top_id,attempt = a,hint = ah,correct = 0,wasted = 0)
