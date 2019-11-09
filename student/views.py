@@ -104,7 +104,7 @@ def start_test(request):
                 q.append(i["que_id"])
         print(q,max(q))
         q_id = max(q)
-        log = Analysis(id = l,user_id=1,sub_id = sub_name,topic_id=top_name)
+        log = Analysis(id = l,user_id=1,sub_id = sub_name,topic_id=top_name,attempt = 0,hint = 0)
         log.save()
         return HttpResponseRedirect(reverse('test', args=(l,q_id,)))
 
@@ -112,13 +112,16 @@ def start_test(request):
     return render(request,'student/start_test.html',{"sub":sub,"top":top})
 
 def test(request,ana_id,que_id):
-    # ana = Analysis.objects.all().filter(id = ana_id)
-    # print(ana)
-    # sub_id = ana[0].sub_id
-    # top_id = ana[0].topic_id
-    # print(ana,ana_id,sub_id,top_id)
     ele=Quetions.objects.all().filter(que_id=que_id)
     # print(ele)
+    ana = Analysis.objects.all().filter(id=ana_id)
+    print(id)
+    x = 0
+    sub_id = ana[0].sub_id
+    top_id = ana[0].topic_id
+    user_id = ana[0].user_id
+    print(ana,ana_id,sub_id,top_id)
+    
     q = []
     h = []
     o1 = []
@@ -138,22 +141,99 @@ def test(request,ana_id,que_id):
         o4.append(i.opt_4)
         ai.append(ana_id)
         c = c + 1
+        m = 0
+        msg = ""
+        ah = ana[0].hint
+        att = ana[0].attempt
+        print("printttttt",ah)
     # print(q,h,o1,o2,o3,o4,c,qi)
     z = zip(q,h,o1,o2,o3,o4,qi,ai)
-    if request.method == 'POST':
-        opt = request.POST.get('opt', '')
-        print(type(opt))
-        anss = Quetions.objects.all().filter(que_id=que_id)
-        print(anss)
-        ans = anss[0].ans
-        print(ans)
-        if ans == int(opt):
+    if att < 3:
+        if request.method == 'POST':
+            opt = request.POST.get('opt', '')
+            hint = request.POST.get('hint', '0')
+            a = ana[0].attempt
+            a = a + 1
+            log = Analysis(id = ana_id,user_id=1,sub_id = sub_id,topic_id=top_id,attempt = a,hint = ah)
+            log.save()
+            h = int(hint)
+            print("hintttttttt",h,a)
+            if h == 0 and ah == 1:
+                h = ah
+                print("printttttttttt::::",h)
+            # if h == 0 and ah == 0:
+            #     log4 = Analysis(id = ana_id,hint = 1,attempt = a)
+            #     log4.save()
+            elif h == 1 and ah == 0:
+                log1 = Analysis(id = ana_id,user_id=1,sub_id = sub_id,topic_id=top_id,hint = 1,attempt = a)
+                log1.save()
+            elif h == 1 and ah == 2:
+                log2 = Analysis(id = ana_id,user_id=1,sub_id = sub_id,topic_id=top_id,hint = 3,attempt = a)
+                log2.save()
+            if h == 0 and a == 2:
+                h = 2
+                log3 = Analysis(id = ana_id,user_id=1,sub_id = sub_id,topic_id=top_id,hint = 2,attempt = a)
+                log3.save()
+            if h == 0 and a == 3:
+                h = 2
+            print("hinttttttt: ",h)
+            print("attemptttt: ",a)
+            print(type(opt))
+            print(opt,"fhj",hint)
+            print("hvjhvcj zvjv")
+            anss = Quetions.objects.all().filter(que_id=que_id)
+            # print(anss)
+            ans = anss[0].ans
+            # print(ans)
+            k = 0
+            if ans == int(opt):
+                que_id = que_id + 1
+                a_id = ana_id + 1
+                log6 = Analysis(id = ana_id,user_id=1,sub_id = sub_id,topic_id=top_id,que_id = (que_id - 1),attempt = a,hint = h,correct = 1)
+                log6.save()
+                log7 = Analysis(id = a_id,user_id=1,sub_id = sub_id,topic_id=top_id,attempt = 0,hint = 0)
+                log7.save()
+                return HttpResponseRedirect(reverse('test', args=(a_id,que_id,)))
+            else:
+                if h == 0 and a == 1:
+                    k=1
+                    msg = "hint!"
+                elif h == 1 and a ==1:
+                    k =7
+                    msg = "Don't hurry. Try once more."
+                elif h == 2 and a ==2:
+                    k = 2
+                    msg = "Warning: Pl check hint and last attempt"
+                elif h == 1 and a == 2:
+                    k = 3
+                    msg = "Learn site"
+                elif h == 2 and a == 3:
+                    k = 6
+                    x = 1
+                    msg = "You havn't checked the hint. This is disappointing."
+                elif h == 3 and a == 3:
+                    k = 4
+                    x = 1
+                    msg = "learn site and solution"
+                elif h == 1 and a == 3:
+                    k = 5
+                    x = 1
+                    msg = "Solution"
+                m = 1
+                return render(request,'student/test.html',{"z":z,"m":m,"msg":msg,"k":k,"x":x})
+    else:
+        if request.method == 'POST':
+            x = 1
+            ah = ana[0].hint
+            att = ana[0].attempt
             que_id = que_id + 1
-            return HttpResponseRedirect(reverse('test', args=(ana_id,que_id,)))
-
-
-        return HttpResponseRedirect(reverse('test', args=(ana_id,que_id,)))
-    return render(request,'student/test.html',{"z":z})
+            a_id = ana_id + 1
+            log6 = Analysis(id = ana_id,user_id=1,sub_id = sub_id,topic_id=top_id,que_id = (que_id - 1),attempt = att, hint = ah,correct = 0)
+            log6.save()
+            log8 = Analysis(id = a_id,user_id=1,sub_id = sub_id,topic_id=top_id,attempt = 0,hint = 0)
+            log8.save()
+            return HttpResponseRedirect(reverse('test', args=(a_id,que_id,)))
+    return render(request,'student/test.html',{"z":z,"m":m,"msg":msg,"x":x})
 
 def analyse(request,sub_id):
     topics = topic.objects.all().filter(sub_id=sub_id).distinct()
