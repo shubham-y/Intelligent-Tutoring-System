@@ -2,12 +2,12 @@ from django.db import models
 
 class Student(models.Model):
     user_id = models.IntegerField()
-    username = models.CharField(max_length=100 , null=False)
-    phn_no = models.IntegerField()
-    email = models.CharField(max_length=100 , null=False)
-    inst = models.CharField(max_length=100 , null=False)
-    age = models.IntegerField()
-    standard = models.IntegerField()
+    username = models.CharField(max_length=100 , null=True)
+    phn_no = models.IntegerField(null=True)
+    email = models.CharField(max_length=100 , null=True)
+    inst = models.CharField(max_length=100 , null=True)
+    age = models.IntegerField(null=True)
+    standard = models.IntegerField(null=True)
 
 
 
