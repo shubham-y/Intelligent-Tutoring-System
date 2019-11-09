@@ -152,23 +152,24 @@ def start_test(request):
                 q.append(i["que_id"])
         print(q,max(q))
         q_id = max(q)
-        log = Analysis(id = l,user_id=1,sub_id = sub_name,topic_id=top_name,attempt = 0,hint = 0)
-        log.save()
-        return HttpResponseRedirect(reverse('test', args=(l,q_id,)))
+        qu_id = Analysis.objects.all().filter(user_id=1,sub_id = sub_name,topic_id=top_name,que_id = q_id)
+        c = qu_id[0].correct
+        w = qu_id[0].wasted
+        ana_id = qu_id[0].id
+        print(c,w,ana_id)
+        if c == 1 or w == 1:
+            log = Analysis(id = l,user_id=1,sub_id = sub_name,topic_id=top_name,attempt = 0,hint = 0,correct = 0,wasted = 0, que_id = (q_id + 1))
+            log.save()
+            return HttpResponseRedirect(reverse('test', args=(l,(q_id+1),)))
+        else:
+            return HttpResponseRedirect(reverse('test', args=(ana_id,q_id,)))
 
 
     return render(request,'student/start_test.html',{"sub":sub,"top":top})
 
 def test(request,ana_id,que_id):
-
     if 'email' not in request.session:
         return HttpResponseRedirect(reverse('login'))
-    # ana = Analysis.objects.all().filter(id = ana_id)
-    # print(ana)
-    # sub_id = ana[0].sub_id
-    # top_id = ana[0].topic_id
-    # print(ana,ana_id,sub_id,top_id)
-
     ele=Quetions.objects.all().filter(que_id=que_id)
     # print(ele)
     ana = Analysis.objects.all().filter(id=ana_id)
@@ -211,7 +212,7 @@ def test(request,ana_id,que_id):
             hint = request.POST.get('hint', '0')
             a = ana[0].attempt
             a = a + 1
-            log = Analysis(id = ana_id,user_id=1,sub_id = sub_id,topic_id=top_id,attempt = a,hint = ah)
+            log = Analysis(id = ana_id,que_id=que_id,user_id=1,sub_id = sub_id,topic_id=top_id,attempt = a,hint = ah,correct = 0,wasted = 0)
             log.save()
             h = int(hint)
             print("hintttttttt",h,a)
@@ -222,14 +223,14 @@ def test(request,ana_id,que_id):
             #     log4 = Analysis(id = ana_id,hint = 1,attempt = a)
             #     log4.save()
             elif h == 1 and ah == 0:
-                log1 = Analysis(id = ana_id,user_id=1,sub_id = sub_id,topic_id=top_id,hint = 1,attempt = a)
+                log1 = Analysis(id = ana_id,que_id=que_id,user_id=1,sub_id = sub_id,topic_id=top_id,hint = 1,attempt = a,correct = 0,wasted = 0)
                 log1.save()
             elif h == 1 and ah == 2:
-                log2 = Analysis(id = ana_id,user_id=1,sub_id = sub_id,topic_id=top_id,hint = 3,attempt = a)
+                log2 = Analysis(id = ana_id,que_id=que_id,user_id=1,sub_id = sub_id,topic_id=top_id,hint = 3,attempt = a,correct = 0,wasted = 0)
                 log2.save()
             if h == 0 and a == 2:
                 h = 2
-                log3 = Analysis(id = ana_id,user_id=1,sub_id = sub_id,topic_id=top_id,hint = 2,attempt = a)
+                log3 = Analysis(id = ana_id,que_id=que_id,user_id=1,sub_id = sub_id,topic_id=top_id,hint = 2,attempt = a,correct = 0,wasted = 0)
                 log3.save()
             if h == 0 and a == 3:
                 h = 2
@@ -246,9 +247,9 @@ def test(request,ana_id,que_id):
             if ans == int(opt):
                 que_id = que_id + 1
                 a_id = ana_id + 1
-                log6 = Analysis(id = ana_id,user_id=1,sub_id = sub_id,topic_id=top_id,que_id = (que_id - 1),attempt = a,hint = h,correct = 1)
+                log6 = Analysis(id = ana_id,user_id=1,sub_id = sub_id,topic_id=top_id,que_id = (que_id - 1),attempt = a,hint = h,correct = 1,wasted = 0)
                 log6.save()
-                log7 = Analysis(id = a_id,user_id=1,sub_id = sub_id,topic_id=top_id,attempt = 0,hint = 0)
+                log7 = Analysis(id = a_id,que_id=que_id,user_id=1,sub_id = sub_id,topic_id=top_id,attempt = 0,hint = 0,correct = 0,wasted = 0)
                 log7.save()
                 return HttpResponseRedirect(reverse('test', args=(a_id,que_id,)))
             else:
@@ -276,6 +277,9 @@ def test(request,ana_id,que_id):
                     k = 5
                     x = 1
                     msg = "Solution"
+                if a == 3:
+                    log9 = Analysis(id = ana_id,user_id=1,sub_id = sub_id,topic_id=top_id,que_id = que_id,attempt = a,hint = h,correct = 0,wasted = 1)
+                    log9.save()
                 m = 1
                 return render(request,'student/test.html',{"z":z,"m":m,"msg":msg,"k":k,"x":x})
     else:
@@ -285,9 +289,9 @@ def test(request,ana_id,que_id):
             att = ana[0].attempt
             que_id = que_id + 1
             a_id = ana_id + 1
-            log6 = Analysis(id = ana_id,user_id=1,sub_id = sub_id,topic_id=top_id,que_id = (que_id - 1),attempt = att, hint = ah,correct = 0)
+            log6 = Analysis(id = ana_id,user_id=1,sub_id = sub_id,topic_id=top_id,que_id = (que_id - 1),attempt = att, hint = ah,correct = 0,wasted = 1)
             log6.save()
-            log8 = Analysis(id = a_id,user_id=1,sub_id = sub_id,topic_id=top_id,attempt = 0,hint = 0)
+            log8 = Analysis(id = a_id,que_id=que_id,user_id=1,sub_id = sub_id,topic_id=top_id,attempt = 0,hint = 0,correct = 0,wasted = 0)
             log8.save()
             return HttpResponseRedirect(reverse('test', args=(a_id,que_id,)))
     return render(request,'student/test.html',{"z":z,"m":m,"msg":msg,"x":x})
