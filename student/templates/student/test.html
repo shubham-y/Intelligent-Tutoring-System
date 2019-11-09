@@ -5,6 +5,97 @@
 {% block content %}
 
 <div class="row justify-content-center">
+    {% if m %}
+    {% if k == 1 %}
+    <div class="col-md-10">
+        <div class="card card-outline-danger">
+            <div class="card-header">
+                <h4 class="m-b-0 text-white">OOP! Wrong answew.</h4></div>
+            <div class="card-body">
+                    <h3 class="card-title">Please check the hint provided below question.</h3>
+                <p class="card-text">It will be helpful.</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if k == 2 %}
+    <div class="col-md-10">
+        <div class="card card-outline-danger">
+            <div class="card-header">
+                <h4 class="m-b-0 text-white">OOP! Wrong answew.</h4></div>
+            <div class="card-body">
+                    <h3 class="card-title">Please check the hint, it's your last attempt.</h3>
+                <p class="card-text">hints are always useful.</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if k == 3 %}
+    <div class="col-md-10">
+        <div class="card card-outline-danger">
+            <div class="card-header">
+                <h4 class="m-b-0 text-white">OOP! Wrong answew.</h4></div>
+            <div class="card-body">
+                    <h3 class="card-title">Lets give it last and final attempt by understanding the basics.</h3>
+                <p class="card-text">The below link will help you understand the topic.</p>
+                <a href="#" class="btn btn-inverse">Learn Site</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if k == 4 %}
+    <div class="col-md-10">
+            <div class="card card-outline-danger">
+                <div class="card-header">
+                    <h4 class="m-b-0 text-white">OOP! Wrong answew.</h4></div>
+                <div class="card-body">
+                        <h3 class="card-title">It seems we need to get through the topic again and get the basics clear.</h3>
+                    <p class="card-text">Here are the solution and learning resource.</p>
+                    <p class="card-text">Solution - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <a href="#" class="btn btn-inverse">Learn Site</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if k == 5 %}
+    <div class="col-md-10">
+            <div class="card card-outline-danger">
+                <div class="card-header">
+                    <h4 class="m-b-0 text-white">OOP! Wrong answew.</h4></div>
+                <div class="card-body">
+                        <h3 class="card-title">We appreciate your effors, check the solution given below. It will help you know where you went wrong.</h3>
+                    <p class="card-text">Solution - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if k == 6 %}
+    <div class="col-md-10">
+            <div class="card card-outline-danger">
+                <div class="card-header">
+                    <h4 class="m-b-0 text-white">OOP! Wrong answew.</h4></div>
+                <div class="card-body">
+                        <h3 class="card-title">You havn't checked the hint. This is uncool. We have provide learning resource and solution below for your better understanding. Please go through it.</h3>
+                    <p class="card-text">Solution - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <a href="#" class="btn btn-inverse">Learn Site</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if k == 7 %}
+    <div class="col-md-10">
+            <div class="card card-outline-danger">
+                <div class="card-header">
+                    <h4 class="m-b-0 text-white">OOP! Wrong answew.</h4></div>
+                <div class="card-body">
+                        <h3 class="card-title">Maybe you missed something. Give it one more try.</h3>
+                    
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% endif %}
     <div class="col-md-10">
             {% for que,hint,op1,op2,op3,op4,qid,aid in z %}
         <div class="card card-outline-info ">
@@ -12,9 +103,11 @@
                 <h1 class="m-b-0 text-white">Q{{qid}}.</h1></div>
             <div class="card-body">
                 <h2 class="card-title">{{que}}</h2>
+                
                 <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
                 <form class="form" method="post" action="{% url 'test' aid qid %}">
                         {% csrf_token %}
+                        {% if x == 0 %}
                     <div class="row">
                     <div class="input-group mx-0 mx-md-3">
                             <div class="input-group-prepend">
@@ -39,6 +132,9 @@
                         <div><input name="opt" type="radio" id="radio_33{{qid}}" class="with-gap radio-col-deep-purple" value="4" />
                         <label for="radio_33{{qid}}">{{op4}}</label></div>
                         </div></div></div>
+                        <input type="hidden" id="hint" name="hint" value="0">
+                        {% endif %}
+                        <input type="hidden" id="x" name="x" value="{{x}}">
                         <div class="row justify-content-center"><div class="col-2"><button class="btn btn-red btn-block" type="submit">Next</button></div>
                         <div class="col-1"></div>
                         <div class="col-2"><button class="btn btn-red btn-block" >Previous</button></div>
@@ -46,7 +142,7 @@
                         </form>
             </div>
             <div class="card-footer text-center">
-                    <a data-toggle="collapse" href="#que{{qid}}" aria-expanded="true" aria-controls="collapse-example" id="heading-example" class="d-block">
+                    <a data-toggle="collapse" href="#que{{qid}}" aria-expanded="true" aria-controls="collapse-example" id="heading-example" class="d-block ll">
                             <i class="fa fa-chevron-down pull-right"></i>
                             Hint!
                     </a>
@@ -62,6 +158,18 @@
 </div>
 </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script>
+$(document).ready(function(){
+  $("#heading-example").click(function(){
+    $('input[name=hint]').val('1');
+
+  });
+});
+
+
+</script>
 
 
 {% endblock %}
