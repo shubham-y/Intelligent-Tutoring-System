@@ -135,6 +135,9 @@ def start_test(request):
         tname.append(i.top_name)
     # print(tid,tname)
     top = zip(tid,tname)
+    # subjj = Subject.objects.get(id = 2)
+    # subjj.sub_name = "MATHEMATICS-dumdum"
+    # subjj.save()
 
     if request.method == 'POST':
         sub_name = request.POST.get('subject', '')
@@ -214,7 +217,9 @@ def test(request,ana_id,que_id):
             print("timeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",time)
             a = ana[0].attempt
             a = a + 1
-            log = Analysis(id = ana_id,que_id=que_id,user_id=1,sub_id = sub_id,topic_id=top_id,attempt = a,hint = ah,correct = 0,wasted = 0)
+            log = Analysis.objects.get(id = ana_id)
+            log.attempt = a
+            log.hint = ah
             log.save()
             h = int(hint)
             print("hintttttttt",h,a)
@@ -225,14 +230,17 @@ def test(request,ana_id,que_id):
             #     log4 = Analysis(id = ana_id,hint = 1,attempt = a)
             #     log4.save()
             elif h == 1 and ah == 0:
-                log1 = Analysis(id = ana_id,que_id=que_id,user_id=1,sub_id = sub_id,topic_id=top_id,hint = 1,attempt = a,correct = 0,wasted = 0)
+                log1 = Analysis.objects.get(id = ana_id)
+                log1.hint = 1
                 log1.save()
             elif h == 1 and ah == 2:
-                log2 = Analysis(id = ana_id,que_id=que_id,user_id=1,sub_id = sub_id,topic_id=top_id,hint = 3,attempt = a,correct = 0,wasted = 0)
+                log2 = Analysis.objects.get(id = ana_id)
+                log2.hint = 3
                 log2.save()
             if h == 0 and a == 2:
                 h = 2
-                log3 = Analysis(id = ana_id,que_id=que_id,user_id=1,sub_id = sub_id,topic_id=top_id,hint = 2,attempt = a,correct = 0,wasted = 0)
+                log3 = Analysis.objects.get(id = ana_id)
+                log3.hint = 2
                 log3.save()
             if h == 0 and a == 3:
                 h = 2
@@ -249,7 +257,9 @@ def test(request,ana_id,que_id):
             if ans == int(opt):
                 que_id = que_id + 1
                 a_id = ana_id + 1
-                log6 = Analysis(id = ana_id,user_id=1,sub_id = sub_id,topic_id=top_id,que_id = (que_id - 1),attempt = a,hint = h,correct = 1,wasted = 0)
+                log6 = Analysis.objects.get(id = ana_id)
+                log6.hint = h
+                log6.correct = 1
                 log6.save()
                 log7 = Analysis(id = a_id,que_id=que_id,user_id=1,sub_id = sub_id,topic_id=top_id,attempt = 0,hint = 0,correct = 0,wasted = 0)
                 log7.save()
@@ -280,7 +290,8 @@ def test(request,ana_id,que_id):
                     x = 1
                     msg = "Solution"
                 if a == 3:
-                    log9 = Analysis(id = ana_id,user_id=1,sub_id = sub_id,topic_id=top_id,que_id = que_id,attempt = a,hint = h,correct = 0,wasted = 1)
+                    log9 = Analysis.objects.get(id = ana_id)
+                    log9.wasted = 1
                     log9.save()
                 m = 1
                 return render(request,'student/test.html',{"z":z,"m":m,"msg":msg,"k":k,"x":x})
@@ -291,7 +302,8 @@ def test(request,ana_id,que_id):
             att = ana[0].attempt
             que_id = que_id + 1
             a_id = ana_id + 1
-            log6 = Analysis(id = ana_id,user_id=1,sub_id = sub_id,topic_id=top_id,que_id = (que_id - 1),attempt = att, hint = ah,correct = 0,wasted = 1)
+            log6 = Analysis.objects.get(id = ana_id,)
+            log6.wasted = 1
             log6.save()
             log8 = Analysis(id = a_id,que_id=que_id,user_id=1,sub_id = sub_id,topic_id=top_id,attempt = 0,hint = 0,correct = 0,wasted = 0)
             log8.save()

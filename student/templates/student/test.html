@@ -186,11 +186,15 @@
                     var sec = timeSpentOnPage.toFixed(0);
                     Number(sec);
                     var min = sec/60;
-                    var minute = min.toFixed(2);
+                    var minu = parseInt(min);
+                    let minu2 = minu.toString().padStart(2, "0");
+                    var minu1 = sec % 60;
+                    let minu3 = minu1.toString().padStart(2, "0");
+                    var minute = String(minu2) + " : " + String(minu3)
                     document.getElementById('timeInSeconds').textContent = minute;
                     $("#ttt").on("submit", function (e) {
         // alert(minute);
-        document.getElementById("time").value = minute;//change input
+        document.getElementById("time").value = sec;//change input
     });
                 }, 25);
         

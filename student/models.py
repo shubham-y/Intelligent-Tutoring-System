@@ -63,3 +63,6 @@ class Quetions(models.Model):
     level = models.IntegerField()
     ans = models.IntegerField()
     solution = models.CharField(max_length=1000 , null=False)
+    best_time = models.IntegerField()
+    avg_time = models.IntegerField()
+    que_no = models.IntegerField()
