@@ -125,7 +125,7 @@ def start_test(request):
     for i in subject:
         sid.append(i.sub_id)
         sname.append(i.sub_name)
-    print(sid,sname)
+    # print(sid,sname)
     sub = zip(sid,sname)
     topics = topic.objects.all()
     tid = []
@@ -133,7 +133,7 @@ def start_test(request):
     for i in topics:
         tid.append(i.top_id)
         tname.append(i.top_name)
-    print(tid,tname)
+    # print(tid,tname)
     top = zip(tid,tname)
 
     if request.method == 'POST':
@@ -338,3 +338,10 @@ def analyse(request,sub_id):
 
     
     return render(request,'student/analyse.html',{"sub_nm":sub_nm,"tt":tt})
+
+def ajax_load_action(request):
+    # print("AJax")
+    subid=request.GET.get('subid')
+    t=topic.objects.filter(sub_id=subid)
+    # print(t)
+    return render(request, 'student/topic_ajax.html', {'t': t})

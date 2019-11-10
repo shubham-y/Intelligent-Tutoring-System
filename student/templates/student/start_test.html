@@ -14,7 +14,7 @@
                                 <h2 class="m-b-0 text-white">Hello Learner!</h2>
                             </div>
                             <div class="card-body">
-                                <form role="form"  method="post" action="{% url 'start_test' %}">
+                                <form role="form"  method="post" id="target_form" data-cities-url="{% url 'ajax_load_action' %}" action="{% url 'start_test' %}">
                                         {% csrf_token %}
                                     <div class="form-body">
                                         <h3 class="card-title">Let's know more about the subject.</h3>
@@ -23,7 +23,8 @@
                                             <div class="col-md-12">
                                                 <div class="form-group has-success">
                                                     <label class="control-label">Subject</label>
-                                                    <select class="form-control custom-select" name="subject">
+                                                    <select class="form-control custom-select" id="subject" name="subject" required>
+                                                        <option value=""></option>
                                                         {% for sid,sname in sub %}
                                                         <option value="{{sid}}">{{sname}}</option>
                                                         {% endfor %}
@@ -33,10 +34,8 @@
                                             <div class="col-md-12">
                                                 <div class="form-group has-success">
                                                     <label class="control-label">Topic</label>
-                                                    <select class="form-control custom-select" name="topic">
-                                                        {% for tid,tname in top %}
-                                                        <option value="{{tid}}">{{tname}}</option>
-                                                        {% endfor %}
+                                                    <select class="form-control custom-select" id="topic" name="topic" required>
+                                                        
                                                     </select>
                                                     <small class="form-control-feedback"> Select The Topic And Let's Start </small> </div>
                                             </div>
@@ -52,5 +51,26 @@
     </div>
 
 </div>
+{% endblock %}
+{% block js %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>     
+<script>
+    $("#subject").on('change', function() {
+      // alert("ajax");
+      var url = $("#target_form").attr("data-cities-url");  // get the url of the `load_cities` view
+      var subid = $(this).val(); 
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'subid': subid       // add the country id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          $("#topic").html(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+
+    });
+  </script>
 
 {% endblock %}

@@ -12,4 +12,5 @@ urlpatterns = [
     path('test/<int:ana_id>/<int:que_id>', views.test,name="test"),
     path('start_test/', views.start_test,name="start_test"),
     path('analyse/<int:sub_id>', views.analyse,name="analyse"),
+    path('ajax/load_action/', views.ajax_load_action, name='ajax_load_action'),
 ]
