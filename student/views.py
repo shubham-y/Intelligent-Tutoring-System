@@ -207,6 +207,7 @@ def test(request,ana_id,que_id):
         ah = ana[0].hint
         att = ana[0].attempt
         print("printttttt",ah)
+        lt = ana[0].last_time
     # print(q,h,o1,o2,o3,o4,c,qi)
     z = zip(q,h,o1,o2,o3,o4,qi,ai)
     if att < 3:
@@ -214,6 +215,17 @@ def test(request,ana_id,que_id):
             opt = request.POST.get('opt', '')
             hint = request.POST.get('hint', '0')
             time = request.POST.get('time', '0')
+            t = int(time)
+            if att == 0:
+                log22 = Analysis.objects.get(id = ana_id)
+                log22.last_time = t
+                log22.save()
+            else:
+                log23 = Analysis.objects.get(id = ana_id)
+                t = t + lt
+                log23.last_time = t
+                log23.save()
+            print(lt,t)
             print("timeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",time)
             a = ana[0].attempt
             a = a + 1
@@ -255,6 +267,25 @@ def test(request,ana_id,que_id):
             # print(ans)
             k = 0
             if ans == int(opt):
+                log33 = Quetions.objects.get(id = que_id)
+                bt = ele[0].best_time
+                avt = ele[0].avg_time
+                avtt = ele[0].attempt
+                if bt == 0 or bt == None:
+                    log33.best_time = t
+                elif bt > t:
+                    log33.best_time = t
+                if avt == 0 or avt == None:
+                    log33.avg_time = t
+                    log33.attempt = 1
+                else:
+                    avgt = avt * avtt
+                    avggt = avgt + t
+                    attem = avtt + 1
+                    aver_t = int(avggt/attem)
+                    log33.avg_time = aver_t
+                    log33.attempt = attem
+                log33.save()
                 que_id = que_id + 1
                 a_id = ana_id + 1
                 log6 = Analysis.objects.get(id = ana_id)
@@ -290,6 +321,26 @@ def test(request,ana_id,que_id):
                     x = 1
                     msg = "Solution"
                 if a == 3:
+                    t1 = ana[0].last_time
+                    log331 = Quetions.objects.get(id = que_id)
+                    bt1 = ele[0].best_time
+                    avt1 = ele[0].avg_time
+                    avtt1 = ele[0].attempt
+                    if bt1 == 0 or bt1 == None:
+                        log331.best_time = t1
+                    elif bt1 > t1:
+                        log331.best_time = t1
+                    if avt1 == 0 or avt1 == None:
+                        log331.avg_time = t1
+                        log331.attempt = 1
+                    else:
+                        avgt1 = avt1 * avtt1
+                        avggt1 = avgt1 + t1
+                        attem1 = avtt1 + 1
+                        aver_t1 = int(avggt1/attem1)
+                        log331.avg_time = aver_t1
+                        log331.attempt = attem1
+                    log331.save()
                     log9 = Analysis.objects.get(id = ana_id)
                     log9.wasted = 1
                     log9.save()

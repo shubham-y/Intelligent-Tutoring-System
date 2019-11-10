@@ -32,6 +32,7 @@ class Analysis(models.Model):
     effort = models.IntegerField(null=True)
     hint = models.IntegerField(null=True)
     wasted = models.IntegerField(null=True)
+    test_id = models.IntegerField()
 
 class Subject(models.Model):
     sub_id = models.IntegerField()
@@ -66,3 +67,5 @@ class Quetions(models.Model):
     best_time = models.IntegerField()
     avg_time = models.IntegerField()
     que_no = models.IntegerField()
+    attempt = models.IntegerField()
+    test_id = models.IntegerField()
