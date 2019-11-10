@@ -8,6 +8,7 @@
     
 
 <div class="row justify-content-center">
+    {% if k != 0 and k != -1 %}
     {% if m %}
     {% if k == 1 %}
     <div class="col-md-10">
@@ -164,9 +165,43 @@
         </div>
         {% endfor %}
     </div>
+    {% elif k == 0 %}
+    <div class="col-md-10">
+        <div class="card card-outline-info">
+            <div class="card-header">
+                <h1 class="m-b-0 text-white">Congratulations!!</h1></div>
+            <div class="card-body">
+                    <h3 class="card-title">It's always good to complete the learning.
+                    Now you can attend the Confidence test.
+                    All the best! And enjoy the learning.</h3>
+                
+                <p class="card-text">You can download the questions and their solution from the above link and know how topper is performing.</p>
+                <div class="card-text text-center mr-3">
+                <a href="{% url 'analyse' sid %}" class="btn btn-info">Go to the dashboard to check the result.</a>
+            </div>
+            </div>
+        </div>
+    </div>
+    {% elif k == -1 %}
+    <div class="col-md-10">
+        <div class="card card-outline-info">
+            <div class="card-header">
+                <h1 class="m-b-0 text-white">Already completed.</h1></div>
+            <div class="card-body">
+                    <h3 class="card-title">It's always good to complete the learning.
+                    Now you can attend the Confidence test.
+                    All the best! And enjoy the learning.</h3>
+                
+                <p class="card-text">You can download the questions and their solution from the above link and know how topper is performing.</p>
+                <div class="card-text text-center mr-3">
+                <a href="{% url 'analyse' sid %}" class="btn btn-info">Go to the dashboard to check the result.</a>
+            </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>
-</div>
-</div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <script>
@@ -203,6 +238,7 @@
 $(document).ready(function(){
   $("#heading-example").click(function(){
     $('input[name=hint]').val('1');
+    alert(minute);
 
   });
 });
