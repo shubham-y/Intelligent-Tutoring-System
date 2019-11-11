@@ -205,8 +205,10 @@ def test(request,ana_id,que_id):
         c = 0
         qi = []
         ai = []
+        qno = []
         for i in ele:
             qi.append(i.que_id)
+            qno.append(i.que_no)
             q.append(i.question)
             h.append(i.hint)
             o1.append(i.opt_1)
@@ -221,147 +223,154 @@ def test(request,ana_id,que_id):
             att = ana[0].attempt
             print("printttttt",ah)
             lt = ana[0].last_time
+        sol = ele[0].solution
         # print(q,h,o1,o2,o3,o4,c,qi)
-        z = zip(q,h,o1,o2,o3,o4,qi,ai)
+        z = zip(q,h,o1,o2,o3,o4,qi,ai,qno)
         if att < 3:
             if request.method == 'POST':
-                opt = request.POST.get('opt', '')
-                hint = request.POST.get('hint', '0')
-                time = request.POST.get('time', '0')
-                t = int(time)
-                if att == 0:
-                    log22 = Analysis.objects.get(id = ana_id)
-                    log22.last_time = t
-                    log22.save()
-                else:
-                    log23 = Analysis.objects.get(id = ana_id)
-                    t = t + lt
-                    log23.last_time = t
-                    log23.save()
-                print(lt,t)
-                print("timeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",time)
-                a = ana[0].attempt
-                a = a + 1
-                log = Analysis.objects.get(id = ana_id)
-                log.attempt = a
-                log.hint = ah
-                log.save()
-                h = int(hint)
-                print("hintttttttt",h,a)
-                if h == 0 and ah == 1:
-                    h = ah
-                    print("printttttttttt::::",h)
-                # if h == 0 and ah == 0:
-                #     log4 = Analysis(id = ana_id,hint = 1,attempt = a)
-                #     log4.save()
-                elif h == 1 and ah == 0:
-                    log1 = Analysis.objects.get(id = ana_id)
-                    log1.hint = 1
-                    log1.save()
-                elif h == 1 and ah == 2:
-                    log2 = Analysis.objects.get(id = ana_id)
-                    log2.hint = 3
-                    log2.save()
-                if h == 0 and a == 2:
-                    h = 2
-                    log3 = Analysis.objects.get(id = ana_id)
-                    log3.hint = 2
-                    log3.save()
-                if h == 0 and a == 3:
-                    h = 2
-                print("hinttttttt: ",h)
-                print("attemptttt: ",a)
-                print(type(opt))
-                print(opt,"fhj",hint)
-                print("hvjhvcj zvjv")
-                anss = Quetions.objects.all().filter(que_id=que_id)
-                # print(anss)
-                ans = anss[0].ans
-                # print(ans)
-                k = 0
-                if ans == int(opt):
-                    log33 = Quetions.objects.get(id = que_id)
-                    bt = ele[0].best_time
-                    avt = ele[0].avg_time
-                    avtt = ele[0].attempt
-                    if bt == 0 or bt == None:
-                        log33.best_time = t
-                    elif bt > t:
-                        log33.best_time = t
-                    if avt == 0 or avt == None:
-                        log33.avg_time = t
-                        log33.attempt = 1
+                opt = request.POST.get('opt', '-2')
+                if int(opt) != -2:
+                    hint = request.POST.get('hint', '0')
+                    time = request.POST.get('time', '0')
+                    t = int(time)
+                    if att == 0:
+                        log22 = Analysis.objects.get(id = ana_id)
+                        log22.last_time = t
+                        log22.save()
                     else:
-                        avgt = avt * avtt
-                        avggt = avgt + t
-                        attem = avtt + 1
-                        aver_t = int(avggt/attem)
-                        log33.avg_time = aver_t
-                        log33.attempt = attem
-                    log33.save()
-                    que_id = que_id + 1
-                    a_id = ana_id + 1
-                    log6 = Analysis.objects.get(id = ana_id)
-                    log6.hint = h
-                    log6.correct = 1
-                    log6.save()
-                    if qn < 15:
-                        log7 = Analysis(id = a_id,que_id=que_id,user_id=1,sub_id = sub_id,topic_id=top_id,attempt = 0,hint = 0,correct = 0,wasted = 0,test_id = 0)
-                        log7.save()
-                    else:
-                        a_id = 0
-                    return HttpResponseRedirect(reverse('test', args=(a_id,que_id,)))
-                else:
-                    if h == 0 and a == 1:
-                        k=1
-                        msg = "hint!"
-                    elif h == 1 and a ==1:
-                        k =7
-                        msg = "Don't hurry. Try once more."
-                    elif h == 2 and a ==2:
-                        k = 2
-                        msg = "Warning: Pl check hint and last attempt"
-                    elif h == 1 and a == 2:
-                        k = 3
-                        msg = "Learn site"
-                    elif h == 2 and a == 3:
-                        k = 6
-                        x = 1
-                        msg = "You havn't checked the hint. This is disappointing."
-                    elif h == 3 and a == 3:
-                        k = 4
-                        x = 1
-                        msg = "learn site and solution"
-                    elif h == 1 and a == 3:
-                        k = 5
-                        x = 1
-                        msg = "Solution"
-                    if a == 3:
-                        t1 = ana[0].last_time
-                        log331 = Quetions.objects.get(id = que_id)
-                        bt1 = ele[0].best_time
-                        avt1 = ele[0].avg_time
-                        avtt1 = ele[0].attempt
-                        if bt1 == 0 or bt1 == None:
-                            log331.best_time = t1
-                        elif bt1 > t1:
-                            log331.best_time = t1
-                        if avt1 == 0 or avt1 == None:
-                            log331.avg_time = t1
-                            log331.attempt = 1
+                        log23 = Analysis.objects.get(id = ana_id)
+                        t = t + lt
+                        log23.last_time = t
+                        log23.save()
+                    print(lt,t)
+                    print("timeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",time)
+                    a = ana[0].attempt
+                    a = a + 1
+                    log = Analysis.objects.get(id = ana_id)
+                    log.attempt = a
+                    log.hint = ah
+                    log.save()
+                    h = int(hint)
+                    print("hintttttttt",h,a)
+                    if h == 0 and ah == 1:
+                        h = ah
+                        print("printttttttttt::::",h)
+                    # if h == 0 and ah == 0:
+                    #     log4 = Analysis(id = ana_id,hint = 1,attempt = a)
+                    #     log4.save()
+                    elif h == 1 and ah == 0:
+                        log1 = Analysis.objects.get(id = ana_id)
+                        log1.hint = 1
+                        log1.save()
+                    elif h == 1 and ah == 2:
+                        log2 = Analysis.objects.get(id = ana_id)
+                        log2.hint = 3
+                        log2.save()
+                    if h == 0 and a == 2:
+                        h = 2
+                        log3 = Analysis.objects.get(id = ana_id)
+                        log3.hint = 2
+                        log3.save()
+                    if h == 0 and a == 3:
+                        h = 2
+                    print("hinttttttt: ",h)
+                    print("attemptttt: ",a)
+                    print(type(opt))
+                    print(opt,"fhj",hint)
+                    print("hvjhvcj zvjv")
+                    anss = Quetions.objects.all().filter(que_id=que_id)
+                    # print(anss)
+                    ans = anss[0].ans
+                    # print(ans)
+                    k = 0
+                    if ans == int(opt):
+                        log33 = Quetions.objects.get(id = que_id)
+                        bt = ele[0].best_time
+                        avt = ele[0].avg_time
+                        avtt = ele[0].attempt
+                        if bt == 0 or bt == None:
+                            log33.best_time = t
+                        elif bt > t:
+                            log33.best_time = t
+                        if avt == 0 or avt == None:
+                            log33.avg_time = t
+                            log33.attempt = 1
                         else:
-                            avgt1 = avt1 * avtt1
-                            avggt1 = avgt1 + t1
-                            attem1 = avtt1 + 1
-                            aver_t1 = int(avggt1/attem1)
-                            log331.avg_time = aver_t1
-                            log331.attempt = attem1
-                        log331.save()
-                        log9 = Analysis.objects.get(id = ana_id)
-                        log9.wasted = 1
-                        log9.save()
+                            avgt = avt * avtt
+                            avggt = avgt + t
+                            attem = avtt + 1
+                            aver_t = int(avggt/attem)
+                            log33.avg_time = aver_t
+                            log33.attempt = attem
+                        log33.save()
+                        que_id = que_id + 1
+                        a_id = ana_id + 1
+                        log6 = Analysis.objects.get(id = ana_id)
+                        log6.hint = h
+                        log6.correct = 1
+                        log6.save()
+                        if qn < 15:
+                            log7 = Analysis(id = a_id,que_id=que_id,user_id=1,sub_id = sub_id,topic_id=top_id,attempt = 0,hint = 0,correct = 0,wasted = 0,test_id = 0)
+                            log7.save()
+                        else:
+                            a_id = 0
+                        return HttpResponseRedirect(reverse('test', args=(a_id,que_id,)))
+                    else:
+                        if h == 0 and a == 1:
+                            k=1
+                            msg = "hint!"
+                        elif h == 1 and a ==1:
+                            k =7
+                            msg = "Don't hurry. Try once more."
+                        elif h == 2 and a ==2:
+                            k = 2
+                            msg = "Warning: Pl check hint and last attempt"
+                        elif h == 1 and a == 2:
+                            k = 3
+                            msg = "Learn site"
+                        elif h == 2 and a == 3:
+                            k = 6
+                            x = 1
+                            msg = "You havn't checked the hint. This is disappointing."
+                        elif h == 3 and a == 3:
+                            k = 4
+                            x = 1
+                            msg = "learn site and solution"
+                        elif h == 1 and a == 3:
+                            k = 5
+                            x = 1
+                            msg = "Solution"
+                        if a == 3:
+                            t1 = ana[0].last_time
+                            log331 = Quetions.objects.get(id = que_id)
+                            bt1 = ele[0].best_time
+                            avt1 = ele[0].avg_time
+                            avtt1 = ele[0].attempt
+                            if bt1 == 0 or bt1 == None:
+                                log331.best_time = t1
+                            elif bt1 > t1:
+                                log331.best_time = t1
+                            if avt1 == 0 or avt1 == None:
+                                log331.avg_time = t1
+                                log331.attempt = 1
+                            else:
+                                avgt1 = avt1 * avtt1
+                                avggt1 = avgt1 + t1
+                                attem1 = avtt1 + 1
+                                aver_t1 = int(avggt1/attem1)
+                                log331.avg_time = aver_t1
+                                log331.attempt = attem1
+                            log331.save()
+                            log9 = Analysis.objects.get(id = ana_id)
+                            log9.wasted = 1
+                            log9.save()
+                        m = 1
+                        return render(request,'student/test.html',{"z":z,"m":m,"msg":msg,"k":k,"x":x,"so":sol})
+                else:
+                    k=11
                     m = 1
                     return render(request,'student/test.html',{"z":z,"m":m,"msg":msg,"k":k,"x":x,'username':request.session['name'],'useremail':request.session['email']})
+
         else:
             if request.method == 'POST':
                 x = 1
@@ -387,7 +396,9 @@ def test(request,ana_id,que_id):
         print("hereeeeeeeeeeeeeeeeeeeeeeeeee","-11111111111111")
         return render(request,'student/test.html',{"k":k,"sid":sidd})
     print(qn,"at lastttttttttttttttttttttttttttttttttttttttttt")
+
     return render(request,'student/test.html',{"z":z,"m":m,"msg":msg,"x":x,'username':request.session['name'],'useremail':request.session['email']})
+
 
 def start_test2(request):
     if 'email' not in request.session:
@@ -499,7 +510,7 @@ def test2(request,sub_id,top_id):
             else:
                 wasted+=1
             c+=1
-        time = request.POST.get('time')
+        time = request.POST.get('time','0')
         print(correct,wasted,left,time)
         log = Analysis(user_id=1,sub_id = sub_id,topic_id=top_id,last_time=int(time),attempt = (correct+wasted),hint = len(qi),correct = correct,wasted = wasted,test_id = 1)
         log.save()
