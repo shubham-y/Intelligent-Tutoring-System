@@ -225,7 +225,7 @@
                     let minu2 = minu.toString().padStart(2, "0");
                     var minu1 = sec % 60;
                     let minu3 = minu1.toString().padStart(2, "0");
-                    var minute = String(minu2) + " : " + String(minu3)
+                    var minute = String(minu2) + " : " + String(minu3);
                     document.getElementById('timeInSeconds').textContent = minute;
                     $("#ttt").on("submit", function (e) {
         // alert(minute);

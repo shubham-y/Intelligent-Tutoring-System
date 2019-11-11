@@ -445,8 +445,9 @@ def start_test2(request):
 def test2(request,sub_id,top_id):
     if 'email' not in request.session:
         return HttpResponseRedirect(reverse('login'))
-    ele=Quetions.objects.all().filter(sub_id=sub_id,top_id=top_id).order_by('que_id')
-    print(ele)
+    ele=Quetions.objects.all().filter(sub_id=sub_id,top_id=top_id,test_id=1).order_by('que_id')
+    # print(ele)
+    print(ele[0].que_id)
     # ana = Analysis.objects.all().filter(id=ana_id)
     # print(id)
     x = 0
@@ -463,6 +464,7 @@ def test2(request,sub_id,top_id):
     o4 = []
     c = 0
     qi = []
+    ans = []
     # ai = []
     for i in ele:
         qi.append(i.que_id)
@@ -472,6 +474,7 @@ def test2(request,sub_id,top_id):
         o2.append(i.opt_2)
         o3.append(i.opt_3)
         o4.append(i.opt_4)
+        ans.append(i.ans)
         # ai.append(ana_id)
         c = c + 1
         m = 0
@@ -482,7 +485,25 @@ def test2(request,sub_id,top_id):
     # print(q,h,o1,o2,o3,o4,c,qi)
     z = zip(q,o1,o2,o3,o4,qi)
     if request.method == 'POST':
-        if request.POST[]
+        c = 0
+        correct,wasted,left=0,0,0
+        # print(request.POST.get('opt3'))
+        for i in qi:
+            if request.POST.get('opt'+str(i)) is None:
+                left+=1
+            elif request.POST.get('opt'+str(i))==str(ans[c]):
+                correct+=1
+            else:
+                wasted+=1
+            c+=1
+        time = request.POST.get('time')
+        print(correct,wasted,left,time)
+        log = Analysis(user_id=1,sub_id = sub_id,topic_id=top_id,last_time=int(time),attempt = (correct+wasted),hint = len(qi),correct = correct,wasted = wasted,test_id = 1)
+        log.save()
+        return HttpResponseRedirect(reverse('start_test2'))
+
+
+
     # if att < 3:
     #     if request.method == 'POST':
     #         opt = request.POST.get('opt', '')
@@ -582,7 +603,7 @@ def test2(request,sub_id,top_id):
     #         log8 = Analysis(id = a_id,que_id=que_id,user_id=1,sub_id = sub_id,topic_id=top_id,attempt = 0,hint = 0,correct = 0,wasted = 0)
     #         log8.save()
     #         return HttpResponseRedirect(reverse('test', args=(a_id,que_id,)))
-    return render(request,'student/test2.html',{"z":z,"m":m,"msg":msg,"x":x})
+    return render(request,'student/test2.html',{"z":z,'sid':sub_id,'tid':top_id,"m":m,"msg":msg,"x":x})
 
 def analyse(request,sub_id):
     topics = topic.objects.all().filter(sub_id=sub_id).distinct()
