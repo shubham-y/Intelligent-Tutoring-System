@@ -10,6 +10,14 @@
 <div class="row justify-content-center">
     {% if k != 0 and k != -1 %}
     {% if m %}
+    {% if k == 11 %}
+    <div class="col-md-10">
+        <div class="card card-outline-danger">
+            <div class="card-header">
+                <h3 class="m-b-0 text-white">Please select the options provided.</h3></div>
+        </div>
+    </div>
+    {% endif %}
     {% if k == 1 %}
     <div class="col-md-10">
         <div class="card card-outline-danger">
@@ -55,7 +63,7 @@
                 <div class="card-body">
                         <h3 class="card-title">It seems we need to get through the topic again and get the basics clear.</h3>
                     <p class="card-text">Here are the solution and learning resource.</p>
-                    <p class="card-text">Solution - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p class="card-text">Solution - {{so}}</p>
                     <a href="#" class="btn btn-inverse">Learn Site</a>
                 </div>
             </div>
@@ -68,7 +76,7 @@
                     <h4 class="m-b-0 text-white">OOPS! Wrong answer.</h4></div>
                 <div class="card-body">
                         <h3 class="card-title">We appreciate your effors, check the solution given below. It will help you know where you went wrong.</h3>
-                    <p class="card-text">Solution - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p class="card-text">Solution - {{so}}</p>
                     
                 </div>
             </div>
@@ -81,7 +89,7 @@
                     <h4 class="m-b-0 text-white">OOPS! Wrong answer.</h4></div>
                 <div class="card-body">
                         <h3 class="card-title">You havn't checked the hint. This is uncool. We have provide learning resource and solution below for your better understanding. Please go through it.</h3>
-                    <p class="card-text">Solution - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p class="card-text">Solution - {{so}}</p>
                     <a href="#" class="btn btn-inverse">Learn Site</a>
                 </div>
             </div>
@@ -106,10 +114,10 @@
                         <span id="timeInSeconds">0</span> <span>Minutes</span>
                     </h1>
             </div>
-            {% for que,hint,op1,op2,op3,op4,qid,aid in z %}
+            {% for que,hint,op1,op2,op3,op4,qid,aid,qno in z %}
         <div class="card card-outline-info ">
             <div class="card-header">
-                <h1 class="m-b-0 text-white">Q{{qid}}.</h1></div>
+                <h1 class="m-b-0 text-white">Q{{qno}}.</h1></div>
             <div class="card-body">
                 <h2 class="card-title">{{que}}</h2>
                 
