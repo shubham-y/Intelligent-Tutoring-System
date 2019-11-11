@@ -57,25 +57,29 @@
                 <!-- Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.html">
-                        <!-- Logo icon -->
+                    
+                    <a class="navbar-brand" href="#">
+                         <!-- Logo icon  -->
                         <b>
-                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                            <!-- Dark Logo icon -->
+                            <!-- You can put here icon as well // <i class="wi wi-sunset"></i> // -->
+                            <!-- Dark Logo icon  -->
                             <img src="{% static 'student/assets/images/logo-icon.png' %}" alt="homepage" class="dark-logo" />
                             <!-- Light Logo icon -->
                             <img src="{% static 'student/assets/images/logo-light-icon.png' %}" alt="homepage" class="light-logo" />
                         </b>
-                        <!--End Logo icon -->
-                        <!-- Logo text -->
-                        <span>
+                        <!-- End Logo icon -->
+                        <!-- Logo text  -->
+                        <!-- <span> -->
                          <!-- dark Logo text -->
-                         <img src="{% static 'student/assets/images/logo-text.png' %}" alt="homepage" class="dark-logo" />
-                         <!-- Light Logo text -->    
-                         <img src="{% static 'student/assets/images/logo-light-text.png' %}" class="light-logo" alt="homepage" /></span> </a>
+                         <!-- <img src="{% static 'student/assets/images/logo-text.png' %}" alt="homepage" class="dark-logo" /> -->
+                         <!-- Light Logo text     -->
+                         <!-- <img src="{% static 'student/assets/images/logo-light-text.png' %}" class="light-logo" alt="homepage" /> -->
+                     <!-- </span>  -->
+                     </a>
+                    <!-- <p class="text-white">ITS</p> -->
                 </div>
-                <!-- ============================================================== -->
-                <!-- End Logo -->
+                
+                <!-- End Logo-->
                 <!-- ============================================================== -->
                 <div class="navbar-collapse">
                     <!-- ============================================================== -->
@@ -199,6 +203,13 @@
                         <!-- ============================================================== -->
                         <!-- Comment -->
                         <!-- ============================================================== -->
+                        <li class="nav-item">
+                            <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href=""  aria-haspopup="true" aria-expanded="false"> 
+                                {% block time %}
+                            {% endblock %}
+                            </a>
+                        
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-message"></i>
                                 <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
@@ -306,17 +317,17 @@
                                         <div class="dw-user-box">
                                             <div class="u-img"><img src="{% static 'student/assets/images/users/1.jpg' %}" alt="user"></div>
                                             <div class="u-text">
-                                                <h4>Steave Jobs</h4>
-                                                <p class="text-muted">varun@gmail.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+                                                <h4>{{username}}</h4>
+                                                <p class="text-muted">{{useremail}}</p><!-- <a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a> --></div>
                                         </div>
                                     </li>
-                                    <li role="separator" class="divider"></li>
+                                    <!-- <li role="separator" class="divider"></li>
                                     <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
                                     <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
                                     <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
-                                    <li role="separator" class="divider"></li>
+                                    <li role="separator" class="divider"></li> -->
                                     <li><a href="{% url 'logout' %}"><i class="fa fa-power-off"></i> Logout</a></li>
                                 </ul>
                             </div>
@@ -324,10 +335,10 @@
                         <!-- ============================================================== -->
                         <!-- Language -->
                         <!-- ============================================================== -->
-                        <li class="nav-item dropdown">
+                        <!-- <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flag-icon flag-icon-us"></i></a>
                             <div class="dropdown-menu dropdown-menu-right scale-up"> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-in"></i> India</a> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-fr"></i> French</a> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-cn"></i> China</a> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-de"></i> Dutch</a> </div>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </nav>
@@ -346,13 +357,13 @@
                     <!-- User profile image -->
                     <div class="profile-img"> <img src="{% static 'student/assets/images/users/profile.png' %}"  alt="user" /> </div>
                     <!-- User profile text-->
-                    <div class="profile-text"> <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Markarn Doe</a>
+                    <div class="profile-text"> <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">{{username}}</a>
                         <div class="dropdown-menu animated flipInY">
-                            <a href="#" class="dropdown-item"><i class="ti-user"></i> My Profile</a>
-                            <a href="#" class="dropdown-item"><i class="ti-wallet"></i> My Balance</a>
-                            <a href="#" class="dropdown-item"><i class="ti-email"></i> Inbox</a>
-                            <div class="dropdown-divider"></div> <a href="#" class="dropdown-item"><i class="ti-settings"></i> Account Setting</a>
-                            <div class="dropdown-divider"></div> <a href="login.html" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
+                            <!-- <a href="#" class="dropdown-item"><i class="ti-user"></i> My Profile</a> -->
+                            <!-- <a href="#" class="dropdown-item"><i class="ti-wallet"></i> My Balance</a> -->
+                            <!-- <a href="#" class="dropdown-item"><i class="ti-email"></i> Inbox</a> -->
+                            <!-- <div class="dropdown-divider"></div> <a href="#" class="dropdown-item"><i class="ti-settings"></i> Account Setting</a> -->
+                            <div class="dropdown-divider"></div> <a href="{% url 'logout' %}" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
                         </div>
                     </div>
                 </div>
@@ -360,19 +371,19 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li class="nav-small-cap">PERSONAL</li>
+                        <!-- <li class="nav-small-cap">PERSONAL</li> -->
                         <li>
-                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard </span></a>
-                            <ul aria-expanded="false" class="collapse">
+                            <a class="has-arrow waves-effect waves-dark" href="{% url 'home' %}" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Home</span></a>
+                            <!-- <ul aria-expanded="false" class="collapse">
                                 <li><a href="index.html">Dashboard 1</a></li>
                                 <li><a href="index2.html">Dashboard 2</a></li>
                                 <li><a href="index3.html">Dashboard 3</a></li>
                                 <li><a href="index4.html">Dashboard 4</a></li>
                                 <li><a href="index5.html">Dashboard 5</a></li>
                                 <li><a href="index6.html">Dashboard 6</a></li>
-                            </ul>
+                            </ul> -->
                         </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-laptop-windows"></i><span class="hide-menu">Template Demos</span></a>
+                        <!-- <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-laptop-windows"></i><span class="hide-menu">Template Demos</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{% static 'student/minisidebar/index.html' %}">Minisidebar</a></li>
                                 <li><a href="{% static 'student/horizontal/index2.html' %}">Horizontal</a></li>
@@ -380,19 +391,19 @@
                                 <li><a href="{% static 'student/material-rtl/index4.html' %}">RTL Version</a></li>
                                 <li><a href="javascript:angular">Anuglar-CLI Starter kit</a></li>
                             </ul>
-                        </li>
+                        </li> -->
                         <li>
-                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Apps</span></a>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Start Test</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="app-calendar.html">Calendar</a></li>
-                                <li><a href="app-chat.html">Chat app</a></li>
-                                <li><a href="app-ticket.html">Support Ticket</a></li>
+                                <li><a href="{% url 'start_test' %}">Learning Test</a></li>
+                                <li><a href="{% url 'start_test2' %}">Confidence Test</a></li>
+                                <!-- <li><a href="app-ticket.html">Support Ticket</a></li>
                                 <li><a href="app-contact.html">Contact / Employee</a></li>
                                 <li><a href="app-contact2.html">Contact Grid</a></li>
-                                <li><a href="app-contact-detail.html">Contact Detail</a></li>
+                                <li><a href="app-contact-detail.html">Contact Detail</a></li> -->
                             </ul>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">Inbox</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="app-email.html">Mailbox</a></li>
@@ -578,7 +589,7 @@
                                 </li>
                                 <li><a href="#">item 1.4</a></li>
                             </ul>
-                        </li>
+                        </li> -->
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -587,11 +598,11 @@
             <!-- Bottom points-->
             <div class="sidebar-footer">
                 <!-- item-->
-                <a href="" class="link" data-toggle="tooltip" title="Settings"><i class="ti-settings"></i></a>
+                <a href="#" class="link" data-toggle="tooltip" title="Settings"><i class="ti-settings"></i></a>
                 <!-- item-->
-                <a href="" class="link" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
+                <a href="{% url 'home' %}" class="link" data-toggle="tooltip" title="Home"><i class="mdi mdi-home"></i></a>
                 <!-- item-->
-                <a href="" class="link" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
+                <a href="{% url 'logout' %}" class="link" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
             </div>
             <!-- End Bottom points-->
         </aside>
@@ -611,10 +622,10 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 col-8 align-self-center">
-                        <h3 class="text-themecolor">Dashboard 2</h3>
+                        <h3 class="text-themecolor">Dashboard</h3>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                            <li class="breadcrumb-item active">Dashboard2</li>
+                            <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
                     </div>
                     <!-- <div class="col-md-7 col-4 align-self-center">
@@ -723,7 +734,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer">
-                © 2017 Material Pro Admin by wrappixel.com
+                © 2019 ITS
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->

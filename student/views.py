@@ -15,6 +15,7 @@ def login_action(request):
 
     if len(l):
         request.session['email']=email #session started
+        request.session['name']=l[0].name
         return HttpResponseRedirect(reverse('home'))
     else:
         return HttpResponseRedirect(reverse('login')+'?login_failure=true')
@@ -116,7 +117,7 @@ def home(request):
         print(z)
 
 
-        return render(request,'student/dash.html',{"z":z})
+        return render(request,'student/dash.html',{"z":z,'username':request.session['name'],'useremail':request.session['email']})
 
 def start_test(request):
     if 'email' not in request.session:
@@ -176,7 +177,7 @@ def start_test(request):
             return HttpResponseRedirect(reverse('test', args=(ana_id,q_id,)))
 
 
-    return render(request,'student/start_test.html',{"sub":sub,"top":top})
+    return render(request,'student/start_test.html',{"sub":sub,"top":top,'username':request.session['name'],'useremail':request.session['email']})
 
 def test(request,ana_id,que_id):
     if 'email' not in request.session:
@@ -360,7 +361,7 @@ def test(request,ana_id,que_id):
                         log9.wasted = 1
                         log9.save()
                     m = 1
-                    return render(request,'student/test.html',{"z":z,"m":m,"msg":msg,"k":k,"x":x})
+                    return render(request,'student/test.html',{"z":z,"m":m,"msg":msg,"k":k,"x":x,'username':request.session['name'],'useremail':request.session['email']})
         else:
             if request.method == 'POST':
                 x = 1
@@ -386,7 +387,7 @@ def test(request,ana_id,que_id):
         print("hereeeeeeeeeeeeeeeeeeeeeeeeee","-11111111111111")
         return render(request,'student/test.html',{"k":k,"sid":sidd})
     print(qn,"at lastttttttttttttttttttttttttttttttttttttttttt")
-    return render(request,'student/test.html',{"z":z,"m":m,"msg":msg,"x":x})
+    return render(request,'student/test.html',{"z":z,"m":m,"msg":msg,"x":x,'username':request.session['name'],'useremail':request.session['email']})
 
 def start_test2(request):
     if 'email' not in request.session:
@@ -440,11 +441,13 @@ def start_test2(request):
         return HttpResponseRedirect(reverse('test2', args=(sub_id,top_id)))
 
 
-    return render(request,'student/start_test2.html',{"sub":sub,"top":top})
+    return render(request,'student/start_test2.html',{"sub":sub,"top":top,'username':request.session['name'],'useremail':request.session['email']})
 
 def test2(request,sub_id,top_id):
     if 'email' not in request.session:
         return HttpResponseRedirect(reverse('login'))
+    if len(Analysis.objects.all().filter(sub_id=sub_id,topic_id=top_id,test_id=1)) >0:
+        return render(request,'student/test2.html',{'sid':sub_id,'tid':top_id,'test_done':1})
     ele=Quetions.objects.all().filter(sub_id=sub_id,top_id=top_id,test_id=1).order_by('que_id')
     # print(ele)
     print(ele[0].que_id)
@@ -502,108 +505,7 @@ def test2(request,sub_id,top_id):
         log.save()
         return HttpResponseRedirect(reverse('start_test2'))
 
-
-
-    # if att < 3:
-    #     if request.method == 'POST':
-    #         opt = request.POST.get('opt', '')
-    #         hint = request.POST.get('hint', '0')
-    #         time = request.POST.get('time', '0')
-    #         print("timeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",time)
-    #         a = ana[0].attempt
-    #         a = a + 1
-    #         log = Analysis.objects.get(id = ana_id)
-    #         log.attempt = a
-    #         log.hint = ah
-    #         log.save()
-    #         h = int(hint)
-    #         print("hintttttttt",h,a)
-    #         if h == 0 and ah == 1:
-    #             h = ah
-    #             print("printttttttttt::::",h)
-    #         # if h == 0 and ah == 0:
-    #         #     log4 = Analysis(id = ana_id,hint = 1,attempt = a)
-    #         #     log4.save()
-    #         elif h == 1 and ah == 0:
-    #             log1 = Analysis.objects.get(id = ana_id)
-    #             log1.hint = 1
-    #             log1.save()
-    #         elif h == 1 and ah == 2:
-    #             log2 = Analysis.objects.get(id = ana_id)
-    #             log2.hint = 3
-    #             log2.save()
-    #         if h == 0 and a == 2:
-    #             h = 2
-    #             log3 = Analysis.objects.get(id = ana_id)
-    #             log3.hint = 2
-    #             log3.save()
-    #         if h == 0 and a == 3:
-    #             h = 2
-    #         print("hinttttttt: ",h)
-    #         print("attemptttt: ",a)
-    #         print(type(opt))
-    #         print(opt,"fhj",hint)
-    #         print("hvjhvcj zvjv")
-    #         anss = Quetions.objects.all().filter(que_id=que_id)
-    #         # print(anss)
-    #         ans = anss[0].ans
-    #         # print(ans)
-    #         k = 0
-    #         if ans == int(opt):
-    #             que_id = que_id + 1
-    #             a_id = ana_id + 1
-    #             log6 = Analysis.objects.get(id = ana_id)
-    #             log6.hint = h
-    #             log6.correct = 1
-    #             log6.save()
-    #             log7 = Analysis(id = a_id,que_id=que_id,user_id=1,sub_id = sub_id,topic_id=top_id,attempt = 0,hint = 0,correct = 0,wasted = 0)
-    #             log7.save()
-    #             return HttpResponseRedirect(reverse('test', args=(a_id,que_id,)))
-    #         else:
-    #             if h == 0 and a == 1:
-    #                 k=1
-    #                 msg = "hint!"
-    #             elif h == 1 and a ==1:
-    #                 k =7
-    #                 msg = "Don't hurry. Try once more."
-    #             elif h == 2 and a ==2:
-    #                 k = 2
-    #                 msg = "Warning: Pl check hint and last attempt"
-    #             elif h == 1 and a == 2:
-    #                 k = 3
-    #                 msg = "Learn site"
-    #             elif h == 2 and a == 3:
-    #                 k = 6
-    #                 x = 1
-    #                 msg = "You havn't checked the hint. This is disappointing."
-    #             elif h == 3 and a == 3:
-    #                 k = 4
-    #                 x = 1
-    #                 msg = "learn site and solution"
-    #             elif h == 1 and a == 3:
-    #                 k = 5
-    #                 x = 1
-    #                 msg = "Solution"
-    #             if a == 3:
-    #                 log9 = Analysis.objects.get(id = ana_id)
-    #                 log9.wasted = 1
-    #                 log9.save()
-    #             m = 1
-    #             return render(request,'student/test.html',{"z":z,"m":m,"msg":msg,"k":k,"x":x})
-    # else:
-    #     if request.method == 'POST':
-    #         x = 1
-    #         ah = ana[0].hint
-    #         att = ana[0].attempt
-    #         que_id = que_id + 1
-    #         a_id = ana_id + 1
-    #         log6 = Analysis.objects.get(id = ana_id,)
-    #         log6.wasted = 1
-    #         log6.save()
-    #         log8 = Analysis(id = a_id,que_id=que_id,user_id=1,sub_id = sub_id,topic_id=top_id,attempt = 0,hint = 0,correct = 0,wasted = 0)
-    #         log8.save()
-    #         return HttpResponseRedirect(reverse('test', args=(a_id,que_id,)))
-    return render(request,'student/test2.html',{"z":z,'sid':sub_id,'tid':top_id,"m":m,"msg":msg,"x":x})
+    return render(request,'student/test2.html',{"z":z,'sid':sub_id,'tid':top_id,"m":m,"msg":msg,"x":x,'username':request.session['name'],'useremail':request.session['email']})
 
 def analyse(request,sub_id):
     topics = topic.objects.all().filter(sub_id=sub_id).distinct()
@@ -696,7 +598,7 @@ def analyse(request,sub_id):
     #     was.append = qn[i] - corr[i]
     
 
-    return render(request,'student/analyse.html',{"sub_nm":sub_nm,"tt":tt,"tid":tid})
+    return render(request,'student/analyse.html',{"sub_nm":sub_nm,"tt":tt,"tid":tid,'username':request.session['name'],'useremail':request.session['email']})
 
 def ajax_load_action(request):
     # print("AJax")
