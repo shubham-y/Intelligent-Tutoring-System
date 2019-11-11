@@ -73,9 +73,11 @@ def home(request):
         print(tid,tname)
         acc = []
         c = []
+        message = []
 
         for i in sid:
             act = []
+            ms1=[]
             ct=[]
             co=0
             for j in tid[i-1]:
@@ -97,12 +99,23 @@ def home(request):
                 p = mxa - mn + 1
                 cp = mx - mn +1
                 print("heeeeeeeerrrrrrreeeeeeeeeeee",p,cp)
-                act.append(int((p/cp)*100))
+                kk = int((p/cp)*100)
+                act.append(kk)
+                if kk < 34:
+                    mss = "Beginer" 
+                    ms1.append(mss)
+                elif kk > 34 and kk <67:
+                    mss = "Intermediate"
+                    ms1.append(mss) 
+                elif kk > 34:
+                    mss = "Advanced"
+                    ms1.append(mss)
                 ct.append(co)
                 co=co+1
             acc.append(act)
+            message.append(ms1)
             c.append(ct)
-        print(acc,c)
+        print("jdhgvjvgvhdchschgvghdvhg",acc,c,message)
         final = []
         for i in range(len(acc)):
             s = []
@@ -110,9 +123,10 @@ def home(request):
                 s1 = []
                 s1.append(tname[i][j])
                 s1.append(acc[i][j])
+                s1.append(message[i][j])
                 s.append(s1)
             final.append(s)
-        print(final)
+        print("finallllllllll",final)
         z = zip(sid,sname,tid,final)
         print(z)
 
