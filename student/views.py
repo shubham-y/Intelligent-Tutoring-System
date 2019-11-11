@@ -392,7 +392,7 @@ def test(request,ana_id,que_id):
     elif ana_id == 1111111111:
         k = -1
         print("hereeeeeeeeeeeeeeeeeeeeeeeeee","-11111111111111")
-        return render(request,'student/test.html',{"k":k,"sid":sidd,"so":sol})
+        return render(request,'student/test.html',{"k":k,"sid":sidd})
     print(qn,"at lastttttttttttttttttttttttttttttttttttttttttt")
     return render(request,'student/test.html',{"z":z,"m":m,"msg":msg,"x":x,"so":sol})
 
