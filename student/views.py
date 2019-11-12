@@ -102,7 +102,7 @@ def home(request):
                 kk = int((p/cp)*100)
                 act.append(kk)
                 if kk < 34:
-                    mss = "Beginer" 
+                    mss = "Beginner" 
                     ms1.append(mss)
                 elif kk > 34 and kk <67:
                     mss = "Intermediate"
