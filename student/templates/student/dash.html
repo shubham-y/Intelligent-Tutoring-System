@@ -36,3 +36,135 @@
         
 {% endblock %}
 
+{% block carousel %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner" role="listbox">
+        {% for p in path %}
+        <div class="carousel-item active">
+            <div class="container"> <img class="d-block img-fluid" id="{{p}}" src="/static/student/assets/images/big/{{p}}"></div>
+        </div>
+        {% endfor %}
+        
+        
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span> </a>
+</div>
+{% endblock %}
+
+
+
+{% block tricks %}
+<h4 class="m-b-20">Details</h4>
+<div id="accordion" class="nav-accordion" role="tablist" aria-multiselectable="true">
+    <div class="card">
+        <div class="card-header" role="tab" id="headingOne">
+            <h5 class="mb-0">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Weak Topics
+        </a>
+      </h5> </div>
+        <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+            <div class="card-body"> {% for i,k in wz %}
+                <h5>{{i}}:</h5> {% for l in k %} 
+                {{l}}
+                <br>
+                {% endfor %}
+                <br>
+                {% endfor %} </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" role="tab" id="headingTwo">
+            <h5 class="mb-0">
+        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Strong Topics
+        </a>
+      </h5> </div>
+        <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+            <div class="card-body"> {% for i,j in sz %}
+                <h5>{{i}}:</h5> {% for l in j %} 
+                {% if l is not "" %}
+                {{l}}
+                {% else %}
+                No topics 
+                {% endif %}
+                <br>
+                {% endfor %}
+                <br>
+                {% endfor %} </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" role="tab" id="headingThree">
+            <h5 class="mb-0">
+        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Google's Here!
+        </a>
+      </h5> </div>
+        <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div class="card-body"> <script async src="https://cse.google.com/cse.js?cx=007395274261731877214:csgzq1shjce"></script>
+                    <div class="gcse-search"></div></div>
+        </div>
+    </div>
+</div>
+
+
+
+    <script>
+            console.log("1111111111");
+                $(document).ready(function(){
+                    $("#gsc-i-id1").placeholder() = "hhh";
+                    console.log(gcse.type);
+                    $("td.gsc-search-button td").attr('id', 'my-id');
+                $("#my-id").click(function(){
+                    alert("done");
+                    console.log("3333333");
+                    var valll = $("#gsc-i-id1").val();
+                    console.log("43434343");
+                    console.log(valll);
+                    console.log("44444444444");
+                });
+                console.log("55555555");
+                });
+                console.log("666666666");
+                </script>
+{% endblock %}
+
+
+
+{% block change %}
+<form>
+    <div class="form-group">
+        <select class="form-control" id="exampleInputname1" name="speed"> 
+            {% if sp == 1 %}
+            <option value="1" selected>Slow</option>
+            <option value="2">Intermediate</option>
+            <option value="3">Fast</option>
+            {% elif sp == 2 %}
+            <option value="1">Slow</option>
+            <option value="2" selected>Intermediate</option>
+            <option value="3">Fast</option>
+            {% elif sp == 3 %}
+            <option value="1">Slow</option>
+            <option value="2">Intermediate</option>
+            <option value="3" selected>Fast</option>
+            {% endif %}
+        </select>
+        </div>
+    <button type="submit" class="btn btn-info">Change</button>
+</form>
+{% endblock %}
+
+
+
+{% block links %}
+<ul class="list-style-none">
+    <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> You can give link</a></li>
+    <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> Give link</a></li>
+    <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> Another Give link</a></li>
+    <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> Forth link</a></li>
+    <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> Another fifth link</a></li>
+</ul>
+{% endblock %}
