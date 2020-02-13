@@ -379,7 +379,7 @@ def test(request,ana_id,que_id):
                             log9.wasted = 1
                             log9.save()
                         m = 1
-                        return render(request,'student/test.html',{"z":z,"m":m,"msg":msg,"k":k,"x":x,"so":sol})
+                        return render(request,'student/test.html',{"z":z,"m":m,"msg":msg,"k":k,"x":x,"so":sol,'username':request.session['name'],'useremail':request.session['email']})
                 else:
                     k=11
                     m = 1
