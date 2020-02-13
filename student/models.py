@@ -11,9 +11,7 @@ class Student(models.Model):
     institute = models.CharField(max_length=100, null=True)
     age = models.IntegerField(default=10)
     standard = models.IntegerField(default=5)
-
-
-
+    speed = models.IntegerField(default=0)
 
 class Analysis(models.Model):
     ana_id = models.IntegerField(null=True)
@@ -69,3 +67,12 @@ class Quetions(models.Model):
     que_no = models.IntegerField()
     attempt = models.IntegerField()
     test_id = models.IntegerField()
+    speed = models.IntegerField(default=0)
+
+class Image(models.Model):
+    img_id = models.IntegerField(primary_key=True)
+    sub_id = models.IntegerField(default=0)
+    top_id = models.IntegerField(default=0)
+    que_id = models.IntegerField(default=0)
+    location = models.CharField(max_length=1000 , null=False)
+    mot_id = models.IntegerField(default=0)

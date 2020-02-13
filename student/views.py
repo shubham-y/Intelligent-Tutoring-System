@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
-from student.models import Quetions,Subject,topic,Analysis,Student
+from student.models import Quetions,Subject,topic,Analysis,Student,Image
 from django.contrib.auth import authenticate, login, logout
 
 def login(request):
@@ -37,6 +37,20 @@ def register_action(request):
             if all(values is not None for values in [name,email,password,age,standard]):
                 log = Student(name=name,email=email,age=age,standard=standard,institute=institute,password=password)
                 log.save()
+                u_id = Student.objects.all().filter(email=email)
+                uid = u_id[0].id
+                topics = topic.objects.all()
+                for i in topics:
+                    if i == 1:
+                        ti = 1
+                    elif i == 2:
+                        ti = 31
+                    elif i == 3:
+                        ti = 46
+                    elif i == 4:
+                        ti = 16
+                    log12 = Analysis(user_id= uid,sub_id = i.sub_id,topic_id= i.top_id,time = 0, last_time = 0,best_time = 0,attempt = 0,hint = 0,correct = 0,wasted = 0, que_id = ti,test_id = 0)
+                    log12.save()
             registered = True 
             print("registered!")      
             return render(request,'student/signin.html',{"registered":registered,})
@@ -51,6 +65,11 @@ def home(request):
     if 'email' not in request.session:
         return HttpResponseRedirect(reverse('login'))
     else:
+        print(request.session['email'])
+        uid = Student.objects.all().filter(email = request.session['email'])
+        print(uid[0].email,uid[0].id)
+        u_id = uid[0].id
+        spd = uid[0].speed
         subject = Subject.objects.all()
         sid = []
         sname = []
@@ -68,27 +87,48 @@ def home(request):
             for j in topics:
                 talid.append(j.top_id)
                 talnm.append(j.top_name)
+                print("hehehehehehe",talid,talnm)
             tid.append(talid)
             tname.append(talnm)
+            print(tid,tname)
         print(tid,tname)
         acc = []
         c = []
         message = []
+        st = []
 
         for i in sid:
             act = []
             ms1=[]
             ct=[]
+            stt = []
             co=0
             for j in tid[i-1]:
-                que = Analysis.objects.all().filter(sub_id = i,topic_id=j,test_id = 0)
+                crr = wtt = 0
+                que = Analysis.objects.all().filter(user_id = u_id ,sub_id = i,topic_id=j,test_id = 0)
                 print(que)
                 q = []
                 for k in que:
                     if k.que_id != None:
                         q.append(k.que_id)
+                    if k.correct == 1:
+                        crr = crr +1
+                    elif k.wasted == 1:
+                        wtt = wtt + 1
+                if (crr + wtt) == 0:
+                    wtt = 1
+                sttr = (crr / (crr + wtt))*100
+                stt.append(int(sttr))
+                print("sttsttsttsttsttstt",stt,sttr)
+                print("quesssssssssss",q)
                 mxa = max(q)
-                print("heeeeeeeerrrrrrreeeeeeeeeeee",mxa,i)
+                qud = Analysis.objects.all().filter(user_id = u_id ,que_id = mxa,test_id = 0)
+                print(qud[0].correct,qud[0].wasted)
+                cr = qud[0].correct
+                wt = qud[0].wasted
+                if cr == 0 and wt == 0:
+                    mxa = mxa - 1
+                print("heeeeeeeerrrrrrreeeeeeeeeeee",mxa,i,j)
                 ques = Quetions.objects.all().filter(sub_id = i,top_id=j,test_id = 0)
                 q1 = []
                 for k1 in ques:
@@ -100,6 +140,7 @@ def home(request):
                 cp = mx - mn +1
                 print("heeeeeeeerrrrrrreeeeeeeeeeee",p,cp)
                 kk = int((p/cp)*100)
+                print(kk)
                 act.append(kk)
                 if kk < 34:
                     mss = "Beginner" 
@@ -107,7 +148,7 @@ def home(request):
                 elif kk > 34 and kk <67:
                     mss = "Intermediate"
                     ms1.append(mss) 
-                elif kk > 34:
+                elif kk > 67:
                     mss = "Advanced"
                     ms1.append(mss)
                 ct.append(co)
@@ -115,6 +156,8 @@ def home(request):
             acc.append(act)
             message.append(ms1)
             c.append(ct)
+            st.append(stt)
+        print(st)
         print("jdhgvjvgvhdchschgvghdvhg",acc,c,message)
         final = []
         for i in range(len(acc)):
@@ -129,13 +172,52 @@ def home(request):
         print("finallllllllll",final)
         z = zip(sid,sname,tid,final)
         print(z)
+        strong = []
+        weak = []
+        print(tname)
+        for y in sid:
+            strong1 = []
+            weak1 = []
+            for k in range(0,len(tname[y-1])):
+                if st[y-1][k] >=80:
+                    strong1.append(tname[y-1][k])
+                elif st[y-1][k] <=34:
+                    weak1.append(tname[y-1][k])
+                    print(weak1)
+            strong.append(strong1)
+            weak.append(weak1)
+        print(strong,weak)
+        sz = zip(sname,strong)
+        wz = zip(sname,weak)
+        adpt = 0
+        for i in st:
+            print(i)
+            for j in i:
+                adpt = adpt + j
+        
+        adpt = int(adpt/4)
+        print(adpt)
+        if adpt >= 75:
+            mot = 1
+        elif adpt >=50:
+            mot = 2
+        else:
+            mot = 3
+        im = Image.objects.all().filter(sub_id = 0 ,top_id = 0,mot_id = mot)
+        path = []
+        for i in im:
+            path.append(i.location)
+        print(path)
 
-
-        return render(request,'student/dash.html',{"z":z,'username':request.session['name'],'useremail':request.session['email']})
+        return render(request,'student/dash.html',{"z":z,"sz":sz,"wz":wz,"sp":spd,"path":path,'username':request.session['name'],'useremail':request.session['email']})
 
 def start_test(request):
     if 'email' not in request.session:
         return HttpResponseRedirect(reverse('login'))
+    print(request.session['email'])
+    uid = Student.objects.all().filter(email = request.session['email'])
+    print(uid[0].email,uid[0].id)
+    u_id = uid[0].id
     subject = Subject.objects.all()
     sid = []
     sname = []
@@ -164,7 +246,7 @@ def start_test(request):
         l = len(ana)
         print(l)
         l = l+1
-        que = Analysis.objects.all().filter(user_id=1,sub_id = sub_name,topic_id=top_name).values("que_id")
+        que = Analysis.objects.all().filter(user_id=u_id,sub_id = sub_name,topic_id=top_name).values("que_id")
         print(que)
         q = []
         for i in que:
@@ -172,7 +254,7 @@ def start_test(request):
                 q.append(i["que_id"])
         print(q,max(q))
         q_id = max(q)
-        qu_id = Analysis.objects.all().filter(user_id=1,sub_id = sub_name,topic_id=top_name,que_id = q_id)
+        qu_id = Analysis.objects.all().filter(user_id=u_id,sub_id = sub_name,topic_id=top_name,que_id = q_id)
         c = qu_id[0].correct
         w = qu_id[0].wasted
         ana_id = qu_id[0].id
@@ -184,8 +266,12 @@ def start_test(request):
                 print("shhjsddddddddddddddssssss")
                 return HttpResponseRedirect(reverse('test', args=(1111111111,(q_id),)))
         if c == 1 or w == 1:
-            log = Analysis(id = l,user_id=1,sub_id = sub_name,topic_id=top_name,attempt = 0,hint = 0,correct = 0,wasted = 0, que_id = (q_id + 1),test_id = 0)
+            log = Analysis(user_id=u_id,sub_id = sub_name,topic_id=top_name,attempt = 0,hint = 0,correct = 0,wasted = 0, que_id = (q_id + 1),test_id = 0)
             log.save()
+            print("shhjsddddddddddddddssssss niiiiii")
+            lol = Analysis.objects.all().filter(user_id=u_id,sub_id = sub_name,topic_id=top_name,que_id = q_id + 1)
+            l = lol[0].id
+            print(l)
             return HttpResponseRedirect(reverse('test', args=(l,(q_id+1),)))
         else:
             return HttpResponseRedirect(reverse('test', args=(ana_id,q_id,)))
@@ -196,6 +282,10 @@ def start_test(request):
 def test(request,ana_id,que_id):
     if 'email' not in request.session:
         return HttpResponseRedirect(reverse('login'))
+    print(request.session['email'])
+    uid = Student.objects.all().filter(email = request.session['email'])
+    print(uid[0].email,uid[0].id)
+    u_id = uid[0].id
     ele=Quetions.objects.all().filter(que_id=que_id)
     sidd = ele[0].sub_id
     qn = ele[0].que_no
@@ -324,7 +414,7 @@ def test(request,ana_id,que_id):
                         log6.correct = 1
                         log6.save()
                         if qn < 15:
-                            log7 = Analysis(id = a_id,que_id=que_id,user_id=1,sub_id = sub_id,topic_id=top_id,attempt = 0,hint = 0,correct = 0,wasted = 0,test_id = 0)
+                            log7 = Analysis(id = a_id,que_id=que_id,user_id=u_id,sub_id = sub_id,topic_id=top_id,attempt = 0,hint = 0,correct = 0,wasted = 0,test_id = 0)
                             log7.save()
                         else:
                             a_id = 0
@@ -396,7 +486,7 @@ def test(request,ana_id,que_id):
                 log6.wasted = 1
                 log6.save()
                 if qn < 15:
-                    log8 = Analysis(id = a_id,que_id=que_id,user_id=1,sub_id = sub_id,topic_id=top_id,attempt = 0,hint = 0,correct = 0,wasted = 0,test_id = 0)
+                    log8 = Analysis(id = a_id,que_id=que_id,user_id=u_id,sub_id = sub_id,topic_id=top_id,attempt = 0,hint = 0,correct = 0,wasted = 0,test_id = 0)
                     log8.save()
                 else:
                     a_id = 0
@@ -417,6 +507,10 @@ def test(request,ana_id,que_id):
 def start_test2(request):
     if 'email' not in request.session:
         return HttpResponseRedirect(reverse('login'))
+    print(request.session['email'])
+    uid = Student.objects.all().filter(email = request.session['email'])
+    print(uid[0].email,uid[0].id)
+    u_id = uid[0].id
     subject = Subject.objects.all()
     sid = []
     sname = []
@@ -471,7 +565,11 @@ def start_test2(request):
 def test2(request,sub_id,top_id):
     if 'email' not in request.session:
         return HttpResponseRedirect(reverse('login'))
-    if len(Analysis.objects.all().filter(sub_id=sub_id,topic_id=top_id,test_id=1)) >0:
+    print(request.session['email'])
+    uid = Student.objects.all().filter(email = request.session['email'])
+    print(uid[0].email,uid[0].id)
+    u_id = uid[0].id
+    if len(Analysis.objects.all().filter(user_id = u_id,sub_id=sub_id,topic_id=top_id,test_id=1)) >0:
         return render(request,'student/test2.html',{'sid':sub_id,'tid':top_id,'test_done':1})
     ele=Quetions.objects.all().filter(sub_id=sub_id,top_id=top_id,test_id=1).order_by('que_id')
     # print(ele)
@@ -526,13 +624,17 @@ def test2(request,sub_id,top_id):
             c+=1
         time = request.POST.get('time','0')
         print(correct,wasted,left,time)
-        log = Analysis(user_id=1,sub_id = sub_id,topic_id=top_id,last_time=int(time),attempt = (correct+wasted),hint = len(qi),correct = correct,wasted = wasted,test_id = 1)
+        log = Analysis(user_id=u_id,sub_id = sub_id,topic_id=top_id,last_time=int(time),attempt = (correct+wasted),hint = len(qi),correct = correct,wasted = wasted,test_id = 1)
         log.save()
         return HttpResponseRedirect(reverse('start_test2'))
 
     return render(request,'student/test2.html',{"z":z,'sid':sub_id,'tid':top_id,"m":m,"msg":msg,"x":x,'username':request.session['name'],'useremail':request.session['email']})
 
 def analyse(request,sub_id):
+    print(request.session['email'])
+    uid = Student.objects.all().filter(email = request.session['email'])
+    print(uid[0].email,uid[0].id)
+    u_id = uid[0].id
     topics = topic.objects.all().filter(sub_id=sub_id).distinct()
     print(topics)
     tid = []
@@ -543,7 +645,7 @@ def analyse(request,sub_id):
     print(tid,tname)
     mx = []
     for j in tid:
-        que = Analysis.objects.all().filter(sub_id = sub_id,topic_id=j,test_id = 0).values("que_id")
+        que = Analysis.objects.all().filter(user_id = u_id,sub_id = sub_id,topic_id=j,test_id = 0).values("que_id")
         print(que)
         q = []
         for i in que:
@@ -555,7 +657,7 @@ def analyse(request,sub_id):
     lstt = []
     corr = []
     for j in tid:
-        que2 = Analysis.objects.all().filter(sub_id = sub_id,topic_id=j,test_id = 0)
+        que2 = Analysis.objects.all().filter(user_id = u_id,sub_id = sub_id,topic_id=j,test_id = 0)
         lst = 0
         cor = 0
         for h in que2:
@@ -566,16 +668,23 @@ def analyse(request,sub_id):
     print("lasttttttttttt timeeeeeeeee",lstt)
     mxx = []
     for i in mx:
-        que1 = Analysis.objects.all().filter(que_id = i,test_id = 0)
+        que1 = Analysis.objects.all().filter(user_id = u_id,que_id = i,test_id = 0)
         c1 = que1[0].correct
         w1 = que1[0].wasted
         if c1 == 1 or w1 == 1:
             mxx.append(i)
         else:
-            mxx.append(i - 1)
+            if i == 1 or i == 16 or i == 31 or i == 46:
+                starting = 1
+                msg = "just started"
+            mxx.append(0)
     qn = []
+    print(mxx,"fafafafafafaf")
     for i in mxx:
-        if mxx != 0:
+        if i != 0:
+            if i == 0:
+                i =1
+            print("ghgh")
             ques1 = Quetions.objects.all().filter(que_id = i,test_id = 0)
             qn.append(ques1[0].que_no)
         else:
@@ -615,7 +724,10 @@ def analyse(request,sub_id):
     print(sub_nm)
     act = []
     for k in range(len(corr)):
-        act.append(((corr[k])/qn[k])*100)
+        if qn[k] == 0:
+            act.append(0)
+        else:
+            act.append(((corr[k])/qn[k])*100)
     print("fvdbdgbsddgdffddddddddddddddddddd",qn,corr,act)
     tt = zip(tid,tname,quet,lstt,avtt,act)
     # was = []
