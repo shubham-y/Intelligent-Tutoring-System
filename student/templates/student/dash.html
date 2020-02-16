@@ -41,8 +41,12 @@
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner" role="listbox">
         {% for p in path %}
+        {% if forloop.counter == 1 %}
         <div class="carousel-item active">
-            <div class="container"> <img class="d-block img-fluid" id="{{p}}" src="/static/student/assets/images/big/{{p}}"></div>
+        {% else %}
+        <div class="carousel-item">
+        {% endif %}
+            <div class="container"> <img class="d-block img-fluid"  src="/static/student/assets/images/big/{{p}}" alt="First slide"></div>
         </div>
         {% endfor %}
         
