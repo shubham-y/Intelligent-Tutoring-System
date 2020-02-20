@@ -573,7 +573,7 @@ def test2(request,sub_id,top_id):
         return render(request,'student/test2.html',{'sid':sub_id,'tid':top_id,'test_done':1})
     ele=Quetions.objects.all().filter(sub_id=sub_id,top_id=top_id,test_id=1).order_by('que_id')
     # print(ele)
-    print(ele[0].que_id)
+    # print(ele[0].que_id)
     # ana = Analysis.objects.all().filter(id=ana_id)
     # print(id)
     x = 0
@@ -743,3 +743,15 @@ def ajax_load_action(request):
     t=topic.objects.filter(sub_id=subid)
     # print(t)
     return render(request, 'student/topic_ajax.html', {'t': t})
+
+def forum(request):
+    # if 'email' not in request.session:
+    #     return HttpResponseRedirect(reverse('login'))
+        
+    return render(request, 'student/forum.html')
+
+def forum_add(request):
+    return render(request, 'student/forum_add.html')
+
+def forum_topic(request):
+    return render(request, 'student/forum_topic.html')

@@ -1,0 +1,79 @@
+{% extends "student/index2.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="col-12">
+           <div class="card card-outline-info">
+               <div class="card-header text-white">
+                   <h2 class="pt-1 text-center"><span class="text-white">Add topic
+                           </span></h2></div>
+                           <!-- <span class="pull-right"><a href="" class="btn-danger">Add topic</a></span></div> -->
+
+                           <div class="card-body">
+                               <div class="row justify-content-center">
+                               <div class="col-12">
+                               	<div class="card">
+                                       <div class="card-body">
+                                       	<form action="#" class="form-horizontal">
+                                       		
+                                       	  <div class="form-group">
+                                       	  	
+                                       	    <label class="control-label" for="title">Title:</label>
+                                       	
+                                       
+                                       	    <input type="text" class="form-control" name="title" placeholder="Enter title" id="title">
+                                       	
+                                       	  </div>
+                                       	  <div class="form-group">
+                                       	    <label class="control-label" for="desc">Description:</label>
+                                       	    <!-- <input type="text" name="desc" class="form-control" placeholder="Enter Description" id="desc"> -->
+                                       	    <textarea class="form-control" placeholder="Enter Description" name="desc" id="desc"></textarea>
+                                       	  </div>
+                                       	  <!-- <div class="form-group form-check">
+                                       	    <label class="form-check-label">
+                                       	      <input class="form-check-input" type="checkbox"> Remember me
+                                       	    </label>
+                                       	  </div> -->
+                                       	  <button type="submit" class="btn btn-primary">Submit</button>
+                                       	
+                                       	</form>
+                                           
+                                               
+                                                   <!-- <h5 class=""><a href="">Topic title</a><span class="pull-right">username</span></h5>
+                                                   <h6 class=""><span class="pull-right">date</span></h6> -->
+                                           <!-- <p class="card-text">desc</p> -->
+                                           
+                                       </div>
+                                   </div></div>
+                            
+                           </div>
+                           </div>
+                       </div>
+                   </div>
+
+
+
+
+    <!-- <div id="disqus_thread" style="width:700px;"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'ryanbelisletest'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a> -->
+    
+
+
+
+
+
+
+{% endblock %}

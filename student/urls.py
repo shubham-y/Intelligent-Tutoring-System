@@ -15,4 +15,7 @@ urlpatterns = [
     path('ajax/load_action/', views.ajax_load_action, name='ajax_load_action'),
     path('start_test2/', views.start_test2,name="start_test2"),
     path('test2/<int:sub_id>/<int:top_id>', views.test2,name="test2"),
+    path('forum/', views.forum,name="forum"),
+    path('forum_add/', views.forum_add,name="forum_add"),
+    path('forum_topic/', views.forum_topic,name="forum_topic"),
 ]

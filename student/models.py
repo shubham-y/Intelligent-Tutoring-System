@@ -76,3 +76,18 @@ class Image(models.Model):
     que_id = models.IntegerField(default=0)
     location = models.CharField(max_length=1000 , null=False)
     mot_id = models.IntegerField(default=0)
+
+class Forum(models.Model):
+    forum_id = models.IntegerField()
+    title = models.CharField(max_length=100 , null=False)
+    desc =  models.CharField(max_length=1000 , null=False)
+    user_id = models.IntegerField(null=True)
+    username =  models.CharField(max_length=100 , null=False)
+    date = models.IntegerField()
+
+class Forum_reply(models.Model):
+    forum_id = models.IntegerField()
+    desc = models.CharField(max_length=1000 , null=False)
+    user_id = models.IntegerField(null=True)
+    username =  models.CharField(max_length=100 , null=False)
+    date = models.IntegerField()
