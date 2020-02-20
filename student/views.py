@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
-from student.models import Quetions,Subject,topic,Analysis,Student,Image
+from student.models import Quetions,Subject,topic,Analysis,Student,Image,Forum
 from django.contrib.auth import authenticate, login, logout
+import datetime
 
 def login(request):
     return render(request,'student/signin.html')
@@ -745,12 +746,49 @@ def ajax_load_action(request):
     return render(request, 'student/topic_ajax.html', {'t': t})
 
 def forum(request):
-    # if 'email' not in request.session:
-    #     return HttpResponseRedirect(reverse('login'))
-        
-    return render(request, 'student/forum.html')
+    if 'email' not in request.session:
+        return HttpResponseRedirect(reverse('login'))
+    email = request.session['email']
+    forum = Forum.objects.all().filter(email=email)
+    print(forum)
+    title = []
+    username = []
+    date = []
+    for forum in forum:
+        title.append(forum.title)
+        username.append(forum.username)
+        date.append(forum.date)
+        # l.append((title,username,date))
+    # print(l)
+    z=zip(title,username,date)
+    # print(z)
+
+
+
+    return render(request, 'student/forum.html',{'z':z})
 
 def forum_add(request):
+    if 'email' not in request.session:
+        return HttpResponseRedirect(reverse('login'))
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        desc = request.POST.get('desc')
+        email = request.session['email']
+        name = request.session['name']
+        uid = Student.objects.all().filter(email = request.session['email'])[0].id
+        date = datetime.date.today()
+        # print(title,desc,email,uid)
+        # print(datetime.date.today())
+
+        log = Forum(title = title, desc = desc, email = email, username = name, date = date)
+        log.save()
+
+        print("done")
+        return render(request, 'student/forum_topic.html')
+
+
+
     return render(request, 'student/forum_add.html')
 
 def forum_topic(request):
