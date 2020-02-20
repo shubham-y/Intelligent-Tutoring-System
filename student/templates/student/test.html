@@ -215,67 +215,120 @@
         <div class="card-header">
             <h4 class="m-b-0 text-white">Calculations:</h4></div>
         <div class="card-body">
-            <input type="text" id="i1"><br ><br >
+            <input type="text" onclick ="appendRoww()" id="i1"><br ><br >
         <div id="d2">
-            <input type="text" id="i2"  hide><br ><br >
+            <input type="text" onclick ="appendRoww()" id="i2"  hide><br ><br >
         </div>
         <div id="d3">
-            <input type="text" id="i3"  hide><br ><br >
+            <input type="text" onclick ="appendRoww()" id="i3"  hide><br ><br >
         </div>
         <div id="d4">
-            <input type="text" id="i4"  hide><br ><br >
+            <input type="text" onclick ="appendRoww()" id="i4"  hide><br ><br >
         </div>
         <div id="d5">
-            <input type="text" id="i5"  hide><br ><br >
+            <input type="text" onclick ="appendRoww()" id="i5"  hide><br ><br >
         </div>
         <div id="d6">
-            <input type="text" id="i6"  hide><br ><br >
+            <input type="text" onclick ="appendRoww()" id="i6"  hide><br ><br >
         </div>
         <div id="d7">
-            <input type="text" id="i7"  hide><br ><br >
+            <input type="text" onclick ="appendRoww()" id="i7"  hide><br ><br >
         </div>
         <div id="d8">
-            <input type="text" id="i8"  hide><br ><br >
+            <input type="text" onclick ="appendRoww()" id="i8"  hide><br ><br >
         </div>
         <div id="d9">
-            <input type="text" id="i9"  hide><br ><br >
+            <input type="text" onclick ="appendRoww()" id="i9"  hide><br ><br >
         </div>
         <div id="d10">
-            <input type="text" id="i10"  hide><br ><br >
+            <input type="text" onclick ="appendRoww()" id="i10"  hide><br ><br >
         </div>
         <div id="d11">
-            <input type="text" id="i11"  hide><br ><br >
+            <input type="text" onclick ="appendRoww()" id="i11"  hide><br ><br >
         </div>
         <div id="d12">
-            <input type="text" id="i12"  hide><br ><br >
+            <input type="text" onclick ="appendRoww()" id="i12"  hide><br ><br >
         </div>
         <div id="d13">
-            <input type="text" id="i13"  hide><br ><br >
+            <input type="text" onclick ="appendRoww()" id="i13"  hide><br ><br >
         </div>
         <div id="d14">
-            <input type="text" id="i14"  hide><br ><br >
+            <input type="text" onclick ="appendRoww()" id="i14"  hide><br ><br >
         </div>
         <div id="d15">
-            <input type="text" id="i15"  hidden><br ><br >
+            <input type="text" onclick ="appendRoww()" id="i15" ><br ><br >
         </div>
         <div id="d16">
-            <p>Variable after equation not defined.</p>
+            <input type="text" onclick ="appendRoww()" id="i16" ><br ><br >
         </div>
         <div id="d17">
+            <input type="text" onclick ="appendRoww()" id="i17" ><br ><br >
+        </div>
+        <div id="d18">
+            <input type="text" onclick ="appendRoww()" id="i18" ><br ><br >
+        </div>
+        <div id="d19">
+            <input type="text" onclick ="appendRoww()" id="i19" ><br ><br >
+        </div>
+        <div id="d20">
+            <input type="text" onclick ="appendRoww()" id="i20" ><br ><br >
+        </div>
+        <div id="d21">
+            <input type="text" onclick ="appendRoww()" id="i21" ><br ><br >
+        </div>
+        <div id="d22">
+            <input type="text" onclick ="appendRoww()" id="i22" ><br ><br >
+        </div>
+        <div id="d23">
+            <input type="text" onclick ="appendRoww()" id="i23" ><br ><br >
+        </div>
+        <div id="dd16">
+            <p>Variable after equation not defined.</p>
+        </div>
+        <div id="dd17">
             <p>Variable used before equation not defined.</p>
         </div>
             <!-- <div id="div">
             </div> -->
-                <button onclick ="appendRow()" value="Add Row">Add Row</button>
-            
+                <button id="adrow" onclick ="appendRow()" value="Add Row">Add Row</button>
+                <div id="ire">
+                    <label>Enter variable name:</label>
+                    <input type="text" onclick ="appendRowwr()" id="ires" >
+                    <label>It's value:</label>
+                    <input type="text"  id="ires1" >
+                </div>
         </div>
+
     </div>
 </div>
 </div>
+<script>
+var xk1 = 1;
+// for(xkk1 = 2;xkk1<18;xkk1++){
+//     console.log("above inside for",xkk1.toString());
+//     if (document.getElementById("d" + xkk1.toString()).css('display') === 'none') {
+//         console.log("inside for");
+//         xk1=xkk1;
+//     }
+// }
+function appendRoww()
+{
 
+console.log("above",xk1,xk1.toString());
+var inputk = document.getElementById("i" + xk1.toString());
+inputk.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   document.getElementById("adrow").click();
+  }
+});
+xk1 = xk1 + 1;
+}
+
+</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-<script>
+<script> 
     var x=1;
 // function appendRow()
 // {
@@ -288,11 +341,62 @@
 //     console.log(x);
 //     }
 // }
-for(kk = 2;kk<18;kk++){
-    console.log(kk);
+for(kk = 2;kk<24;kk++){
+    // console.log(kk);
     $("#d"+ kk.toString()).hide();
-    console.log(kk);
+    // console.log(kk);
 }
+$("#dd16").hide();
+$("#dd17").hide();
+$("#adrow").hide();
+if(x=1){
+$("#ire").hide();
+
+}
+
+function appendRowwr()
+{
+    // var valvariab = document.getElementById("ires").value;
+    // console.log(valvariab,"here");
+    var inputkk = document.getElementById("ires");
+inputkk.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   var valvariab = document.getElementById("ires").value;
+   console.log(valvariab,"here");
+   if(valvariab.indexOf(",") == -1){
+    console.log("aboveee trueeeeee");
+       if(valvariab in variab){
+           console.log("trueeeeee");
+           document.getElementById("ires1").value = variab[valvariab];
+       }
+   }
+   else{
+    var strrn = "";
+    var strer = 0;
+    var strers = "";
+    resultss = valvariab.split(",");
+    console.log(resultss);
+    for(i=0;i<resultss.length;i++){
+        if(resultss[i] in variab){
+            strrn = strrn + ", " + variab[resultss[i]];
+        }
+        else{
+            strer = 1;
+            strers = strers + ", " + resultss[i];
+        }
+    }
+    if(strer == 0){
+        document.getElementById("ires1").value = strrn.slice(2);
+    }
+    else{
+        document.getElementById("ires1").value = strers.slice(2) + " - this variables not defined.";
+    }
+   }
+  }
+});
+}
+
 var variab = {};
 var oper = ["+","-","*","/"];
 var opera;
@@ -364,7 +468,7 @@ function appendRow()
         }
         if(error2 == 1){
             console.log("Errorrr2");
-            $("#d17").show();
+            $("#dd17").show();
         }
         else{
             error2 = 1;
@@ -384,7 +488,7 @@ function appendRow()
         }
         if(error2 == 1){
             console.log("Errorrr2","hereee");
-            $("#d16").show();
+            $("#dd16").show();
         }
         else{
             if(isNaN(astat.slice(varlle+1))){
@@ -430,7 +534,7 @@ function appendRow()
         if(velll == 0){
             if(error2 == 1){
                 console.log("Errorrr2");
-                $("#d17").show();
+                $("#dd17").show();
             }
             else{
                 for(i=0;i<variables.length;i++){
@@ -439,7 +543,7 @@ function appendRow()
                 if(isNaN(variables[i])){
                     console.log("Error here!!!!!");
                     errorr = 1;
-                    $("#d16").show();
+                    $("#dd16").show();
                 }
                 }
                 // else{
@@ -464,7 +568,7 @@ function appendRow()
         else if(velll1 == 1 && velll2 != 2){
             if(error2 == 1){
                 console.log("Errorrr2");
-                $("#d17").show();
+                $("#dd17").show();
             }
             else{
                 // for(i=0;i<variables.length;i++){
@@ -473,7 +577,7 @@ function appendRow()
                 if(isNaN(variables[1])){
                     console.log("Error here!!!!!");
                     errorr = 1;
-                    $("#d16").show();
+                    $("#dd16").show();
                 }
                 // }
                 // else{
@@ -498,7 +602,7 @@ function appendRow()
         else if(velll1 != 1 && velll2 == 2){
             if(error2 == 1){
                 console.log("Errorrr2");
-                $("#d17").show();
+                $("#dd17").show();
             }
             else{
                 // for(i=0;i<variables.length;i++){
@@ -507,7 +611,7 @@ function appendRow()
                 if(isNaN(variables[0])){
                     console.log("Error here!!!!!");
                     errorr = 1;
-                    $("#d16").show();
+                    $("#dd16").show();
                 }
                 // }
                 // else{
@@ -532,7 +636,7 @@ function appendRow()
         else if(velll1 == 1 && velll2 == 2){
             if(error2 == 1){
                 console.log("Errorrr2");
-                $("#d17").show();
+                $("#dd17").show();
             }
             else{
                 // for(i=0;i<variables.length;i++){
@@ -541,7 +645,7 @@ function appendRow()
                 // if(isNaN(variables[1])){
                 //     console.log("Error here!!!!!");
                 //     errorr = 1;
-                //     $("#d16").show();
+                //     $("#dd16").show();
                 // }
                 // }
                 // else{
@@ -566,13 +670,17 @@ function appendRow()
         }
     }
     if(errorr == 0 && error2 == 0){
-        $("#d16").hide();
-        $("#d17").hide();
+        $("#dd16").hide();
+        $("#dd17").hide();
     var asta = document.getElementById("i" + x.toString()).value;
     if(asta != ""){
         x = x + 1;
     $("#d"+ x.toString()).show();
     console.log(x);
+    if(x==2){
+        $("#ire").show();
+    }
+
     console.log("obj here",variab);
     for (var key in variab) {
             if (variab.hasOwnProperty(key)) {
@@ -582,6 +690,7 @@ function appendRow()
     }
     }
 }
+
     // Initialize library and start tracking time
     TimeMe.initialize({
     	currentPageName: "my-home-page", // current page
