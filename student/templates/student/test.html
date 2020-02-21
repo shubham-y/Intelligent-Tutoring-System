@@ -378,12 +378,13 @@ inputkk.addEventListener("keyup", function(event) {
     resultss = valvariab.split(",");
     console.log(resultss);
     for(i=0;i<resultss.length;i++){
-        if(resultss[i] in variab){
-            strrn = strrn + ", " + variab[resultss[i]];
+        console.log(resultss[i].trim());
+        if(resultss[i].trim() in variab){
+            strrn = strrn + ", " + variab[resultss[i].trim()];
         }
         else{
             strer = 1;
-            strers = strers + ", " + resultss[i];
+            strers = strers + ", " + resultss[i].trim();
         }
     }
     if(strer == 0){
@@ -437,8 +438,8 @@ function appendRow()
         console.log(astat.indexOf(":"));
         var varll = astat.indexOf(":");
         name = astat.slice(0, varll);
-        console.log(name);
-        variab[name] = "none";
+        console.log(name.trim());
+        variab[name.trim()] = "none";
         error2 = 0;
         // console.log("gname is here",gname);
         // alert(variab[name]);
@@ -453,14 +454,14 @@ function appendRow()
         }
         console.log(zalil,opera);
         if(zalil == 0){
-        console.log("name here:",astat.slice(0,varlle));
+        console.log("name here:",astat.slice(0,varlle).trim());
         // console.log(astat.slice(varlle+1));
         // console.log((varlle+1));
 
         for (var key in variab) {
             if (variab.hasOwnProperty(key)) {
-                console.log(key,variab[astat.slice(0,varlle)],astat.slice(0,varlle));
-                if(key == astat.slice(0,varlle) ){
+                console.log(key,variab[astat.slice(0,varlle).trim()],astat.slice(0,varlle));
+                if(key == astat.slice(0,varlle).trim() ){
                     error2 = 0;
                     console.log("error2");
                 }
@@ -472,11 +473,11 @@ function appendRow()
         }
         else{
             error2 = 1;
-            console.log(astat.slice(varlle+1));
-        if(isNaN(astat.slice(varlle+1))){
+            console.log(astat.slice(varlle+1).trim());
+        if(isNaN(astat.slice(varlle+1).trim())){
             for (var key in variab) {
             if (variab.hasOwnProperty(key)) {
-                if(key == astat.slice(varlle+1) ){
+                if(key == astat.slice(varlle+1).trim() ){
                     error2 = 0;
                     console.log("error2");
                 }
@@ -491,13 +492,13 @@ function appendRow()
             $("#dd16").show();
         }
         else{
-            if(isNaN(astat.slice(varlle+1))){
-                variab[astat.slice(0,varlle)] = variab[astat.slice(varlle+1)];
+            if(isNaN(astat.slice(varlle+1).trim())){
+                variab[astat.slice(0,varlle).trim()] = variab[astat.slice(varlle+1).trim()];
             }
             else{
-        variab[astat.slice(0,varlle)] = parseInt(astat.slice((varlle+1)));
+        variab[astat.slice(0,varlle).trim()] = parseInt(astat.slice((varlle+1)).trim());
         console.log("value below");
-        console.log(typeof variab[astat.slice(0,varlle)]);
+        console.log(typeof variab[astat.slice(0,varlle).trim()]);
         // error2 = 0;
             }
         }
@@ -505,24 +506,24 @@ function appendRow()
         }
         else{
             console.log("inside elsee",opera);
-            restt = astat.slice(varlle+1);
+            restt = astat.slice(varlle+1).trim();
             console.log(restt);
             variables = restt.split(opera);
             console.log("after split",variables);
             for (var key in variab) {
             if (variab.hasOwnProperty(key)) {
-                console.log(key,variab[astat.slice(0,varlle)],astat.slice(0,varlle));
-                if(key == astat.slice(0,varlle)){
+                console.log(key,variab[astat.slice(0,varlle).trim()],astat.slice(0,varlle).trim());
+                if(key == astat.slice(0,varlle).trim()){
                     error2 = 0;
                     console.log("error2");
                 }
                 for(i=0;i<variables.length;i++){
-                    if(key == variables[i] && i == 0){
+                    if(key == variables[i].trim() && i == 0){
                         variable1 = key;
                         velll1 = 1;
                         velll = -1;
                     }
-                    else if(key == variables[i] && i == 1){
+                    else if(key == variables[i].trim() && i == 1){
                         variable2 = key;
                         velll2 = 2;
                         velll = -1;
@@ -538,9 +539,9 @@ function appendRow()
             }
             else{
                 for(i=0;i<variables.length;i++){
-                console.log(Number(variables[i]));
+                console.log(Number(variables[i].trim()));
                 // var etetete = Number("sfsdssf");
-                if(isNaN(variables[i])){
+                if(isNaN(variables[i].trim())){
                     console.log("Error here!!!!!");
                     errorr = 1;
                     $("#dd16").show();
@@ -551,16 +552,16 @@ function appendRow()
                 // }
             if(errorr != 1){
                 if(opera == "+"){
-                variab[astat.slice(0,varlle)] = Number(variables[0]) + Number(variables[1]);
+                variab[astat.slice(0,varlle).trim()] = Number(variables[0].trim()) + Number(variables[1].trim());
                 }
                 else if(opera == "-"){
-                    variab[astat.slice(0,varlle)] = Number(variables[0]) - Number(variables[1]);
+                    variab[astat.slice(0,varlle).trim()] = Number(variables[0].trim()) - Number(variables[1].trim());
                 }
                 else if(opera == "*"){
-                    variab[astat.slice(0,varlle)] = Number(variables[0]) * Number(variables[1]);
+                    variab[astat.slice(0,varlle).trim()] = Number(variables[0].trim()) * Number(variables[1].trim());
                 }
                 else if(opera == "/"){
-                    variab[astat.slice(0,varlle)] = Number(Number(variables[0]) / Number(variables[1]));
+                    variab[astat.slice(0,varlle).trim()] = Number(Number(variables[0].trim()) / Number(variables[1].trim()));
                 }
             }
             }
@@ -574,7 +575,7 @@ function appendRow()
                 // for(i=0;i<variables.length;i++){
                 // console.log(Number(variables[i]));
                 // var etetete = Number("sfsdssf");
-                if(isNaN(variables[1])){
+                if(isNaN(variables[1].trim())){
                     console.log("Error here!!!!!");
                     errorr = 1;
                     $("#dd16").show();
@@ -585,16 +586,16 @@ function appendRow()
                 // }
             if(errorr != 1){
                 if(opera == "+"){
-                variab[astat.slice(0,varlle)] = variab[variable1] + Number(variables[1]);
+                variab[astat.slice(0,varlle).trim()] = variab[variable1] + Number(variables[1].trim());
                 }
                 else if(opera == "-"){
-                    variab[astat.slice(0,varlle)] = variab[variable1] - Number(variables[1]);
+                    variab[astat.slice(0,varlle).trim()] = variab[variable1] - Number(variables[1].trim());
                 }
                 else if(opera == "*"){
-                    variab[astat.slice(0,varlle)] = variab[variable1] * Number(variables[1]);
+                    variab[astat.slice(0,varlle).trim()] = variab[variable1] * Number(variables[1].trim());
                 }
                 else if(opera == "/"){
-                    variab[astat.slice(0,varlle)] = Number(variab[variable1] / Number(variables[1]));
+                    variab[astat.slice(0,varlle).trim()] = Number(variab[variable1] / Number(variables[1].trim()));
                 }
             }
             }
@@ -608,7 +609,7 @@ function appendRow()
                 // for(i=0;i<variables.length;i++){
                 // console.log(Number(variables[i]));
                 // var etetete = Number("sfsdssf");
-                if(isNaN(variables[0])){
+                if(isNaN(variables[0].trim())){
                     console.log("Error here!!!!!");
                     errorr = 1;
                     $("#dd16").show();
@@ -619,16 +620,16 @@ function appendRow()
                 // }
             if(errorr != 1){
                 if(opera == "+"){
-                variab[astat.slice(0,varlle)] = Number(variables[0]) + variab[variable2];
+                variab[astat.slice(0,varlle).trim()] = Number(variables[0].trim()) + variab[variable2];
                 }
                 else if(opera == "-"){
-                    variab[astat.slice(0,varlle)] = Number(variables[0]) - variab[variable2];
+                    variab[astat.slice(0,varlle).trim()] = Number(variables[0].trim()) - variab[variable2];
                 }
                 else if(opera == "*"){
-                    variab[astat.slice(0,varlle)] = Number(variables[0]) * variab[variable2];
+                    variab[astat.slice(0,varlle).trim()] = Number(variables[0].trim()) * variab[variable2];
                 }
                 else if(opera == "/"){
-                    variab[astat.slice(0,varlle)] = Number(Number(variables[0]) / variab[variable2]);
+                    variab[astat.slice(0,varlle).trim()] = Number(Number(variables[0].trim()) / variab[variable2]);
                 }
             }
             }
@@ -642,7 +643,7 @@ function appendRow()
                 // for(i=0;i<variables.length;i++){
                 // console.log(Number(variables[i]));
                 // var etetete = Number("sfsdssf");
-                // if(isNaN(variables[1])){
+                // if(isNaN(variables[1].trim())){
                 //     console.log("Error here!!!!!");
                 //     errorr = 1;
                 //     $("#dd16").show();
@@ -653,16 +654,16 @@ function appendRow()
                 // }
             if(errorr != 1){
                 if(opera == "+"){
-                variab[astat.slice(0,varlle)] = variab[variable1] + variab[variable2];
+                variab[astat.slice(0,varlle).trim()] = variab[variable1] + variab[variable2];
                 }
                 else if(opera == "-"){
-                    variab[astat.slice(0,varlle)] = variab[variable1] - variab[variable2];
+                    variab[astat.slice(0,varlle).trim()] = variab[variable1] - variab[variable2];
                 }
                 else if(opera == "*"){
-                    variab[astat.slice(0,varlle)] = variab[variable1] * variab[variable2];
+                    variab[astat.slice(0,varlle).trim()] = variab[variable1] * variab[variable2];
                 }
                 else if(opera == "/"){
-                    variab[astat.slice(0,varlle)] = Number(variab[variable1] / variab[variable2]);
+                    variab[astat.slice(0,varlle).trim()] = Number(variab[variable1] / variab[variable2]);
                 }
             }
             }

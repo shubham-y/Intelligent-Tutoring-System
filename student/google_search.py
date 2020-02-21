@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 
 driver = webdriver.Chrome()
+print browser.current_url
 driver.get('https://www.google.co.in/search')
 # searchbox = driver.find_element_by_xpath("//input[@type='text']")
 # searchbox.send_keys('Set theory')

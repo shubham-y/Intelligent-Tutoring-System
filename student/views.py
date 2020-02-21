@@ -4,6 +4,43 @@ from django.urls import reverse
 from student.models import Quetions,Subject,topic,Analysis,Student,Image,Forum
 from django.contrib.auth import authenticate, login, logout
 import datetime
+# from selenium import webdriver
+# from selenium.webdriver.common.action_chains import ActionChains
+# from selenium.webdriver.remote.webdriver import WebDriver
+
+# driver = webdriver.Chrome()
+# driver.get('file:///C:/Users/RU/Desktop/its-launch.html')
+# executor_url = driver.command_executor._url
+# sessions_id = driver.session_id
+# print(executor_url,sessions_id)
+
+# def attach_to_session(executor_url, sessions_id):
+#     original_execute = WebDriver.execute
+#     def new_command_execute(self, command, params=None):
+#         if command == "newSession":
+#             # Mock the response
+#             return {'success': 0, 'value': None, 'sessionId': sessions_id}
+#         else:
+#             return original_execute(self, command, params)
+#     # Patch the function before creating the driver object
+#     WebDriver.execute = new_command_execute
+#     driver = webdriver.Remote(command_executor=executor_url, desired_capabilities={})
+#     driver.session_id = sessions_id
+#     # Replace the patched function with original function
+#     WebDriver.execute = original_execute
+#     return driver
+
+# curd = attach_to_session(executor_url, sessions_id)
+# print(curd.current_url)
+# nmnm = "kkhkjh"
+
+# def sele(request):
+#     print("inside sele")
+#     curd.get('http://127.0.0.1:8000/home/') 
+#     searchbox = curd.find_element_by_xpath('//*[@id="gsc-i-id1"]')
+#     searchbox.send_keys('Set theory')
+#     print("below sele url")
+#     return render(request,'student/dash.html')
 
 def login(request):
     return render(request,'student/signin.html')
