@@ -4,28 +4,85 @@
 
 {% block content %}
 
-<div>
-    <form action="{% url 'doubt' md5 event_id %}" enctype="multipart/form-data" method="POST" id="msform1" class="col-md-12 mt-50 mb-50" autocomplete="off"> {% csrf_token %}
+<div class="container">
+    <div class="container-fluid">
+
+            <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card card-outline-info">
+                            <div class="card-header">
+                                <h2 class="m-b-0 text-white">Ask your doubt by uploading image.</h2>
+                            </div>
+                            <div class="card-body">
+    <form action="{% url 'doubt' %}" enctype="multipart/form-data" method="POST" id="msform1" class="col-md-12 mt-50 mb-50" autocomplete="off"> {% csrf_token %}
         <fieldset>
           <div class="row">
             <div class="form-group col-md-6">
-              <h3>Thumbnail</h3>
+              <h3>Upload</h3>
 
-              <input id="menu_images1" class="form-control" type="file" name="myfile1">
-              <img id="menu_image1" class="preview_img1" />
-              <div id="e1" style="display: none;" class="alert alert-danger">
-                <strongn id="error1" style="color: white"></strong>
-              </div>
+              <input id="menu_images" class="form-control block" onchange="readURL(this);"  type="file" name="myfile">
+              
+              {% if k == "" %}
+              <img id="blah" src="#" alt="your image" />
+              {% endif %}
             </div>
-
+            {% if k == "" %}
             <div class="col-md-12">
-              <button type="submit" class="btn btn1 btn-danger btn-block mt-10">Upload</button>
+              <button type="submit" id="test" class="btn btn1 btn-danger btn-block mt-10">Upload</button>
             </div>
+            {% endif %}
 
         </div>
+        
         </fieldset>
       </form>
+      {% if k == "" %}
+      {% else %}
+      
+      <div class="col-md-12">
+        <button type="submit" id="tet" onclick ="googoo()" class="btn btn1 btn-danger btn-block mt-10">RESULT</button>
+      </div>
+      
+        <div id="te" class="card-body"> <script async src="https://cse.google.com/cse.js?cx=007395274261731877214:csgzq1shjce"></script>
+            <div class="gcse-search"></div></div>
+        {% endif %}
+    </div>
 </div>
+</div>
+</div>
+<input type="hidden" id="myVar" name="variable" value="{{ k }}">
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+$('#blah').hide();
+ function readURL(input) {
+    $('#blah').show();
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#blah')
+                    .attr('src', e.target.result)
+
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $('#te').hide();
+    function googoo(){
+        $('#te').show();
+        var inboxx = document.querySelectorAll("#gsc-i-id1");
+        console.log(inboxx.length);
+        console.log(inboxx[0]);
+        inboxx[0].value = document.getElementById("myVar").value;;
+        var searchh = document.querySelectorAll(".gsc-search-button-v2");
+        console.log(searchh[0]);
+        searchh[0].click();
+}
+
+  </script>
+  
 
 {% endblock %}
 

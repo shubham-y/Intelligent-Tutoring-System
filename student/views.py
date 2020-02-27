@@ -4,6 +4,13 @@ from django.urls import reverse
 from student.models import Quetions,Subject,topic,Analysis,Student,Image,Forum
 from django.contrib.auth import authenticate, login, logout
 import datetime
+import pytesseract
+ 
+from PIL import Image
+
+pytesseract.pytesseract.tesseract_cmd = "C:/Program Files/Tesseract-OCR/tesseract.exe"
+
+tessdata_dir_config = '--tessdata-dir "C:\\Program Files\\Tesseract-OCR\\tessdata"'
 # from selenium import webdriver
 # from selenium.webdriver.common.action_chains import ActionChains
 # from selenium.webdriver.remote.webdriver import WebDriver
@@ -835,10 +842,16 @@ def doubt(request):
     if 'email' not in request.session:
         return HttpResponseRedirect(reverse('login'))
 
-    if request.method == 'POST':
-        print("jjjjjjjjjjjjjjjjjjjjkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk")
+    k = ""
 
-    return render(request, 'student/doubt.html')
+    if request.method == 'POST':
+        myfile = request.FILES['myfile']
+        print("jjjjjjjjjjjjjjjjjjjjkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk")
+        value=Image.open(myfile)
+        text=pytesseract.image_to_string(value,config=tessdata_dir_config,lang = 'eng')
+        print("text present in images:",text)
+        k = text
+    return render(request, 'student/doubt.html',{"k":k})
 
 
 def analyze(request):
