@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
-from student.models import Quetions,Subject,topic,Analysis,Student,Image,Forum
+from student.models import Quetions,Subject,topic,Analysis,Student,Imaged,Forum
 from django.contrib.auth import authenticate, login, logout
 import datetime
 import pytesseract
@@ -248,7 +248,7 @@ def home(request):
             mot = 2
         else:
             mot = 3
-        im = Image.objects.all().filter(sub_id = 0 ,top_id = 0,mot_id = mot)
+        im = Imaged.objects.all().filter(sub_id = 0 ,top_id = 0,mot_id = mot)
         path = []
         for i in im:
             path.append(i.location)

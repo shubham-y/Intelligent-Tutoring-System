@@ -69,7 +69,7 @@ class Quetions(models.Model):
     test_id = models.IntegerField()
     speed = models.IntegerField(default=0)
 
-class Image(models.Model):
+class Imaged(models.Model):
     img_id = models.IntegerField(primary_key=True)
     sub_id = models.IntegerField(default=0)
     top_id = models.IntegerField(default=0)
