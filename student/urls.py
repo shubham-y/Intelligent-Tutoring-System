@@ -18,5 +18,7 @@ urlpatterns = [
     path('forum/', views.forum,name="forum"),
     path('forum_add/', views.forum_add,name="forum_add"),
     path('forum_topic/', views.forum_topic,name="forum_topic"),
+    path('doubt/', views.doubt,name="doubt"),
+    path('analyze/', views.analyze,name="analyze"),
     # path("sele/",views.sele,name="sele"),
 ]

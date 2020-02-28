@@ -4,6 +4,13 @@ from django.urls import reverse
 from student.models import Quetions,Subject,topic,Analysis,Student,Image,Forum
 from django.contrib.auth import authenticate, login, logout
 import datetime
+import pytesseract
+ 
+from PIL import Image
+
+pytesseract.pytesseract.tesseract_cmd = "C:/Program Files/Tesseract-OCR/tesseract.exe"
+
+tessdata_dir_config = '--tessdata-dir "C:\\Program Files\\Tesseract-OCR\\tessdata"'
 # from selenium import webdriver
 # from selenium.webdriver.common.action_chains import ActionChains
 # from selenium.webdriver.remote.webdriver import WebDriver
@@ -304,7 +311,7 @@ def start_test(request):
                 print("shhjsddddddddddddddssssss")
                 return HttpResponseRedirect(reverse('test', args=(1111111111,(q_id),)))
         if c == 1 or w == 1:
-            log = Analysis(user_id=u_id,sub_id = sub_name,topic_id=top_name,attempt = 0,hint = 0,correct = 0,wasted = 0, que_id = (q_id + 1),test_id = 0)
+            log = Analysis(user_id=u_id,sub_id = sub_name,topic_id=top_name,time = 0, last_time = 0,best_time = 0,attempt = 0,hint = 0,correct = 0,wasted = 0, que_id = (q_id + 1),test_id = 0)
             log.save()
             print("shhjsddddddddddddddssssss niiiiii")
             lol = Analysis.objects.all().filter(user_id=u_id,sub_id = sub_name,topic_id=top_name,que_id = q_id + 1)
@@ -452,7 +459,7 @@ def test(request,ana_id,que_id):
                         log6.correct = 1
                         log6.save()
                         if qn < 15:
-                            log7 = Analysis(id = a_id,que_id=que_id,user_id=u_id,sub_id = sub_id,topic_id=top_id,attempt = 0,hint = 0,correct = 0,wasted = 0,test_id = 0)
+                            log7 = Analysis(id = a_id,que_id=que_id,user_id=u_id,sub_id = sub_id,topic_id=top_id,time = 0, last_time = 0,best_time = 0,attempt = 0,hint = 0,correct = 0,wasted = 0,test_id = 0)
                             log7.save()
                         else:
                             a_id = 0
@@ -524,7 +531,7 @@ def test(request,ana_id,que_id):
                 log6.wasted = 1
                 log6.save()
                 if qn < 15:
-                    log8 = Analysis(id = a_id,que_id=que_id,user_id=u_id,sub_id = sub_id,topic_id=top_id,attempt = 0,hint = 0,correct = 0,wasted = 0,test_id = 0)
+                    log8 = Analysis(id = a_id,que_id=que_id,user_id=u_id,sub_id = sub_id,topic_id=top_id,time = 0, last_time = 0,best_time = 0,attempt = 0,hint = 0,correct = 0,wasted = 0,test_id = 0)
                     log8.save()
                 else:
                     a_id = 0
@@ -662,7 +669,7 @@ def test2(request,sub_id,top_id):
             c+=1
         time = request.POST.get('time','0')
         print(correct,wasted,left,time)
-        log = Analysis(user_id=u_id,sub_id = sub_id,topic_id=top_id,last_time=int(time),attempt = (correct+wasted),hint = len(qi),correct = correct,wasted = wasted,test_id = 1)
+        log = Analysis(user_id=u_id,sub_id = sub_id,topic_id=top_id,time = 0,best_time = 0,last_time=int(time),attempt = (correct+wasted),hint = len(qi),correct = correct,wasted = wasted,test_id = 1)
         log.save()
         return HttpResponseRedirect(reverse('start_test2'))
 
@@ -830,3 +837,23 @@ def forum_add(request):
 
 def forum_topic(request):
     return render(request, 'student/forum_topic.html')
+
+def doubt(request):
+    if 'email' not in request.session:
+        return HttpResponseRedirect(reverse('login'))
+
+    k = ""
+
+    if request.method == 'POST':
+        myfile = request.FILES['myfile']
+        print("jjjjjjjjjjjjjjjjjjjjkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk")
+        value=Image.open(myfile)
+        text=pytesseract.image_to_string(value,config=tessdata_dir_config,lang = 'eng')
+        print("text present in images:",text)
+        k = text
+    return render(request, 'student/doubt.html',{"k":k})
+
+
+def analyze(request):
+    return render(request, 'student/analyze.html')
+
