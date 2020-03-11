@@ -6,8 +6,10 @@
 <div class="col-12">
            <div class="card card-outline-info">
                <div class="card-header text-white">
-                   <h2 class="pt-1 text-center"><span class="text-white">Forum#1
-                           </span></h2></div>
+               	
+                   <h2 class="pt-1 text-center"><span class="text-white">Forum#{{z.0}}
+                           </span></h2>
+                </div>
                            <!-- <span class="pull-right"><a href="" class="btn-danger">Add topic</a></span></div> -->
 
                            <div class="card-body">
@@ -19,14 +21,15 @@
                                        		
                                        	  <div class="form-group"> -->
                                        	  	
-                                       	    <h2><i class="mdi mdi-comment-alert"></i>&nbspSet theory</h2>
+                                       	    <h2 id="title"><i class="mdi mdi-comment-alert"></i>&nbsp{{z.1}}</h2>
                                        	
                                        	  
-                                       	    <h4><i class="mdi mdi-comment-text"></i>&nbspThere are only three clubs. 60 students are only in drama club, 80 students only in dance, 30 student only in maths, 44 both in drama and dance, 12 dance and math 7 both in drama and math, 2 students are in all club and 75% are not in any club so find out the total students</h4>
+                                       	    <h4 id="desc"><i class="mdi mdi-comment-text"></i>&nbsp{{z.2}}</h4>
                                        	  
                                        	  
                                        	  	
-                                       	    <p><i class="mdi mdi-account"></i>Rahul</p>
+                                       	    <p id="username&date"><i class="mdi mdi-account"></i>{{z.3}}
+                                       	    	&nbsp<i class="mdi mdi-calendar"></i>{{z.4}}</p>
                                        	</div>
                                        	
                                        	  
@@ -47,30 +50,24 @@
                                            <!-- <p class="card-text">desc</p> -->
                                            
                                        </div>
-                                   </div></div>
-                            
-                           </div>
-                           
-                                       		
-                                       
-                           </div>
-                       </div>
-                       	<form action="#" class="m-l-20">
-                       	<textarea class="form-control"></textarea>
+                                   
+                                                  
+                           	<div class="card">
+                            <div class="card-body">
+                           	<form method="post" id="reply" action="{% url 'forum_reply' z.0%}" class="m-l-20">
+                           		{% csrf_token %}
+                           	<textarea class="form-control" name="desc" required></textarea>
 
-                       <button type="submit" class="btn btn-primary">Reply</button>
-                       </form>
+                           <button type="submit" class="btn btn-primary">Reply</button>
+                           </form>
+                       </div></div>
                    
-
-                   <!-- <div class="card">
-                       
-                                    <span class="pull-right"><a href="" class="btn-danger">Add topic</a></span></div> -->
-
-                                   <div class="card-body">
-                                       <div class="row justify-content-center">
-                                       <div class="col-12">
-                                       	<div class="card">
-                                               <div class="card-body">
+                           {% for desc,username,date,time in r%}
+                           
+                               	<div class="card">
+                                       
+                           		<div class="card-body">
+                                               	
                                                	<!-- <form action="/action_page.php" class="form-horizontal">
                                                		
                                                	  <div class="form-group"> -->
@@ -79,32 +76,51 @@
                                                	
                                                	  
                                                	    <h4><i class="mdi mdi-comment-text"></i>
-                                               	    	&nbspAnswer:
-													Step-by-step explanation:
-													Only A = 60
-													Only B = 80
-													Only C = 30
-													AB=40, BC=12, AC=7, ABC=2
-													So A U B U C = 60+80+30+40+12+7-2xABC = 229 + 2x2=225
-													(Note Only 1 ABC is part of union, but AB, BC, AC contributes 3 overlapping ABC. So substract 2ABC
-													25% is 225 students. So 100% is 225 x 100/25=900
-													Ans: Total no of students = 900
+                                               	    	&nbsp{{desc}}
 												</h4>
                                                	  
                                                	  
                                                	  	
-                                               	    <p><i class="mdi mdi-account"></i>Shubham</p>
+                                               	    <p><i class="mdi mdi-account"></i>{{username}}
+                                               	    	&nbsp<i class="mdi mdi-calendar"></i>{{date}}
+                                               	    	&nbsp<i class="mdi mdi-timer"></i>{{time}}
+                                               	    </p>
                                                	</div>
+                                               	
                                                </div>
+                                               {% endfor %}
+                                       		
+                                       
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+
+                       	
+                   
+
+                   <!-- <div class="card">
+                       
+                                    <span class="pull-right"><a href="" class="btn-danger">Add topic</a></span></div> >
+                                    
+                                       <div class="row justify-content-center">
+                                       <div class="col-12">
+                                       	
+                                       	<div class="card">
+                                               
+                                               </div>
+                                               
                                            </div>
                                        </div>
-                                    
-                                   </div>
+                                     
+                                   
+                                  
                                    
                                                		
                                                
                                    </div>
-                        </div>
+                        </div-->
 
 
 

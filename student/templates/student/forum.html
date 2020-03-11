@@ -10,7 +10,7 @@
                     <h2 class="pt-1 text-center"><span class="text-white">Discussion Forum
                             </span></h2>
                             <span class="pull-right"><a href="{% url 'forum_add' %}" class="btn-danger">Add topic</a></span></div>
-                            {% for title,username,date in z%}
+                            {% for id,title,username,date in z%}
                             <div class="card-body">
                                 <div class="row justify-content-center">
                                 <div class="col-12"><div class="card">
@@ -18,7 +18,7 @@
                                             	
                                                 	
                                                     <h5 class=""><i class="mdi mdi-comment-alert"></i>
-                                                    	<a href="{% url 'forum_topic' %}">{{title}}</a>
+                                                    	<a href="{% url 'forum_topic' id %}">{{title}}</a>
                                                     	<span class="pull-right"><i class="mdi mdi-account"></i>{{username}}</span></h5>
                                                     <h6 class=""><span class="pull-right">{{date}}</span></h6>
                                             <!-- <p class="card-text">desc</p> -->

@@ -78,7 +78,7 @@ class Imaged(models.Model):
     mot_id = models.IntegerField(default=0)
 
 class Forum(models.Model):
-    forum_id = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100 , null=False)
     desc =  models.CharField(max_length=1000 , null=False)
     # user_id = models.IntegerField(null=True)
@@ -86,9 +86,12 @@ class Forum(models.Model):
     email =  models.CharField(max_length=100,default='')
     date = models.CharField(max_length = 20)
 
-# class Forum_reply(models.Model):
-#     forum_id = models.IntegerField()
-#     desc = models.CharField(max_length=1000 , null=False)
-#     user_id = models.IntegerField(null=True)
-#     username =  models.CharField(max_length=100 , null=False)
-#     date = models.IntegerField()
+class Forum_reply(models.Model):
+    id = models.AutoField(primary_key=True)
+    forum_id = models.IntegerField()
+    # reply_id = models.IntegerField()
+    desc = models.CharField(max_length=1000 , null=False)
+    # user_id = models.IntegerField(null=True)
+    username =  models.CharField(max_length=100 , null=False)
+    email =  models.CharField(max_length=100,default='')
+    date = models.CharField(max_length = 20)

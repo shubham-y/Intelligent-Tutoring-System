@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
-from student.models import Quetions,Subject,topic,Analysis,Student,Imaged,Forum
+from student.models import Quetions,Subject,topic,Analysis,Student,Imaged,Forum,Forum_reply
 from django.contrib.auth import authenticate, login, logout
 import datetime
 import pytesseract
@@ -793,18 +793,20 @@ def forum(request):
     if 'email' not in request.session:
         return HttpResponseRedirect(reverse('login'))
     email = request.session['email']
-    forum = Forum.objects.all().filter(email=email)
-    print(forum)
+    forum = Forum.objects.order_by('-id')
+    # print(forum)
+    id=[]
     title = []
     username = []
     date = []
     for forum in forum:
+        id.append(forum.id)
         title.append(forum.title)
         username.append(forum.username)
-        date.append(forum.date)
+        date.append(forum.date.split(',')[0])
         # l.append((title,username,date))
     # print(l)
-    z=zip(title,username,date)
+    z=zip(id,title,username,date)
     # print(z)
 
 
@@ -821,22 +823,65 @@ def forum_add(request):
         email = request.session['email']
         name = request.session['name']
         uid = Student.objects.all().filter(email = request.session['email'])[0].id
-        date = datetime.date.today()
+        date = datetime.datetime.now().strftime("%d-%m-%Y,%H:%M:%S")
         # print(title,desc,email,uid)
         # print(datetime.date.today())
 
         log = Forum(title = title, desc = desc, email = email, username = name, date = date)
         log.save()
 
-        print("done")
-        return render(request, 'student/forum_topic.html')
+        # print("done")
+        return HttpResponseRedirect(reverse('forum'))
 
 
 
     return render(request, 'student/forum_add.html')
 
-def forum_topic(request):
-    return render(request, 'student/forum_topic.html')
+def forum_topic(request,forum_id):
+    if 'email' not in request.session:
+        return HttpResponseRedirect(reverse('login'))
+    forum = Forum.objects.all().get(id = forum_id)
+    # print(type(forum.desc))
+    z = []
+    z.extend([forum_id,forum.title,forum.desc,forum.username,forum.date.split(',')[0]])
+
+    #Display Replies
+    replies = Forum_reply.objects.all().filter(forum_id=forum_id).order_by('-id')
+    desc,username,date,time = ([] for i in range(4))
+
+    for reply in replies:
+        # id.append(r.id)
+        desc.append(reply.desc)
+        username.append(reply.username)
+        date_time=reply.date.split(',')
+        date.append(date_time[0])
+        time.append(date_time[1])
+        # date.append(reply.date.split(',')[0])
+    r=zip(desc,username,date,time)
+
+    return render(request, 'student/forum_topic.html',{'z':z,'r':r})
+
+def forum_reply(request,forum_id):
+    if 'email' not in request.session:
+        return HttpResponseRedirect(reverse('login'))
+    if request.method == 'POST':
+        desc = request.POST.get('desc')
+        # print(desc)
+        email = request.session['email']
+        name = request.session['name']
+        # uid = Student.objects.all().filter(email = request.session['email'])[0].id
+        date = datetime.datetime.now().strftime("%d-%m-%Y,%H:%M:%S")
+        # print(datetime.datetime.now())
+        log = Forum_reply(forum_id = forum_id, desc = desc, email = email, username = name, date = date)
+        log.save()
+        # print(type(forum_id))
+        # print('done')
+        return HttpResponseRedirect(reverse('forum_topic',kwargs={'forum_id':forum_id}))
+        
+    return render(request, 'student/forum_add.html')
+
+
+
 
 def doubt(request):
     if 'email' not in request.session:
