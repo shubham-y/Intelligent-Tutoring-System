@@ -35,6 +35,38 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
+<style>
+@keyframes card1 {
+    from{transform: translateX(540px);}
+    to{transform: translateX(0px);}
+}
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+#d1{
+    animation: card1;
+    animation-delay: 2s;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+
+}
+#d2{
+    animation: shake;
+    animation-duration: 0.5s;
+    animation-iteration-count:4;
+}
+
+</style>
 <!-- <style>
     .toolbar{
     width: 100%;
