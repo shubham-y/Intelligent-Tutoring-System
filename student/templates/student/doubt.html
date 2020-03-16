@@ -1,6 +1,8 @@
 {% extends "student/index2.html" %}
 {% load static %}
-
+{% block breadcrum %}
+Doubt portal
+{% endblock %}
 
 {% block content %}
 
@@ -23,7 +25,7 @@
               <input id="menu_images" class="form-control block" onchange="readURL(this);"  type="file" name="myfile">
               
               {% if k == "" %}
-              <img id="blah" src="#" alt="your image" />
+              <img id="blah" height="300px" width="800px" src="#" alt="your image" />
               {% endif %}
             </div>
             {% if k == "" %}
