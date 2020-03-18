@@ -12,100 +12,140 @@
     {% if m %}
     {% if k == 11 %}
     <div class="col-md-10">
-        <div class="card card-outline-danger">
-            <div class="card-header">
-                <h3 class="m-b-0 text-white">Please select the options provided.</h3></div>
+        <div class="alert alert-warning border border-warning h6" role="alert"> <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/237/warning-sign_26a0.png" class="img-rounded"width="30" height="30"> Please Select Answer From Below Provided Options..!!! 
+           
         </div>
     </div>
     {% endif %}
     {% if k == 1 %}
     <div class="col-md-10">
-        <div class="card card-outline-danger">
-            <div class="card-header">
-                <h4 class="m-b-0 text-white">OOPS! Wrong answer.</h4></div>
-            <div class="card-body">
-                    <h3 class="card-title">Please check the hint provided below question.</h3>
-                <p class="card-text">It will be helpful.</p>
-            </div>
-        </div>
+        <div class="alert alert-warning border border-warning" role="alert">
+            <h2 class="alert-heading">OOPS...wrong answer!!&#128532</h2>
+            <p>You havn't checked the hint. First check it and then try to solve the problem again...!! I'm sure it will be very helpful to you..!!!</p>
+          </div>
     </div>
     {% endif %}
     {% if k == 2 %}
     <div class="col-md-10">
-        <div class="card card-outline-danger">
-            <div class="card-header">
-                <h4 class="m-b-0 text-white">OOPS! Wrong answer.</h4></div>
-            <div class="card-body">
-                    <h3 class="card-title">Please check the hint, it's your last attempt.</h3>
-                <p class="card-text">hints are always useful.</p>
+        <div class="alert alert-warning border border-warning" role="alert">
+            <h2 class="alert-heading">OOPS...wrong answer!!&#128531</h2>
+                    <p>Please check the hint, it's your last attempt. Try as much as you can.<br>Hints are always useful. Take the help of hints and reach out to the solution...!!</p>
             </div>
         </div>
-    </div>
     {% endif %}
     {% if k == 3 %}
     <div class="col-md-10">
-        <div class="card card-outline-danger">
-            <div class="card-header">
-                <h4 class="m-b-0 text-white">OOPS! Wrong answer.</h4></div>
-            <div class="card-body">
-                    <h3 class="card-title">Lets give it last and final attempt by understanding the basics.</h3>
-                <p class="card-text">The below link will help you understand the topic.</p>
+        <div class="alert alert-warning border border-warning" role="alert">
+            <h2 class="alert-heading">OOPS...wrong answer!!&#128519</h2>
+            <p>Lets give it last and final attempt by understanding the basics.<br>
+                The below link will help you understand the topic.</p>
                 <a href="#" class="btn btn-inverse">Learn Site</a>
             </div>
         </div>
-    </div>
     {% endif %}
     {% if k == 4 %}
     <div class="col-md-10">
-            <div class="card card-outline-danger">
-                <div class="card-header">
-                    <h4 class="m-b-0 text-white">OOPS! Wrong answer.</h4></div>
-                <div class="card-body">
-                        <h3 class="card-title">It seems we need to get through the topic again and get the basics clear.</h3>
-                    <p class="card-text">Here are the solution and learning resource.</p>
-                    <p class="card-text">Solution - {{so}}</p>
-                    <a href="#" class="btn btn-inverse">Learn Site</a>
-                </div>
-            </div>
+        <div class="alert alert-danger border border-danger" role="alert">
+            <h2 class="alert-heading">OOPS...wrong answer!!&#128578</h2>
+                It seems we need to get through the topic again and get the basics clear.<br>
+                But Don't Worry..!! You have following options.<hr>
+            <button class="btn btn-inverse" data-toggle="modal" data-target="#exampleModal">
+                View Solution
+              </button>
+            <a href="#" class="btn btn-inverse pull-right">Learn Site</a>
+            
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h3 class="modal-title" id="exampleModalLabel">Solution</h3>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body text-dark">
+                      Solution - {{so}}
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary border-primary" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+            </div> 
         </div>
+        </div>
+</div>
     {% endif %}
     {% if k == 5 %}
     <div class="col-md-10">
-            <div class="card card-outline-danger">
-                <div class="card-header">
-                    <h4 class="m-b-0 text-white">OOPS! Wrong answer.</h4></div>
-                <div class="card-body">
-                        <h3 class="card-title">We appreciate your efforts, check the solution given below. It will help you know where you went wrong.</h3>
-                    <p class="card-text">Solution - <pre>{{so}}</pre></p>
-                    
-                </div>
-            </div>
-        </div>
+                    <div class="alert alert-danger border border-danger" role="alert">
+                        <h2 class="alert-heading">OOPS...wrong answer!!&#128578</h2>
+                        You don't need to worry...<strong>Remember</strong> Success is not final, failure is not fatal: it is the courage to continue that counts.<br>
+                        Here, You Have Following Options: <hr>
+                        <button class="btn btn-inverse" data-toggle="modal" data-target="#exampleModal">
+                            View Solution
+                          </button>
+                        <a href="#" class="btn btn-inverse pull-right">Learn Site</a>
+                        
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h3 class="modal-title" id="exampleModalLabel">Solution</h3>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body text-dark">
+                                  Solution - {{so}}
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-primary border-primary" data-dismiss="modal">Close</button>
+                                </div>
+                              </div>
+                        </div> 
+                    </div>
+                    </div>
+    </div>
+               
     {% endif %}
     {% if k == 6 %}
     <div class="col-md-10">
-            <div class="card card-outline-danger">
-                <div class="card-header">
-                    <h4 class="m-b-0 text-white">OOPS! Wrong answer.</h4></div>
-                <div class="card-body">
-                        <h3 class="card-title">You havn't checked the hint. This is uncool. We have provide learning resource and solution below for your better understanding. Please go through it.</h3>
-                    <p class="card-text">Solution - {{so}}</p>
-                    <a href="#" class="btn btn-inverse">Learn Site</a>
-                </div>
-            </div>
+        <div class="alert alert-danger border border-danger" role="alert">
+            <h2 class="alert-heading">OOPS...wrong answer!!&#128524</h2>
+            You havn't checked the hint. Hint helps a lot to find the proper direction of solution. Always try to Grab the opportunity..!!<br>
+            Don't Worry, You have Following Options:<hr>
+            <button class="btn btn-inverse" data-toggle="modal" data-target="#exampleModal">
+                View Solution
+              </button>
+            <a href="#" class="btn btn-inverse pull-right">Learn Site</a>
+            
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h3 class="modal-title" id="exampleModalLabel">Solution</h3>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body text-dark">
+                      Solution - {{so}}
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary border-primary" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+            </div> 
+        </div>
         </div>
     {% endif %}
     {% if k == 7 %}
     <div class="col-md-10">
-            <div class="card card-outline-danger">
-                <div class="card-header">
-                    <h4 class="m-b-0 text-white">OOPS! Wrong answer.</h4></div>
-                <div class="card-body">
-                        <h3 class="card-title">Maybe you missed something. Give it one more try.</h3>
-                    
-                </div>
-            </div>
-        </div>
+        <div class="alert alert-warning border border-warning" role="alert">
+            <h2 class="alert-heading">OOPS...wrong answer!!&#128522</h2>
+            <p>Maybe you missed something. Give it one more try. Just keep in your mind that the Winners never quit, and quitters never win.</p>
+          </div>
+    </div>
     {% endif %}
     {% endif %}
     <div class="col-md-10">
