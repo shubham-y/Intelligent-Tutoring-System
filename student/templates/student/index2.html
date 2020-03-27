@@ -65,6 +65,46 @@
     animation-duration: 0.5s;
     animation-iteration-count:4;
 }
+.btn{
+    backface-visibility: hidden;
+    transition: transform 50ms ease-in-out;
+}
+.btn:hover{
+    
+    background: linear-gradient(90deg,#1E88E5, #7460EE);
+    color: linear-gradient(90deg,#ffffff, rgb(65, 64, 70));
+    transform:translateY(-1px) scale(1.005);
+}
+.btn:hover::after{
+    content: " >>";
+}
+.navbar{
+    animation: navv;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    transition: ease;
+    
+}
+@keyframes navv {
+    0%{background: linear-gradient(-90deg,#1E88E5, #7460EE);}
+    100%{background: linear-gradient(90deg,#1E88E5, #7460EE);}
+}
+
+#lgo{
+    transform: translate(0%,30%);
+    stroke-dasharray:140px;
+    stroke-dashoffset: 0px;
+    animation: str 2s ease 4s,fill 0.5s ease 6s infinite;
+
+}
+@keyframes str {
+    to{stroke-dashoffset: 140px;}
+}
+
+@keyframes fill {
+    to{fill:white;}
+}
+
 
 
 </style>
@@ -136,12 +176,11 @@
                     
                     <a class="navbar-brand" href="#">
                          <!-- Logo icon  -->
-                        <b>
-                            <!-- You can put here icon as well // <i class="wi wi-sunset"></i> // -->
-                            <!-- Dark Logo icon  -->
-                            <img src="{% static 'student/assets/images/logo-icon.png' %}" alt="homepage" class="dark-logo" />
-                            <!-- Light Logo icon -->
-                            <img src="{% static 'student/assets/images/logo-light-icon.png' %}" alt="homepage" class="light-logo" />
+                         <b id="ulg">
+                            <svg id="lgo" width="83" height="31" viewBox="0 0 83 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17.375 17.1699H18.375V16.1699V13.4102V12.4102H17.375H7.2832V6.18359H18.9922H19.9922V5.18359V2.40625V1.40625H18.9922H2.9082H1.9082V2.40625V28V29H2.9082H19.168H20.168V28V25.2402V24.2402H19.168H7.2832V17.1699H17.375ZM26.9902 29H27.9902V28V2.40625V1.40625H26.9902H23.6152H22.6152V2.40625V28V29H23.6152H26.9902ZM36.7988 29H37.7988V28V2.40625V1.40625H36.7988H33.4238H32.4238V2.40625V28V29H33.4238H36.7988ZM60.1426 6.18359H61.1426V5.18359V2.40625V1.40625H60.1426H40.3496H39.3496V2.40625V5.18359V6.18359H40.3496H47.5586V28V29H48.5586H51.916H52.916V28V6.18359H60.1426ZM64.1906 14.266L64.1906 14.266L71.1992 16.5918L70.9213 17.5524C70.9215 17.5524 70.9216 17.5525 70.9218 17.5526C73.2159 18.2164 74.6464 18.8537 75.3622 19.4168L75.3687 19.4219C75.969 19.8861 76.2988 20.5416 76.2988 21.5312C76.2988 22.4916 75.9554 23.1811 75.2672 23.7079C74.5595 24.2495 73.4437 24.5918 71.7793 24.5918C70.0239 24.5918 68.7332 24.1842 67.8086 23.469C66.9314 22.7707 66.4863 21.8448 66.4863 20.582V19.582H65.4863H62.0938H61.0938V20.582C61.0938 22.2667 61.5621 23.7987 62.505 25.1457L62.5088 25.1512C63.4601 26.4911 64.7897 27.5221 66.45 28.2629L66.4559 28.2654C68.113 28.992 69.8912 29.3516 71.7793 29.3516C74.6347 29.3516 77.0333 28.6958 78.8748 27.2813L78.8784 27.2786C80.7437 25.8322 81.6914 23.8745 81.6914 21.4961C81.6914 20.0423 81.3626 18.7265 80.6685 17.5864C79.9906 16.4539 78.966 15.5095 77.6551 14.7323C76.3509 13.9405 74.5917 13.2497 72.4189 12.6408C70.3351 12.0536 68.9919 11.4425 68.2624 10.8594C67.593 10.3039 67.3125 9.69305 67.3125 8.98047C67.3125 7.94978 67.662 7.2414 68.3186 6.72612L68.3199 6.72509C69.023 6.17133 70.0769 5.83203 71.6035 5.83203C73.2366 5.83203 74.3544 6.23613 75.0986 6.90952L75.1035 6.91391C75.8383 7.56994 76.2461 8.49076 76.2461 9.80664V10.8066H77.2461H80.6387H81.6387V9.80664C81.6387 8.19931 81.204 6.70704 80.341 5.35173C79.4837 3.98691 78.2711 2.93062 76.7395 2.1775C75.2115 1.42038 73.4918 1.05469 71.6035 1.05469C68.85 1.05469 66.5116 1.76504 64.677 3.26731C62.8474 4.76333 61.9023 6.7079 61.9023 9.0332C61.9023 11.0943 62.6757 12.8592 64.1906 14.266Z" stroke="white" stroke-width="2"/>
+                                </svg>
+                                
                         </b>
                         <!-- End Logo icon -->
                         <!-- Logo text  -->
