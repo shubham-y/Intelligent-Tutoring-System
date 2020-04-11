@@ -441,6 +441,12 @@ def test(request,ana_id,que_id):
     uid = Student.objects.all().filter(email = request.session['email'])
     print(uid[0].email,uid[0].id)
     u_id = uid[0].id
+    aaaaid = ana_id
+    ana = Analysis.objects.all().filter(id=ana_id)
+    print(ana,ana_id)
+    subid = ana[0].sub_id
+    topid = ana[0].topic_id
+    userid = ana[0].user_id
     ele=Quetions.objects.all().filter(que_id=que_id)
     sidd = ele[0].sub_id
     qn = ele[0].que_no
@@ -461,86 +467,230 @@ def test(request,ana_id,que_id):
             status = 0
     print("jdjdjdjdjdjdjdjdjdjdjd",kc_list,status,kc_stat_list,kc_qn)
     if status == 1:
-        ana_id = 1111111111
+        aaaaid = ana_id
+        ana_id = 0
     else:
         status1 = 1
         for i in kc_qn:
             j = kc_list.index(i)
             if kc_stat_list[j] == 0:
                 status1 = 0
-    anaid = Analysis.objects.all().filter(id=ana_id)
-    print(anaid,ana_id)
-    subid = anaid[0].sub_id
-    topid = anaid[0].topic_id
-    userid = anaid[0].user_id
-    if status1 == 1:
-        logkc1 = Analysis(id = ana_id + 1,user_id=userid,sub_id = subid,topic_id=topid,time = 0, last_time = 0,best_time = 0,attempt = 0,hint = 0,correct = 0,wasted = 0, que_id = (que_id + 1),test_id = 0,status =1)
-        logkc1.save()
-        return HttpResponseRedirect(reverse('test', args=(ana_id + 1,que_id + 1,)))
+    
+        if status1 == 1:
+            logkc1 = Analysis(id = ana_id + 1,user_id=userid,sub_id = subid,topic_id=topid,time = 0, last_time = 0,best_time = 0,attempt = 0,hint = 0,correct = 0,wasted = 0, que_id = (que_id + 1),test_id = 0,status =1)
+            logkc1.save()
+            return HttpResponseRedirect(reverse('test', args=(ana_id + 1,que_id + 1,)))
     if request.method == 'GET':
         stepv1 = "-1"
         stepv2 = "-1"
         stepv3 = "-1"
-    if ana_id != 0 and ana_id != 1111111111:
-        ana = Analysis.objects.all().filter(id=ana_id)
-        print(qn,"at firstttttttttttttttttttttttttttttttttttttttttttt")
-        # print(ele)
-        print(id)
-        x = 0
-        sub_id = ana[0].sub_id
-        top_id = ana[0].topic_id
-        user_id = ana[0].user_id
-        print(ana,ana_id,sub_id,top_id)
-        # zzz = 0
-        # kc_data = Kc_ana.objects.all().filter(stu_id = user_id,kc_id = 1)
-        # # kc_datac = Kc_ana.objects.all().filter(stu_id = user_id,que_id = que_id,kc_id = 1)
-        # pr_list = kc_data[0].p_list
+        # atttr = 0
+    if request.method == 'POST':
         
-        # pre_list = []
-        # print(len(pr_list),"LLLLLLLLLLLLLLLLLLLLLL")
-        # if len(pr_list) == 0:
-        #     zzz = 1
-        # else:
-        #     for i in pr_list.split(","):
-        #         pre_list.append(float(i))
-        # print(pre_list)
-        # kcid_id = kc_data[0].id
-        # kcid_idc = kc_datac[0].id
-        # kc_data1 = Kc_ana.objects.all().filter(stu_id = user_id,que_id = que_id + 1,kc_id = 1)
-        # if len(kc_data1) == 0:
-        #     logkc = Kc_ana(stu_id = user_id,que_id = que_id + 1,kc_id = 1,status = 0,p_list ="0")
-        #     logkc.save()
-        q = []
-        h = []
-        o1 = []
-        o2 = []
-        o3 = []
-        o4 = []
-        c = 0
-        qi = []
-        ai = []
-        qno = []
-        for i in ele:
-            qi.append(i.que_id)
-            qno.append(i.que_no)
-            q.append(i.question)
-            h.append(i.hint)
-            o1.append(i.opt_1)
-            o2.append(i.opt_2)
-            o3.append(i.opt_3)
-            o4.append(i.opt_4)
-            ai.append(ana_id)
-            c = c + 1
-            m = 0
-            msg = ""
-            ah = ana[0].hint
-            att = ana[0].attempt
-            print("printttttt",ah)
-            lt = ana[0].last_time
-        sol = ele[0].solution
-        # print(q,h,o1,o2,o3,o4,c,qi)
-        z = zip(q,h,o1,o2,o3,o4,qi,ai,qno)
-        if att < 3:
+        hhin = int(request.POST.get('hint', '0'))
+        opt = request.POST.get('opt', '-2')
+        if len(kc_qn) == 3:
+            step1 = request.POST.get('step1', '-22')
+            stepv1 = step1
+            step2 = request.POST.get('step2', '-22')
+            stepv2 = step2
+            step3 = request.POST.get('step3', '-22')
+            stepv3 = step3
+        elif len(kc_qn) == 2:
+            if kc_qn.count(1) > 0 and kc_qn.count(2) > 0:
+                step1 = request.POST.get('step1', '-22')
+                stepv1 = step1
+                step2 = request.POST.get('step2', '-22')
+                stepv2 = step2
+                stepv3 = "-1"
+                step3 = "-22"
+            elif kc_qn.count(1) > 0 and kc_qn.count(3) > 0:
+                step1 = request.POST.get('step1', '-22')
+                stepv1 = step1
+                stepv3 = "-1"
+                step3 = request.POST.get('step2', '-22')
+                stepv2 = step3
+                step2 = "-22"
+            elif kc_qn.count(2) > 0 and kc_qn.count(3) > 0:
+                stepv3 = "-1"
+                step2 = request.POST.get('step1', '-22')
+                stepv1 = step2
+                step3 = request.POST.get('step2', '-22')
+                stepv2 = step3
+                step1 = "-22"
+        elif len(kc_qn) == 1:
+            if kc_qn.count(1) > 0:
+                step1 = request.POST.get('step1', '-22')
+                stepv1 = step1
+                stepv2 = "-1"
+                stepv3 = "-1"
+                step2 = "-22"
+                step3 = "-22"
+            elif kc_qn.count(2) > 0:
+                stepv2 = "-1"
+                step2 = request.POST.get('step1', '-22')
+                stepv1 = step2
+                stepv3 = "-1"
+                step1 = "-22"
+                step3 = "-22"
+            elif kc_qn.count(3) > 0:
+                stepv2 = "-1"
+                stepv3 = "-1"
+                step3 = request.POST.get('step1', '-22')
+                stepv1 = step3
+                step1 = "-22"
+                step2 = "-22"
+        if int(opt) != -2:
+            answer = Quetions.objects.all().filter(que_id=que_id)
+            step1_a = answer[0].step1
+            step2_a = answer[0].step2
+            step3_a = answer[0].step3
+            wr = []
+            for ii in kc_qn:
+                zzz = 0
+                kc_data = Kc_ana.objects.all().filter(stu_id = u_id,kc_id = ii)
+                # kc_datac = Kc_ana.objects.all().filter(stu_id = user_id,que_id = que_id,kc_id = 1)
+                print(kc_data)
+                pr_list = kc_data[0].p_list
+                pre_list = []
+                print(len(pr_list),"LLLLLLLLLLLLLLLLLLLLLL")
+                if len(pr_list) == 0:
+                    zzz = 1
+                else:
+                    for i in pr_list.split(","):
+                        pre_list.append(float(i))
+                print(pre_list)
+                kcid_id = kc_data[0].id
+                if ii == 1:
+                    if float(step1_a) == float(step1) or float(step1_a) == float(step2) or float(step1_a) == float(step3):
+                        co_pr = 1
+                    else:
+                        co_pr = 0
+                    wr.append(co_pr)
+                elif ii == 2:
+                    if float(step2_a) == float(step1) or float(step2_a) == float(step2) or float(step2_a) == float(step3):
+                        co_pr = 1
+                    else:
+                        co_pr = 0
+                    wr.append(co_pr)
+                elif ii == 3:
+                    if float(step3_a) == float(step1) or float(step3_a) == float(step2) or float(step3_a) == float(step3):
+                        co_pr = 1
+                    else:
+                        co_pr = 0
+                    wr.append(co_pr)
+                if zzz == 1:
+                    if co_pr == 1:
+                        pr_list = "0.8"
+                    else:
+                        pr_list = "0.676"
+                    logkc2 = Kc_ana(id = kcid_id,stu_id = u_id,kc_id = ii,status = 0,p_list = pr_list)
+                    logkc2.save()
+                else:
+                    pr_pr = pre_list[-1]
+                    kcid = calthres(co_pr,pr_pr,pre_list)
+                    print("jjjjjjjjjjjjjjjjjjjj",kcid,pr_list)
+                    pr_list = pr_list + "," + str(kcid[0])
+                    print("jjjjjjjjjjjjjjjjjjjj",pr_list)
+                    jj=0
+                    if kcid[1] == 1:
+                        # Pass = 1
+                        jj = 1
+                        print("PAssssssssssss")
+                        logkc11 = Kc_ana(id = kcid_id,stu_id = u_id,kc_id = ii,status = 1,p_list = pr_list)
+                        logkc11.save()
+                        opt = -2
+                        status1 = 1
+                        kc_stat1 = Kc_ana.objects.all().filter(stu_id = u_id)
+                        kc_stat_list1 = []
+                        for i in kc_stat1:
+                            kc_stat_list1.append(i.status)
+                        print("Kcccccccccccstattttttttttlistttttttt",kc_stat_list1)
+                        for i in kc_qn:
+                            j = kc_list.index(i)
+                            if kc_stat_list1[j] == 0:
+                                status1 = 0
+                        if status1 == 1:
+                            logkc22 = Analysis(id = ana_id + 1,user_id=u_id,sub_id = subid,topic_id=topid,time = 0, last_time = 0,best_time = 0,attempt = 0,hint = 0,correct = 0,wasted = 0, que_id = (que_id + 1),test_id = 0,status =1)
+                            logkc22.save()
+                            return HttpResponseRedirect(reverse('test', args=(ana_id + 1,que_id + 1,)))
+                    else:
+                        logkc2 = Kc_ana(id = kcid_id,stu_id = u_id,kc_id = ii,status = 0,p_list = pr_list)
+                        logkc2.save()
+                    print("kciddddddddddddd",kcid[0])
+        
+        print(ana_id)
+        log6kc = Analysis.objects.get(id = aaaaid)
+        log6kc.hint = hhin
+        if wr.count(0)>0:
+            log6kc.wasted = 1
+        else:
+            log6kc.correct = 1
+        log6kc.save()
+        logkc222 = Analysis(id = aaaaid + 1,user_id=u_id,sub_id = subid,topic_id=topid,time = 0, last_time = 0,best_time = 0,attempt = 0,hint = 0,correct = 0,wasted = 0, que_id = (que_id + 1),test_id = 0,status =1)
+        logkc222.save()
+        ana_id = -111
+
+    # ana = Analysis.objects.all().filter(id=ana_id)
+    print(qn,"at firstttttttttttttttttttttttttttttttttttttttttttt")
+    # print(ele)
+    print(id)
+    x = 0
+    sub_id = ana[0].sub_id
+    top_id = ana[0].topic_id
+    user_id = ana[0].user_id
+    print(ana,ana_id,sub_id,top_id)
+    # zzz = 0
+    # kc_data = Kc_ana.objects.all().filter(stu_id = user_id,kc_id = 1)
+    # # kc_datac = Kc_ana.objects.all().filter(stu_id = user_id,que_id = que_id,kc_id = 1)
+    # pr_list = kc_data[0].p_list
+    
+    # pre_list = []
+    # print(len(pr_list),"LLLLLLLLLLLLLLLLLLLLLL")
+    # if len(pr_list) == 0:
+    #     zzz = 1
+    # else:
+    #     for i in pr_list.split(","):
+    #         pre_list.append(float(i))
+    # print(pre_list)
+    # kcid_id = kc_data[0].id
+    # kcid_idc = kc_datac[0].id
+    # kc_data1 = Kc_ana.objects.all().filter(stu_id = user_id,que_id = que_id + 1,kc_id = 1)
+    # if len(kc_data1) == 0:
+    #     logkc = Kc_ana(stu_id = user_id,que_id = que_id + 1,kc_id = 1,status = 0,p_list ="0")
+    #     logkc.save()
+    q = []
+    h = []
+    o1 = []
+    o2 = []
+    o3 = []
+    o4 = []
+    c = 0
+    qi = []
+    ai = []
+    qno = []
+    for i in ele:
+        qi.append(i.que_id)
+        qno.append(i.que_no)
+        q.append(i.question)
+        h.append(i.hint)
+        o1.append(i.opt_1)
+        o2.append(i.opt_2)
+        o3.append(i.opt_3)
+        o4.append(i.opt_4)
+        ai.append(ana_id)
+        c = c + 1
+        m = 0
+        msg = ""
+        ah = ana[0].hint
+        att = ana[0].attempt
+        print("printttttt",ah)
+        lt = ana[0].last_time
+    sol = ele[0].solution
+    # print(q,h,o1,o2,o3,o4,c,qi)
+    z = zip(q,h,o1,o2,o3,o4,qi,ai,qno)
+    if ana_id != 0 and ana_id != 1111111111 and ana_id != -111:
+        if att < 1:
             if request.method == 'POST':
                 opt = request.POST.get('opt', '-2')
                 if len(kc_qn) == 3:
@@ -839,6 +989,32 @@ def test(request,ana_id,que_id):
         k = -1
         print("hereeeeeeeeeeeeeeeeeeeeeeeeee","-11111111111111")
         return render(request,'student/test.html',{"k":k,"sid":sidd})
+    elif ana_id == -111:
+        wrr = []
+        for i in range(len(wr)):
+            if i == 0:
+                if wr[i] == 0:
+                    wrr.append(i+1)
+            elif i == 1:
+                if wr[i] == 0:
+                    wrr.append(i+1)
+            elif i == 2:
+                if wr[i] == 0:
+                    wrr.append(i+1)
+            elif i == 3:
+                if wr[i] == 0:
+                    wrr.append(i+1)
+        corrr = 1
+        if wr.count(0) > 0:
+            corrr = 0
+        print("hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee","-11111111111111")
+        if hhin == 1:
+            k=1115
+        else:
+            k=1116
+        m = 1
+        print(m,k,hhin,wr,wrr)
+        return render(request,'student/test.html',{"k":k,"aid":aaaaid + 1,"qid":que_id + 1,"m":m,"corr":corrr,"lwr":len(wrr),"wrong":wrr,"sid":sidd,"so":sol,'username':request.session['name'],'useremail':request.session['email']})
     print(qn,"at lastttttttttttttttttttttttttttttttttttttttttt")
 
     return render(request,'student/test.html',{"z":z,"m":m,"msg":msg,"x":x,"nkc":len(kc_qn),"rkc":range(1,(len(kc_qn) + 1)),"step1":stepv1,"step2":stepv2,"step3":stepv3,'username':request.session['name'],'useremail':request.session['email']})
