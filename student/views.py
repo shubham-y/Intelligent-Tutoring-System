@@ -194,7 +194,7 @@ def register_action(request):
                 print(mxq)
                 topics = topic.objects.all()
                 for i in topics:
-                    mxq = mxq + 15
+                    mxq = mxq + 50
                     if i.top_id == 1:
                         ti = 1
                     elif i.top_id == 2:
@@ -454,13 +454,18 @@ def test(request,ana_id,que_id):
         top_id = ana[0].topic_id
         user_id = ana[0].user_id
         print(ana,ana_id,sub_id,top_id)
-
+        zzz = 0
         kc_data = Kc_ana.objects.all().filter(stu_id = user_id,kc_id = 1)
         # kc_datac = Kc_ana.objects.all().filter(stu_id = user_id,que_id = que_id,kc_id = 1)
         pr_list = kc_data[0].p_list
         pre_list = []
-        for i in pr_list.split(","):
-            pre_list.append(float(i))
+        print(len(pr_list),"LLLLLLLLLLLLLLLLLLLLLL")
+        if len(pr_list) == 0:
+            zzz = 1
+        else:
+            for i in pr_list.split(","):
+                pre_list.append(float(i))
+        print(pre_list)
         kcid_id = kc_data[0].id
         # kcid_idc = kc_datac[0].id
         # kc_data1 = Kc_ana.objects.all().filter(stu_id = user_id,que_id = que_id + 1,kc_id = 1)
@@ -501,26 +506,37 @@ def test(request,ana_id,que_id):
             if request.method == 'POST':
                 opt = request.POST.get('opt', '-2')
                 if int(opt) != -2:
-                    pr_pr = pre_list[-1]
                     answer = Quetions.objects.all().filter(que_id=que_id)
                     if int(opt) == answer[0].ans:
                         co_pr = 1
                     else:
                         co_pr = 0
-                    kcid = calthres(co_pr,pr_pr,pre_list)
-                    print("jjjjjjjjjjjjjjjjjjjj",kcid,pr_list)
-                    pr_list = pr_list + "," + str(kcid[0])
-                    print("jjjjjjjjjjjjjjjjjjjj",pr_list)
-                    jj=0
-                    if kcid[1] == 1:
-                        # Pass = 1
-                        jj = 1
-                        print("PAssssssssssss")
-                        logkc1 = Kc_ana(id = kcid_id,stu_id = user_id,kc_id = 1,status = 1,p_list = pr_list)
-                        logkc1.save()
-                        opt = -2
-                    logkc2 = Kc_ana(id = kcid_id,stu_id = user_id,kc_id = 1,status = 0,p_list = pr_list)
-                    logkc2.save()
+                    if zzz == 1:
+                        if co_pr == 1:
+                            pr_list = "0.8"
+                        else:
+                            pr_list = "0.676"
+                        logkc2 = Kc_ana(id = kcid_id,stu_id = user_id,kc_id = 1,status = 0,p_list = pr_list)
+                        logkc2.save()
+                    else:
+                        pr_pr = pre_list[-1]
+                        
+                        kcid = calthres(co_pr,pr_pr,pre_list)
+                        print("jjjjjjjjjjjjjjjjjjjj",kcid,pr_list)
+                        pr_list = pr_list + "," + str(kcid[0])
+                        print("jjjjjjjjjjjjjjjjjjjj",pr_list)
+                        jj=0
+                        if kcid[1] == 1:
+                            # Pass = 1
+                            jj = 1
+                            print("PAssssssssssss")
+                            logkc1 = Kc_ana(id = kcid_id,stu_id = user_id,kc_id = 1,status = 1,p_list = pr_list)
+                            logkc1.save()
+                            opt = -2
+                        else:
+                            logkc2 = Kc_ana(id = kcid_id,stu_id = user_id,kc_id = 1,status = 0,p_list = pr_list)
+                            logkc2.save()
+                        print("kciddddddddddddd",kcid[0])
                 if int(opt) != -2:
                     hint = request.POST.get('hint', '0')
                     time = request.POST.get('time', '0')
@@ -838,12 +854,18 @@ def analyse(request,sub_id):
     print(tid,tname)
     mx = []
     for j in tid:
-        que = Analysis.objects.all().filter(user_id = u_id,sub_id = sub_id,topic_id=j,test_id = 0).values("que_id")
+        que = Analysis.objects.all().filter(user_id = u_id,sub_id = sub_id,topic_id=j,test_id = 0)
         print(que)
         q = []
         for i in que:
-            if i["que_id"] != None:
-                q.append(i["que_id"])
+            c11 = i.correct
+            w11 = i.wasted
+            if i.que_id != None:
+                if c11 == 1 or w11 == 1:
+                    q.append(i.que_id)
+                else:
+                    if i.que_id == 1 or i.que_id == 16 or i.que_id == 31 or i.que_id == 46:
+                        q.append(i.que_id)
         print(q,max(q))
         mx.append(max(q))
     print(mx,"hereeeeeeeeeeeeeeeeeeeeeeee")
