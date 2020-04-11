@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
-from student.models import Quetions,Subject,topic,Analysis,Student,Imaged,Forum,Forum_reply
+from student.models import Quetions,Subject,topic,Analysis,Student,Imaged,Forum,Forum_reply,Kc_ana
 from django.contrib.auth import authenticate, login, logout
 import datetime
 import pytesseract
@@ -49,6 +49,107 @@ tessdata_dir_config = '--tessdata-dir "C:\\Program Files\\Tesseract-OCR\\tessdat
 #     print("below sele url")
 #     return render(request,'student/dash.html')
 
+def getpred(kcidd):
+    pred = 0.0
+    slip = 0.07
+    guess = 0.13
+    transit = 0.3
+    prev = float(kcidd[0])
+    prev_groundtruth = str(kcidd[1]) 
+    # print('prev: ')
+    # print(prev)
+    # print('prev_groundtruth: ')
+    # print(prev_groundtruth)
+    transitProb = 0.0
+    if prev_groundtruth=='1':
+        transitProb = (prev*(1 - slip))/(prev*(1-slip) + (1-prev)*guess)
+    else:
+        transitProb = (prev * slip) / (prev * slip + (1 - prev) * (1 - guess))
+    # print('prev_groundtruth: ')
+    # print(prev_groundtruth)
+    # print('transitProb: ')
+    # print(transitProb)
+    prob = float(transitProb + (1 - transitProb) * transit)
+    # print('prob: ')
+    # print(prob)
+    pred = float(prob * (1 - slip) + (1 - prob) * guess)
+    return pred
+
+def calthres(corr,prev_pred,pred_list):
+    av = 0
+    jj = 0
+    # c = input()
+    kcidd = [prev_pred,corr]
+    print("Kcidd: ",kcidd)
+    pred = getpred(kcidd)
+    # pred_list.append(pred)
+    if corr == 1:
+        print("111111111111111111111111")
+        if len(pred_list) == 1:
+            avg = pred_list[0]
+        elif len(pred_list) == 2:
+            avg = 0.5*pred_list[0] + 0.5*pred_list[1]
+        elif len(pred_list) == 3:
+            avg = (1/3)*pred_list[0] + (1.1/3)*pred_list[1] + (0.9/3)*pred_list[2]
+        elif len(pred_list) == 4:
+            avg = (1.1/4)*pred_list[0] + (1/4)*pred_list[1] + (1/4)*pred_list[2] + (0.9/4)*pred_list[3]
+        elif len(pred_list) == 5:
+            avg = (1.1/5)*pred_list[0] + (1/5)*pred_list[1] + (1/5)*pred_list[2] + (1/5)*pred_list[3] + (0.9/5)*pred_list[4]
+        elif len(pred_list) == 6:
+            avg = (0.5/6)*pred_list[0] + (0.75/6)*pred_list[1] + (1.15/6)*pred_list[2] + (1.25/6)*pred_list[3] + (1.25/6)*pred_list[4] + (1.1/6)*pred_list[5]
+        elif len(pred_list) == 7:
+            avg = (0.55/7)*pred_list[0] + (0.7/7)*pred_list[1] + (0.8/7)*pred_list[2] + (1.2/7)*pred_list[3] + (1.3/7)*pred_list[4] + (1.3/7)*pred_list[5] + (1.15/7)*pred_list[6]
+        else:
+            lenn = len(pred_list)
+            avg = (0.4/8)*pred_list[lenn - 8] + (0.5/8)*pred_list[lenn - 7] + (0.7/8)*pred_list[lenn - 6] + (1.15/8)*pred_list[lenn - 5] + (1.35/8)*pred_list[lenn - 4] + (1.35/8)*pred_list[lenn - 3] + (1.35/8)*pred_list[lenn - 2] + (1.2/8)*pred_list[lenn - 1]
+        # avg = (avg) + pred
+    else:
+        print("000000000000000000000000000000000")
+        if len(pred_list) == 1:
+            avg = pred_list[0]
+        elif len(pred_list) == 2:
+            avg = 0.5*pred_list[0] + 0.5*pred_list[1]
+        elif len(pred_list) == 3:
+            avg = (0.95/3)*pred_list[0] + (1.05/3)*pred_list[1] + (1.1/3)*pred_list[2]
+        elif len(pred_list) == 4:
+            avg = (0.9/4)*pred_list[0] + (1/4)*pred_list[1] + (1/4)*pred_list[2] + (1.1/4)*pred_list[3]
+        elif len(pred_list) == 5:
+            avg = (0.75/5)*pred_list[0] + (0.9/5)*pred_list[1] + (1/5)*pred_list[2] + (1.05/5)*pred_list[3] + (1.3/5)*pred_list[4]
+        elif len(pred_list) == 6:
+            avg = (0.5/6)*pred_list[0] + (0.75/6)*pred_list[1] + (1.05/6)*pred_list[2] + (1.15/6)*pred_list[3] + (1.2/6)*pred_list[4] + (1.35/6)*pred_list[5]
+        elif len(pred_list) == 7:
+            avg = (0.55/7)*pred_list[0] + (0.75/7)*pred_list[1] + (0.85/7)*pred_list[2] + (1.05/7)*pred_list[3] + (1.2/7)*pred_list[4] + (1.25/7)*pred_list[5] + (1.35/7)*pred_list[6]
+        else:
+            lenn = len(pred_list)
+            avg = (0.4/8)*pred_list[lenn - 8] + (0.5/8)*pred_list[lenn - 7] + (0.8/8)*pred_list[lenn - 6] + (1.2/8)*pred_list[lenn - 5] + (1.25/8)*pred_list[lenn - 4] + (1.325/8)*pred_list[lenn - 3] + (1.325/8)*pred_list[lenn - 2] + (1.2/8)*pred_list[lenn - 1]
+        # avg = (avg) + pred
+    kcidd[0] = pred
+    
+    print("pred: ",pred)
+    av = avg
+    # print(av)
+    # print(pred_list)
+    if av > 0.745 and len(pred_list) >= 5:
+        jj = 1
+    kcidd[1] = jj
+    print(av)
+    return kcidd
+
+perm = [0,1,0,1,0,1,1,0,1]
+pred_list = [0.82]
+kcdi = [0.82,1]
+# pred_list = [0.676]
+# kcdi = [0.676,1]
+ct = 1
+for i in perm:
+    ct = ct + 1
+    pr_pr = kcdi[0]
+    kcdi = calthres(i,pr_pr,pred_list)
+    pred_list.append(kcdi[0])
+    if kcdi[1] == 1:
+        print("Pass",ct,perm)
+        break
+
 def login(request):
     return render(request,'student/signin.html')
 
@@ -84,17 +185,25 @@ def register_action(request):
                 log.save()
                 u_id = Student.objects.all().filter(email=email)
                 uid = u_id[0].id
+                anaa = Analysis.objects.all()
+                anaa_id = []
+                for i in anaa:
+                    anaa_id.append(i.id)
+                mxq = max(anaa_id)
+                print(anaa_id)
+                print(mxq)
                 topics = topic.objects.all()
                 for i in topics:
-                    if i == 1:
+                    mxq = mxq + 15
+                    if i.top_id == 1:
                         ti = 1
-                    elif i == 2:
+                    elif i.top_id == 2:
                         ti = 31
-                    elif i == 3:
+                    elif i.top_id == 3:
                         ti = 46
-                    elif i == 4:
+                    elif i.top_id == 4:
                         ti = 16
-                    log12 = Analysis(user_id= uid,sub_id = i.sub_id,topic_id= i.top_id,time = 0, last_time = 0,best_time = 0,attempt = 0,hint = 0,correct = 0,wasted = 0, que_id = ti,test_id = 0)
+                    log12 = Analysis(id = mxq,user_id= uid,sub_id = i.sub_id,topic_id= i.top_id,time = 0, last_time = 0,best_time = 0,attempt = 0,hint = 0,correct = 0,wasted = 0, que_id = ti,test_id = 0)
                     log12.save()
             registered = True 
             print("registered!")      
@@ -151,6 +260,7 @@ def home(request):
             for j in tid[i-1]:
                 crr = wtt = 0
                 que = Analysis.objects.all().filter(user_id = u_id ,sub_id = i,topic_id=j,test_id = 0)
+                print(u_id,i,j)
                 print(que)
                 q = []
                 for k in que:
@@ -164,7 +274,7 @@ def home(request):
                     wtt = 1
                 sttr = (crr / (crr + wtt))*100
                 stt.append(int(sttr))
-                print("sttsttsttsttsttstt",stt,sttr)
+                print("sttsttsttsttsttstt",stt,sttr,q)
                 print("quesssssssssss",q)
                 mxa = max(q)
                 qud = Analysis.objects.all().filter(user_id = u_id ,que_id = mxa,test_id = 0)
@@ -344,7 +454,19 @@ def test(request,ana_id,que_id):
         top_id = ana[0].topic_id
         user_id = ana[0].user_id
         print(ana,ana_id,sub_id,top_id)
-        
+
+        kc_data = Kc_ana.objects.all().filter(stu_id = user_id,kc_id = 1)
+        # kc_datac = Kc_ana.objects.all().filter(stu_id = user_id,que_id = que_id,kc_id = 1)
+        pr_list = kc_data[0].p_list
+        pre_list = []
+        for i in pr_list.split(","):
+            pre_list.append(float(i))
+        kcid_id = kc_data[0].id
+        # kcid_idc = kc_datac[0].id
+        # kc_data1 = Kc_ana.objects.all().filter(stu_id = user_id,que_id = que_id + 1,kc_id = 1)
+        # if len(kc_data1) == 0:
+        #     logkc = Kc_ana(stu_id = user_id,que_id = que_id + 1,kc_id = 1,status = 0,p_list ="0")
+        #     logkc.save()
         q = []
         h = []
         o1 = []
@@ -378,6 +500,27 @@ def test(request,ana_id,que_id):
         if att < 3:
             if request.method == 'POST':
                 opt = request.POST.get('opt', '-2')
+                if int(opt) != -2:
+                    pr_pr = pre_list[-1]
+                    answer = Quetions.objects.all().filter(que_id=que_id)
+                    if int(opt) == answer[0].ans:
+                        co_pr = 1
+                    else:
+                        co_pr = 0
+                    kcid = calthres(co_pr,pr_pr,pre_list)
+                    print("jjjjjjjjjjjjjjjjjjjj",kcid,pr_list)
+                    pr_list = pr_list + "," + str(kcid[0])
+                    print("jjjjjjjjjjjjjjjjjjjj",pr_list)
+                    jj=0
+                    if kcid[1] == 1:
+                        # Pass = 1
+                        jj = 1
+                        print("PAssssssssssss")
+                        logkc1 = Kc_ana(id = kcid_id,stu_id = user_id,kc_id = 1,status = 1,p_list = pr_list)
+                        logkc1.save()
+                        opt = -2
+                    logkc2 = Kc_ana(id = kcid_id,stu_id = user_id,kc_id = 1,status = 0,p_list = pr_list)
+                    logkc2.save()
                 if int(opt) != -2:
                     hint = request.POST.get('hint', '0')
                     time = request.POST.get('time', '0')
@@ -516,9 +659,14 @@ def test(request,ana_id,que_id):
                         m = 1
                         return render(request,'student/test.html',{"z":z,"m":m,"msg":msg,"k":k,"x":x,"so":sol,'username':request.session['name'],'useremail':request.session['email']})
                 else:
-                    k=11
-                    m = 1
-                    return render(request,'student/test.html',{"z":z,"m":m,"msg":msg,"k":k,"x":x,'username':request.session['name'],'useremail':request.session['email']})
+                    if jj == 1:
+                        k=111
+                        m = 1
+                        return render(request,'student/test.html',{"z":z,"m":m,"msg":msg,"k":k,"x":x,'username':request.session['name'],'useremail':request.session['email'],"sid":sidd})
+                    else:
+                        k=11
+                        m = 1
+                        return render(request,'student/test.html',{"z":z,"m":m,"msg":msg,"k":k,"x":x,'username':request.session['name'],'useremail':request.session['email']})
 
         else:
             if request.method == 'POST':

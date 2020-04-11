@@ -43,11 +43,22 @@ class topic(models.Model):
     top_name = models.CharField(max_length=1000 , null=False)
     level = models.IntegerField()
     sub_id = models.IntegerField()
+    kcids = models.CharField(max_length=1000 , null=False)
 
 class Motivation(models.Model):
     mot_id = models.IntegerField()
     mot_quote = models.CharField(max_length=1000 , null=False)
     mots_id = models.IntegerField()
+
+class Kc(models.Model):
+    kc_id = models.IntegerField(primary_key=True)
+    priority = models.IntegerField()
+
+class Kc_ana(models.Model):
+    stu_id = models.IntegerField()
+    kc_id = models.IntegerField()
+    status = models.IntegerField()
+    p_list = models.CharField(max_length=1000 , null=False)
 
 class Quetions(models.Model):
     que_id = models.IntegerField()
@@ -68,6 +79,7 @@ class Quetions(models.Model):
     attempt = models.IntegerField()
     test_id = models.IntegerField()
     speed = models.IntegerField(default=0)
+    kcid = models.CharField(max_length=1000 , default="1")
 
 class Imaged(models.Model):
     img_id = models.IntegerField(primary_key=True)

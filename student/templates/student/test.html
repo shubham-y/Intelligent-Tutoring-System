@@ -12,7 +12,8 @@ Learning test
     
 
 <div class="row justify-content-center">
-    {% if k != 0 and k != -1 %}
+    {% if k != 0 and k != -1 and k != 111 %}
+    <input type="text" id="ifelse" name="elif" value="0">
     {% if m %}
     {% if k == 11 %}
     <div class="col-md-10">
@@ -21,6 +22,7 @@ Learning test
         </div>
     </div>
     {% endif %}
+    
     {% if k == 1 %}
     <div class="col-md-10">
         <div class="alert alert-warning border border-warning" role="alert">
@@ -216,7 +218,24 @@ Learning test
         </div>
         {% endfor %}
     </div>
+    {% elif k == 111 %}
+    <input type="text" id="ifelse" name="elif" value="1">
+    <div class="col-md-10">
+        <div class="card card-outline-info">
+            <div class="card-header">
+                <h1 class="m-b-0 text-white">Congratulations!!</h1></div>
+            <div class="card-body">
+                    <h3 class="card-title">You successfully learned This topic!!! We are happy for you!</h3>
+                
+                <p class="card-text">You can download the questions and their solution from the above link and know how topper is performing.</p>
+                <div class="card-text text-center mr-3">
+                <a href="{% url 'analyse' sid %}" class="btn btn-info">Go to the dashboard to check the result.</a>
+            </div>
+            </div>
+        </div>
+    </div>
     {% elif k == 0 %}
+    <input type="text" id="ifelse" name="elif" value="1">
     <div class="col-md-10">
         <div class="card card-outline-info">
             <div class="card-header">
@@ -234,6 +253,7 @@ Learning test
         </div>
     </div>
     {% elif k == -1 %}
+    <input type="text" id="ifelse" name="elif" value="1">
     <div class="col-md-10">
         <div class="card card-outline-info">
             <div class="card-header">
@@ -253,7 +273,7 @@ Learning test
     {% endif %}
     
 </div>
-<div class="row justify-content-center">
+<div id="callll" class="row justify-content-center">
 <div class="col-md-10">
     <div class="card card-outline-inverse">
         <div class="card-header">
@@ -732,6 +752,13 @@ function OpenImage(){
 </div>
 </div>
 <script>
+    $("#ifelse").hide()
+if($("#ifelse").val() == "1"){
+$("#callll").hide()
+}
+else{
+    $("#callll").show()
+}
 var xk1 = 1;
 // for(xkk1 = 2;xkk1<18;xkk1++){
 //     console.log("above inside for",xkk1.toString());
