@@ -165,12 +165,66 @@ Learning test
             <div class="card-header">
                 <h1 class="m-b-0 text-white">Q{{qno}}.</h1></div>
             <div class="card-body">
-                <h2 class="card-title">{{que}}</h2>
+                <h2 class="card-title">{{que}}(<span class="text-success">This question can be solved by solving {{nkc}} Shapes.</span>)</h2>
                 
                 <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
                 <form class="form" id="ttt" method="post" action="{% url 'test' aid qid %}">
                         {% csrf_token %}
                         {% if x == 0 %}
+                    
+                    <h3 class="font-weight-bold">So we have provided {{nkc}} Steps as per the question, fill the boxes by solving any shapes required in question:</h3>
+                    <br>
+                    {% for i in rkc %}
+                    
+                    {% if i == 1 %}
+                    <div class="row">
+                        <div class="col-4">
+                            <h2>--> First Step:  </h2>
+                        </div>
+                        <div class="col-8 d-block">
+                            
+                            {% if step1 == "-1" %}
+                                <input type="text"  name="step1" value="">
+                            {% else %}
+                                <input type="text"  name="step1" value="{{step1}}">
+                            {% endif %}
+                                
+                        </div>
+                    </div>
+                    <br>
+                    {% elif i == 2 %}
+                    <div class="row">
+                        <div class="col-4">
+                            <h2>--> Second Step:  </h2>
+                        </div>
+                        <div class="col-8 d-block">
+                            {% if step2 == "-1" %}
+                                <input type="text"  name="step2" value="">
+                            {% else %}
+                                <input type="text"  name="step2" value="{{step2}}">
+                            {% endif %}
+                        </div>
+                    </div>
+                    <br>
+                    {% else %}
+                    <div class="row">
+                        <div class="col-4">
+                            <h2>--> Third Step:  </h2>
+                        </div>
+                        <div class="col-8 d-block">
+                            {% if step3 == "-1" %}
+                                <input type="text"  name="step3" value="">
+                            {% else %}
+                                <input type="text"  name="step3" value="{{step3}}">
+                            {% endif %}
+                        </div>
+                    </div>
+                    <br>
+                    {% endif %}
+
+                    {% endfor %}
+                        
+                    <h2>--> Final Step: Calculate the final answer and select the options below:</h2>
                     <div class="row">
                     <div class="input-group mx-0 mx-md-3">
                             <div class="input-group-prepend">
