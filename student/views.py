@@ -444,6 +444,40 @@ def test(request,ana_id,que_id):
     ele=Quetions.objects.all().filter(que_id=que_id)
     sidd = ele[0].sub_id
     qn = ele[0].que_no
+    qn_kc = ele[0].kcid
+    kc_qne = qn_kc.split(",")
+    kc_qn = []
+    for i in kc_qne:
+        kc_qn.append(int(i))
+    print(kc_qn)
+    kc_stat = Kc_ana.objects.all().filter(stu_id = u_id)
+    kc_list = []
+    status = 1
+    kc_stat_list = []
+    for i in kc_stat:
+        kc_list.append(i.kc_id)
+        kc_stat_list.append(i.status)
+        if i.status == 0:
+            status = 0
+    print("jdjdjdjdjdjdjdjdjdjdjd",kc_list,status,kc_stat_list,kc_qn)
+    if status == 1:
+        ana_id = 1111111111
+    else:
+        status1 = 1
+        for i in kc_qn:
+            j = kc_list.index(i)
+            if kc_stat_list[j] == 0:
+                status1 = 0
+    anaid = Analysis.objects.all().filter(id=ana_id)
+    print(anaid,ana_id)
+    subid = anaid[0].sub_id
+    topid = anaid[0].topic_id
+    userid = anaid[0].user_id
+    if status1 == 1:
+        logkc1 = Analysis(id = ana_id + 1,user_id=userid,sub_id = subid,topic_id=topid,time = 0, last_time = 0,best_time = 0,attempt = 0,hint = 0,correct = 0,wasted = 0, que_id = (que_id + 1),test_id = 0,status =1)
+        logkc1.save()
+        return HttpResponseRedirect(reverse('test', args=(ana_id + 1,que_id + 1,)))
+
     if ana_id != 0 and ana_id != 1111111111:
         ana = Analysis.objects.all().filter(id=ana_id)
         print(qn,"at firstttttttttttttttttttttttttttttttttttttttttttt")
@@ -458,6 +492,7 @@ def test(request,ana_id,que_id):
         kc_data = Kc_ana.objects.all().filter(stu_id = user_id,kc_id = 1)
         # kc_datac = Kc_ana.objects.all().filter(stu_id = user_id,que_id = que_id,kc_id = 1)
         pr_list = kc_data[0].p_list
+        
         pre_list = []
         print(len(pr_list),"LLLLLLLLLLLLLLLLLLLLLL")
         if len(pr_list) == 0:
@@ -530,13 +565,28 @@ def test(request,ana_id,que_id):
                             # Pass = 1
                             jj = 1
                             print("PAssssssssssss")
-                            logkc1 = Kc_ana(id = kcid_id,stu_id = user_id,kc_id = 1,status = 1,p_list = pr_list)
-                            logkc1.save()
+                            logkc11 = Kc_ana(id = kcid_id,stu_id = user_id,kc_id = 1,status = 1,p_list = pr_list)
+                            logkc11.save()
                             opt = -2
+                            status1 = 1
+                            kc_stat1 = Kc_ana.objects.all().filter(stu_id = u_id)
+                            kc_stat_list1 = []
+                            for i in kc_stat1:
+                                kc_stat_list1.append(i.status)
+                            print("Kcccccccccccstattttttttttlistttttttt",kc_stat_list1)
+                            for i in kc_qn:
+                                j = kc_list.index(i)
+                                if kc_stat_list1[j] == 0:
+                                    status1 = 0
+                            if status1 == 1:
+                                logkc22 = Analysis(id = ana_id + 1,user_id=userid,sub_id = subid,topic_id=topid,time = 0, last_time = 0,best_time = 0,attempt = 0,hint = 0,correct = 0,wasted = 0, que_id = (que_id + 1),test_id = 0,status =1)
+                                logkc22.save()
+                                return HttpResponseRedirect(reverse('test', args=(ana_id + 1,que_id + 1,)))
                         else:
                             logkc2 = Kc_ana(id = kcid_id,stu_id = user_id,kc_id = 1,status = 0,p_list = pr_list)
                             logkc2.save()
                         print("kciddddddddddddd",kcid[0])
+                    
                 if int(opt) != -2:
                     hint = request.POST.get('hint', '0')
                     time = request.POST.get('time', '0')
