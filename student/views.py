@@ -150,6 +150,9 @@ for i in perm:
         print("Pass",ct,perm)
         break
 
+def learning_resource(request):
+    return render(request,'student/learning_resource.html')
+
 def login(request):
     return render(request,'student/signin.html')
 

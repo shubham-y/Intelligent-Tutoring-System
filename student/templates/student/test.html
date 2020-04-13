@@ -165,7 +165,8 @@ Learning test
             <div class="card-header">
                 <h1 class="m-b-0 text-white">Q{{qno}}.</h1></div>
             <div class="card-body">
-                <h2 class="card-title">{{que}}</h2>
+                <h2 class="card-title">{{que|safe }}</h2>
+
                 
                 <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
                 <form class="form" id="ttt" method="post" action="{% url 'test' aid qid %}">
