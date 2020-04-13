@@ -15,6 +15,7 @@ class Student(models.Model):
 
 class Analysis(models.Model):
     ana_id = models.IntegerField(null=True)
+    status = models.IntegerField(default=0)
     user_id = models.IntegerField(null=True)
     sub_id = models.IntegerField(null=True)
     topic_id = models.IntegerField(null=True)
@@ -72,6 +73,9 @@ class Quetions(models.Model):
     hint = models.CharField(max_length=1000 , null=False)
     level = models.IntegerField()
     ans = models.IntegerField()
+    step1 = models.IntegerField(default=-1)
+    step2 = models.IntegerField(default=-1)
+    step3 = models.IntegerField(default=-1)
     solution = models.CharField(max_length=1000 , null=False)
     best_time = models.IntegerField()
     avg_time = models.IntegerField()

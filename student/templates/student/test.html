@@ -12,7 +12,7 @@ Learning test
     
 
 <div class="row justify-content-center">
-    {% if k != 0 and k != -1 and k != 111 %}
+    {% if k != 0 and k != -1 and k != 111 and k != 1115 and k != 1116 %}
     <input type="text" id="ifelse" name="elif" value="0">
     {% if m %}
     {% if k == 11 %}
@@ -115,7 +115,7 @@ Learning test
                
     {% endif %}
     {% if k == 6 %}
-    <div class="col-md-10">
+    <!-- <div class="col-md-10"></div> -->
         <div class="alert alert-danger border border-danger" role="alert">
             <h2 class="alert-heading">OOPS...wrong answer!!&#128524</h2>
             You havn't checked the hint. Hint helps a lot to find the proper direction of solution. Always try to Grab the opportunity..!!<br>
@@ -165,13 +165,66 @@ Learning test
             <div class="card-header">
                 <h1 class="m-b-0 text-white">Q{{qno}}.</h1></div>
             <div class="card-body">
-                <h2 class="card-title">{{que|safe }}</h2>
-
+                <h2 class="card-title">{{que|safe}}(<span class="text-success">This question can be solved by solving {{nkc}} Shapes.</span>)</h2>
                 
                 <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
                 <form class="form" id="ttt" method="post" action="{% url 'test' aid qid %}">
                         {% csrf_token %}
                         {% if x == 0 %}
+                    
+                    <h3 class="font-weight-bold">So we have provided {{nkc}} Steps as per the question, fill the boxes by solving any shapes required in question:</h3>
+                    <br>
+                    {% for i in rkc %}
+                    
+                    {% if i == 1 %}
+                    <div class="row">
+                        <div class="col-4">
+                            <h2>--> First Step:  </h2>
+                        </div>
+                        <div class="col-8 d-block">
+                            
+                            {% if step1 == "-1" %}
+                                <input type="text"  name="step1" value="">
+                            {% else %}
+                                <input type="text"  name="step1" value="{{step1}}">
+                            {% endif %}
+                                
+                        </div>
+                    </div>
+                    <br>
+                    {% elif i == 2 %}
+                    <div class="row">
+                        <div class="col-4">
+                            <h2>--> Second Step:  </h2>
+                        </div>
+                        <div class="col-8 d-block">
+                            {% if step2 == "-1" %}
+                                <input type="text"  name="step2" value="">
+                            {% else %}
+                                <input type="text"  name="step2" value="{{step2}}">
+                            {% endif %}
+                        </div>
+                    </div>
+                    <br>
+                    {% else %}
+                    <div class="row">
+                        <div class="col-4">
+                            <h2>--> Third Step:  </h2>
+                        </div>
+                        <div class="col-8 d-block">
+                            {% if step3 == "-1" %}
+                                <input type="text"  name="step3" value="">
+                            {% else %}
+                                <input type="text"  name="step3" value="{{step3}}">
+                            {% endif %}
+                        </div>
+                    </div>
+                    <br>
+                    {% endif %}
+
+                    {% endfor %}
+                        
+                    <h2>--> Final Step: Calculate the final answer and select the options below:</h2>
                     <div class="row">
                     <div class="input-group mx-0 mx-md-3">
                             <div class="input-group-prepend">
@@ -219,6 +272,118 @@ Learning test
         </div>
         {% endfor %}
     </div>
+    {% elif k == 1115 %}
+    <input type="text" id="ifelse" name="elif" value="1">
+    <div class="col-md-10">
+        
+        {% if corr == 1 %}
+        <div class="alert alert-danger border border-danger" role="alert">
+            <h2 class="alert-heading">You did a great job!!!</h2>
+            You an check the solution and move on!<strong>Remember</strong> Keep on working hard, results are waiting!<br>
+            Here, You Have Following Options: <hr>
+        {% else %}
+        <div class="alert alert-danger border border-danger" role="alert">
+            <h2 class="alert-heading">OOPS...your step
+                
+                {% if lwr == 1 %}
+                {{wrong.0}} was
+            {% elif lwr == 2 %}
+            {{wrong.0}} and {{wrong.1}} were
+            {% elif lwr == 3 %}
+            {{wrong.0}}, {{wrong.1}} and {{wrong.2}} were
+            {% else %}
+            {{wrong.0}}, {{wrong.0}}, {{wrong.0}} and {{wrong.0}} were
+            {% endif %}
+
+                !!&#128578</h2>
+            You don't need to worry...<strong>Remember</strong> Success is not final, failure is not fatal: it is the courage to continue that counts.<br>
+            Here, You Have Following Options: <hr>
+        {% endif %}
+                        <button class="btn btn-inverse" data-toggle="modal" data-target="#exampleModal">
+                            View Solution
+                          </button>
+                        <a href="#" class="btn btn-inverse pull-right">Learn Site</a>
+                        
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h3 class="modal-title" id="exampleModalLabel">Solution</h3>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body text-dark">
+                                  Solution - {{so}}
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-primary border-primary" data-dismiss="modal">Close</button>
+                                </div>
+                              </div>
+                        </div> 
+                    </div>
+                    </div>
+    </div>
+    <form class="form"  method="get" action="{% url 'test' aid qid %}">
+        {% csrf_token %}
+    <button type="submit" ></button>
+    </form>
+    
+    {% elif k == 1116 %}
+    <input type="text" id="ifelse" name="elif" value="1">
+    <!-- <div class="col-md-10"></div> -->
+    {% if corr == 1 %}
+    <div class="alert alert-danger border border-danger" role="alert">
+        <h2 class="alert-heading">You did a great job!!!</h2>
+        You an check the solution and move on!<strong>Remember</strong> Keep on working hard, results are waiting!<br>
+        Here, You Have Following Options: <hr>
+    {% else %}
+    <div class="alert alert-danger border border-danger" role="alert">
+        <h2 class="alert-heading">OOPS...your step
+            
+            {% if lwr == 1 %}
+            {{wrong.0}} was
+        {% elif lwr == 2 %}
+        {{wrong.0}} and {{wrong.1}} were
+        {% elif lwr == 3 %}
+        {{wrong.0}}, {{wrong.1}} and {{wrong.2}} were
+        {% else %}
+        {{wrong.0}}, {{wrong.0}}, {{wrong.0}} and {{wrong.0}} were
+        {% endif %}
+
+            !!&#128578</h2>
+            You havn't checked the hint. Hint helps a lot to find the proper direction of solution. Always try to Grab the opportunity..!!<br>
+        Here, You Have Following Options: <hr>
+    {% endif %}
+            
+            <button class="btn btn-inverse" data-toggle="modal" data-target="#exampleModal">
+                View Solution
+              </button>
+            <a href="#" class="btn btn-inverse pull-right">Learn Site </a>
+            
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h3 class="modal-title" id="exampleModalLabel">Solution</h3>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body text-dark">
+                      Solution - {{so}}
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary border-primary" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+            </div> 
+        </div>
+        </div>
+        <form class="form"  method="get" action="{% url 'test' aid qid %}">
+            {% csrf_token %}
+        <button type="submit" ></button>
+        </form>    
     {% elif k == 111 %}
     <input type="text" id="ifelse" name="elif" value="1">
     <div class="col-md-10">
@@ -235,6 +400,7 @@ Learning test
             </div>
         </div>
     </div>
+    <button type="submit" formaction="{% url 'test' aid qid %}"></button>
     {% elif k == 0 %}
     <input type="text" id="ifelse" name="elif" value="1">
     <div class="col-md-10">
