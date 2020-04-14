@@ -129,15 +129,15 @@ def calthres(corr,prev_pred,pred_list):
     av = avg
     # print(av)
     # print(pred_list)
-    if av > 0.745 and len(pred_list) >= 5:
+    if av > 0.75 and len(pred_list) >= 4:
         jj = 1
     kcidd[1] = jj
     print(av)
     return kcidd
 
-perm = [0,1,0,1,0,1,1,0,1]
-pred_list = [0.82]
-kcdi = [0.82,1]
+perm = [1,1,0,1,0,0,1,0,1]
+pred_list = [0.6]
+kcdi = [0.6,1]
 # pred_list = [0.676]
 # kcdi = [0.676,1]
 ct = 1
