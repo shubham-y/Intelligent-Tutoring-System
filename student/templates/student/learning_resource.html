@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Learning Resource</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <style type="text/css">
+  body {
+  overflow: hidden; /* Hide scrollbars */
+}
+	.navbar{
+		background: linear-gradient(90deg,#761D52, #7A98BD);
+		color: linear-gradient(90deg,#ffffff, rgb(65, 64, 70));
+	}
+  	#vertical{
+  		/*position: absolute;
+  		width: 730px;
+  		height: 0px;
+  		margin-left: 30px;
+  		bottom:200px; 
+
+  		border: 1px solid #000000;
+  		transform: rotate(90deg);*/
+  		border: 1px solid black;
+  height: 550px;
+  position: absolute;
+  left: 28%;
+  margin-left: -3px;
+  top: 10%;
+  	}
+  	#horizontal{
+  		position: absolute;
+  		width: 1177px;
+  		height: 0px;
+  		left: 55px;
+  		top: 153px;
+  		border: 1px solid #000000;
+  	}
+  	#topic{
+  		position: absolute;
+  		width: 300px;
+  		height: 60px;
+  		left: 55px;
+  		top: 66px;
+
+  		background: #FAE570;
+  		box-shadow: 2px 8px 5px rgba(0, 0, 0, 0.25);
+  		border-radius: 20px;
+  	}
+  	#topic-text{
+  		position: relative;
+  		width: 300px;
+  		height: 60px;font-family: Roboto;
+  		font-style: normal;
+  		font-weight: normal;
+  		font-size: 26px;
+  		line-height: 30px;
+  		/*display: ;*/
+  		align-items: center;
+  		text-align: center;
+
+  		color:black;
+  	}
+  	#sub-topic{
+  		position: absolute;
+  		width: 191px;
+  		height: 30px;
+  		left: 414px;
+  		top: 81px;
+  	}
+  	#read-time{
+  		position: absolute;
+  		width: 146px;
+  		height: 15px;
+  		left: 414px;
+  		top: 124px;
+  	}
+  	#skills{
+  		position: absolute;
+  		width: 255px;
+  		height: 15px;
+  		left: 577px;
+  		top: 124px;
+  	}
+  	#content{ 
+  		position: absolute;
+  		width: 837px;
+  		height: 450px;
+  		left: 414px;
+  		top: 168px;
+
+  		background: rgba(222, 212, 212, 0.28);
+
+  		               /* margin:5px; 
+  		                padding:5px; 
+  		                background-color: green; 
+  		                width: 500px; 
+  		                height: 110px; */
+  		/*overflow: auto; */
+        text-align:justify; 
+        overflow-y: scroll;
+  		            
+  	}
+  	#time-spent{
+  		position: absolute;
+  		width: 251px;
+  		height: 41px;
+  		left: 946px;
+  		top: 75px;
+  	}
+  	#sub-topic-list-active{
+  		position: absolute;
+  		width: 40px;
+  		height: 40px;
+  		left: 70px;
+  		top: 180px;
+
+  		background: #36D21D;
+  		border-radius: 30px;
+  	}
+  	/*.progress-container {
+  	  width: 100%;
+  	  height: 8px;
+  	  background: #ccc;
+  	}
+
+  	.progress-bar {
+  	  height: 8px;
+  	  background: #4caf50;
+  	  width: 0%;
+  	}*/
+  	
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark" >
+  <!-- Brand/logo -->
+  <a class="navbar-brand" href="#"><span style="font-size: 20px">EIITS</span></a>
+  
+  <!-- Links -->
+  <ul class="navbar-nav ml-auto" style="color: white;">
+    <li class="nav-item">
+      <a class="nav-link" href="#" style="color: white;">Syllabus</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Getting started</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Definition</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Application</a>
+    </li>
+  </ul>
+</nav>
+
+<div id="vertical">
+	
+</div>
+<button id="topic"><span id="topic-text">Rectangle</span></button>
+<div id="horizontal">
+	<!-- <div class="progress-container">
+    <div class="progress-bar" id="myBar"></div>
+  </div>  -->
+</div>
+<div id="sub-topic"><span id="topic-text">Rectangle</span></div>
+
+<div id="read-time"><span >Read Time:10 min</span></div>
+
+<div id="vertical" style="left:41%; height: 20px; top:20%"></div>
+
+<div id="skills"><span>Skills: Area </span></div>
+
+<div id="time-spent"><span  style="font-size: 26px;">Time spent : 5:43 min </span></div>
+
+<div id="sub-topic-list-active"></div>
+
+<div id="content"><span ><p>Basic Concepts of Percentages 
+	<br>In this lesson, we cover the absolute basics of Percentages. The purpose of this lesson is to help you answer one simple question: What are Percentages? Basic Definition: Percent implies “for every hundred” and the sign % is read as percentage and x % is read as x per cent. In other words, a fraction with denominator 100 is called a per cent. For example, 20 % means 20/100 (i.e. 20 parts from 100). This can also be written as 0.2.<br> Basic Formula: In order to calculate p % of q, use the formula: (p/100) x q = (pxq)/100 <br>Also remember: p % of q = q % of p
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></span>
+</div>
+
+
+</body>
+<!-- <script>
+// When the user scrolls the page, execute myFunction 
+document.getElementById('content').onscroll = function() {myFunction()};
+
+function myFunction() {
+  var winScroll = document.getElementById('content');
+  var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var scrolled = (winScroll / height) * 100;
+  document.getElementById("myBar").style.width = scrolled + "%";
+}
+</script> -->
+</html>

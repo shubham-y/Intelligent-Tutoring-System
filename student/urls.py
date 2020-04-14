@@ -21,5 +21,6 @@ urlpatterns = [
     path('forum_reply/<int:forum_id>', views.forum_reply,name="forum_reply"),
     path('doubt/', views.doubt,name="doubt"),
     path('analyze/', views.analyze,name="analyze"),
+    path('learning_resource/', views.learning_resource,name = "learning_resource")
     # path("sele/",views.sele,name="sele"),
 ]
