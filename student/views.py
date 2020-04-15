@@ -500,27 +500,27 @@ def test(request,ana_id,que_id):
             step3 = request.POST.get('step3', '-22')
             stepv3 = step3
         elif len(kc_qn) == 2:
-            if kc_qn.count(1) > 0 and kc_qn.count(2) > 0:
-                step1 = request.POST.get('step1', '-22')
-                stepv1 = step1
-                step2 = request.POST.get('step2', '-22')
-                stepv2 = step2
-                stepv3 = "-1"
-                step3 = "-22"
-            elif kc_qn.count(1) > 0 and kc_qn.count(3) > 0:
-                step1 = request.POST.get('step1', '-22')
-                stepv1 = step1
-                stepv3 = "-1"
-                step3 = request.POST.get('step2', '-22')
-                stepv2 = step3
-                step2 = "-22"
-            elif kc_qn.count(2) > 0 and kc_qn.count(3) > 0:
-                stepv3 = "-1"
-                step2 = request.POST.get('step1', '-22')
-                stepv1 = step2
-                step3 = request.POST.get('step2', '-22')
-                stepv2 = step3
-                step1 = "-22"
+            # if kc_qn.count(1) > 0 and kc_qn.count(2) > 0:
+            step1 = request.POST.get('step1', '-22')
+            stepv1 = step1
+            step2 = request.POST.get('step2', '-22')
+            stepv2 = step2
+            stepv3 = "-1"
+            step3 = "-22"
+            # elif kc_qn.count(1) > 0 and kc_qn.count(3) > 0:
+            #     step1 = request.POST.get('step1', '-22')
+            #     stepv1 = step1
+            #     stepv3 = "-1"
+            #     step3 = request.POST.get('step2', '-22')
+            #     stepv2 = step3
+            #     step2 = "-22"
+            # elif kc_qn.count(2) > 0 and kc_qn.count(3) > 0:
+            #     stepv3 = "-1"
+            #     step2 = request.POST.get('step1', '-22')
+            #     stepv1 = step2
+            #     step3 = request.POST.get('step2', '-22')
+            #     stepv2 = step3
+            #     step1 = "-22"
         elif len(kc_qn) == 1:
             if kc_qn.count(1) > 0:
                 step1 = request.POST.get('step1', '-22')
@@ -577,7 +577,7 @@ def test(request,ana_id,que_id):
                         co_pr = 0
                     wr.append(co_pr)
                 elif ii == 3:
-                    if float(step3_a) == float(step1) or float(step3_a) == float(step2) or float(step3_a) == float(step3):
+                    if float(step2_a) == float(step1) or float(step2_a) == float(step2) or float(step2_a) == float(step3):
                         co_pr = 1
                     else:
                         co_pr = 0
