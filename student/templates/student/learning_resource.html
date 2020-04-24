@@ -9,8 +9,15 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   <script src="{% static 'student/js/timeme.min.js' %}"></script>
   <style type="text/css">
+  * {
+	  box-shadow: none;
+	  box-sizing: 0;
+	  padding: 0;
+
+  }
   body {
   overflow: hidden; /* Hide scrollbars */
+  padding: 0;
 }
 	.navbar{
 		background: linear-gradient(90deg,#761D52, #7A98BD);
@@ -112,7 +119,7 @@
   		left: 946px;
   		top: 75px;
   	}
-  	#sub-topic-list-active{
+  	.sub-topic-list-active1{
   		position: absolute;
   		width: 40px;
   		height: 40px;
@@ -122,12 +129,47 @@
   		background: #36D21D;
   		border-radius: 30px;
   	}
-  	#sub-topic-list{
+	  .sub-topic-list-active2{
   		position: absolute;
-  		width: 201px;
+  		width: 40px;
+  		height: 40px;
+  		left: 70px;
+  		top: 240px;
+
+  		background: #36D21D;
+  		border-radius: 30px;
+  	}
+	  .sub-topic-list-active3{
+  		position: absolute;
+  		width: 40px;
+  		height: 40px;
+  		left: 70px;
+  		top: 300px;
+
+  		background: #36D21D;
+  		border-radius: 30px;
+  	}
+  	.sub-topic-list1{
+  		position: absolute;
+  		width: 250px;
   		height: 36px;
   		left: 122px;
-  		top: 182px;
+  		top: 185px;
+		  color:black;
+  	}
+	  .sub-topic-list2{
+  		position: absolute;
+  		width: 250px;
+  		height: 36px;
+  		left: 122px;
+  		top: 245px;
+  	}
+	  .sub-topic-list3{
+  		position: absolute;
+  		width: 250px;
+  		height: 36px;
+  		left: 122px;
+  		top: 305px;
   	}
   	#image-rect{
   		position: absolute;
@@ -136,6 +178,25 @@
   		left: 89px;
   		top: 253px;
   	}
+	  p {
+		font-family: Poppins;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 16px;
+		line-height: 25px;
+		letter-spacing: 0.1em;
+		padding-left: 10px;
+		padding-right: 10px;
+		color: #000000;
+	  }
+	  button:focus { outline:0 ;
+		 }
+	.mm1{
+		color: #000000;
+	}
+	#contenttt{
+		padding: 0px !important;
+	}
   	/*.progress-container {
   	  width: 100%;
   	  height: 8px;
@@ -193,20 +254,802 @@
 
 <div id="time-spent"><span  style="font-size: 26px;">Time spent : <span id="timeInSeconds">0</span><span>Min</span> </span></div>
 
-<div id="sub-topic-list-active"></div>
-<div id="sub-topic-list"><span id="topic-text" style="font-size: 22px;
-line-height: 26px;">Areas of Squares and Rectangles</span></div>
+
+<div class="sub-topic-list-active1"></div>
+<div class="sub-topic-list1"><a href="#"><span class="mm1"  style="font-size: 16px;
+line-height: 22px;">Areas of Squares and Rectangles</span></a></div>
 
 
-<div id="content"><span >
-	<p>The simplest (and most commonly used) area calculations are for squares and rectangles.</p>
-	 <p>To find the area of a rectangle multiply its height by its width.</p> 
-	 <p>For a square you only need to find the length of one of the sides (as each side is the same length) and then multiply this by itself to find the area. This is the same as saying length2 or length squared.</p>
-	 <p>It is good practice to check that a shape is actually a square by measuring two sides. For example the wall of a room may look like a square but when you measure it you find it is actually a rectangle.</p>
-	</span>
+<div class="sub-topic-list-active2"></div>
+<div class="sub-topic-list2"><a href="#"><span class="mm1" style="font-size: 16px;
+line-height: 22px;">Areas of Triangles</span></a></div>
 
-	<img src="{% static 'student/images/LR content image.PNG' %}" id="image-rect"></img> 
+
+<div class="sub-topic-list-active3"></div>
+<div class="sub-topic-list3"><a href="#"><span class="mm1" style="font-size: 16px;
+line-height: 22px;">Areas of Circles</span></a></div>
+
+
+
+
+
+{% if sid == 1 %}
+	
+
+	
+<div id="rectangle">
+	
+	{% if s == 0 %}
+		
+	<div id="content">
+		<div id="contenttt" class="row px-4">
+		<!-- <div class=" col-12 text-center">
+		<input type="button" class="btn btn-primary" value="hello">
+	</div> -->
+		<div class=" col-12 text-center">
+			<h2 class=" col-12 text-center">Area of square and rectangle:</h2><br>
+		</div>
+		<div class=" col-12 text-left">
+			<h5 class=" col-12 text-left">Let's start with the defination:</h5>
+		</div>
+		<div class=" col-12">
+			<p class=" col-12 text-center">
+				A Square is a flat shape with 4 equal sides and every angle is a right angle (90°)
+			</p>
+			<div class="row">
+			<div class=" col-6 text-right">
+				<img src='/static/student/images/quadrilateral-square.gif' alt='First slide'>
+				
+			</div>
+			<div class=" col-6 text-left align-center my-auto">
+				<img class="mr-2" src='/static/student/images/quadrilateral-right-key.gif' alt='First slide'><i>means "right angle"</i><br>
+				<img class="mr-2 ml-1" src='/static/student/images/quadrilateral-equal-key.gif' alt='First slide'><i>show equal sides</i>
+			</div>
+			</div><br>
+		</div>
+
+		<div class=" col-12 text-left">
+			<h5 class=" col-12 text-left">Properties of square are:</h5>
+		</div>
+		<div class="col-1"></div>
+		<div class=" col-10">
+			<p class=" col-12 text-left">
+				<img src='/static/student/images/right-arrow.gif' alt='First slide'>
+				All sides are equal in length
+			</p>
+			<p class=" col-12 text-left">
+				<img src='/static/student/images/right-arrow.gif' alt='First slide'>
+				All sides are equal in length
+			</p>
+			<p class=" col-12 text-left">
+				<img src='/static/student/images/right-arrow.gif' alt='First slide'>
+				All sides are equal in length
+			</p>
+			<br>
+		</div>
+		<div class="col-1"></div>
+
+		<div class=" col-12 text-left">
+			<h5 class=" col-12 text-left">About Square:</h5>
+		</div>
+		<div class="col-1"></div>
+		<div class="col-10">
+			<p>
+				A square also fits the definition of a rectangle (all angles are 90°), a rhombus (all sides are equal length), a parallelogram (opposite sides parallel and equal in length) and a regular polygon(all angles equal and all sides equal). What a hero!
+				<br>
+			</p>
+		</div>
+		<div class="col-1"></div>
+
+		<div class=" col-12 text-left">
+			<h5 class=" col-12 text-left">Area of Square:</h5>
+		</div>
+
+		<div class="col-10 ml-5">
+			<div class="row">
+				<div class="col-5 text-right ">
+					<img src='/static/student/images/squar2.gif' alt='First slide'>
+				</div>
+				<div class="col-6 my-3">
+					<p>
+					The Area is the <b>side length squared</b>:
+					<span ><h5 class="text-center">Area = a<sup>2</sup> = a × a</h5></span>
+					</p>
+				</div>
+				<br>
+			</div>
+		</div>
+		<div class="col-1"></div>
+
+		<div class="col-1"></div>
+		<div class="col-10">
+		<div class="card mb-3">
+			<div class="card-header bg-white"><h6>Example: A square has a side length of 6 m, what is its Area?</h6></div>
+			<div class="card-body bg-light">
+			  <h5 class="card-title"><p>Area = 6 m × 6 m = <b>36 m<sup>2</sup></b></p></h5>
+			</div>
+		  </div>
+		</div>
+		<div class="col-1"></div>
+
+		<div class="col-1"></div>
+		<div class="col-10">
+			<div class="row">
+				<div class="col-4 text-right my-auto">
+					<img src='/static/student/images/square-diag.gif' alt='First slide'>
+				</div>
+				<div class="col-8 my-3">
+					<p>
+						The Area is also <b>half of the diagonal squared:</b>
+					<span ><h5 class="text-center">Area = d<sup>2</sup>/2</h5></span>
+					</p>
+				</div>
+				<br>
+			</div>
+		</div>
+		<div class="col-1"></div>
+
+		<div class=" col-12 text-left">
+			<h5 class=" col-12 text-left">Perimeter of a Square:</h5>
+		</div>
+		<div class="col-1"></div>
+		<div class="col-10">
+			<p>
+				The Perimeter is the distance around the edge.
+				<br>
+			</p>
+		</div>
+		<div class="col-1"></div>
+
+		<div class="col-1"></div>
+		<div class="col-10">
+			<div class="row">
+				<div class="col-4 text-right my-auto">
+					<img src='/static/student/images/square-perim.gif' alt='First slide'>
+				</div>
+				<div class="col-8 my-3">
+					<p>
+						The Perimeter is <b>4 times the side length:</b>
+					<span ><h5 class="text-center">Perimeter = 4a</h5></span>
+					</p>
+				</div>
+				<br>
+			</div>
+		</div>
+		<div class="col-1"></div>
+
+		<div class="col-1"></div>
+		<div class="col-10">
+		<div class="card mb-3">
+			<div class="card-header bg-white"><h6>Example: A square has a side length of 12 cm, what is its Perimeter?</h6></div>
+			<div class="card-body bg-light">
+			  <h5 class="card-title"><p>Perimeter = 4 × 12 cm = <b>48 cm</b></p></h5>
+			</div>
+		  </div>
+		</div>
+		<div class="col-1"></div>
+
+
+		<div class=" col-12 text-left">
+			<h5 class=" col-12 text-left">Diagonals of a Square:</h5>
+		</div>
+		<div class="col-1"></div>
+		<div class="col-10">
+			<p>
+				A square has two diagonals, they are equal in length and intersect in the middle.
+				<br>
+			</p>
+		</div>
+		<div class="col-1"></div>
+
+		<div class="col-1"></div>
+		<div class="col-10">
+			<div class="row">
+				<div class="col-4 text-right my-auto">
+					<img src='/static/student/images/square-diag.gif' alt='First slide'>
+				</div>
+				<div class="col-8 my-3">
+					<p>
+						The Diagonal is the <b>side length times the square root of 2:</b>
+					<span ><h5 class="text-center">Diagonal "d" = a × √2</h5></span>
+					</p>
+				</div>
+				<br>
+			</div>
+		</div>
+		<div class="col-1"></div>
+
+		<div class="col-1"></div>
+		<div class="col-10">
+		<div class="card mb-3">
+			<div class="card-header bg-white"><h6>Example: A square has a side length of 5 m, what is the length of a diagonal?</h6></div>
+			<div class="card-body bg-light">
+			  <h5 class="card-title">
+				<div class="row">
+					<div class="col-4 text-right mt-4">
+						<img src='/static/student/images/square-diag-ex.gif' alt='First slide'>
+					</div>
+					<div class="col-8 my-3">
+					<p>Diagonal Length =	a × √2</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=	5 × 1.41421...</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=	<b>7.071 m</b> (to 3 decimals)</p>
+				</div>
+			</h5>
+				</div>
+			</div>
+		  </div>
+		</div>
+		<!-- <div class="col-1"></div> -->
+
+
+
+	</div>
 </div>
+
+	{% else %}
+
+<div id="content">
+	<input type="text" id="user-caption1" value='<div class=" col-12 text-left">
+		<h5 class=" col-12 text-left">Lets start with the defination:</h5>
+	</div>
+	<div class=" col-12">
+		<p class=" col-12 text-center">
+			A Square is a flat shape with 4 equal sides and every angle is a right angle (90°)
+		</p>
+		<div class="row">
+		<div class=" col-6 text-right">
+			<img src="/static/student/images/quadrilateral-square.gif">
+			
+		</div>
+		<div class=" col-6 text-left align-center my-auto">
+			<img class="mr-2" src="/static/student/images/quadrilateral-right-key.gif"><i>means "right angle"</i><br>
+			<img class="mr-2 ml-1" src="/static/student/images/quadrilateral-equal-key.gif" ><i>show equal sides</i>
+		</div>
+		</div><br>
+	</div>' />
+	<input type="text" id="user-caption2" value='<div class=" col-12 text-left">
+		<h5 class=" col-12 text-left">Properties of square are:</h5>
+	</div>
+	<div class="col-1"></div>
+	<div class=" col-10">
+		<p class=" col-12 text-left">
+			<img src="/static/student/images/right-arrow.gif">
+			All sides are equal in length
+		</p>
+		<p class=" col-12 text-left">
+			<img src="/static/student/images/right-arrow.gif" >
+			All sides are equal in length
+		</p>
+		<p class=" col-12 text-left">
+			<img src="/static/student/images/right-arrow.gif" >
+			All sides are equal in length
+		</p>
+		<br>
+	</div>
+	<div class="col-1"></div>' />
+	<input type="text" id="user-caption3" value='<div class=" col-12 text-left">
+		<h5 class=" col-12 text-left">About Square:</h5>
+	</div>
+	<div class="col-1"></div>
+	<div class="col-10">
+		<p>
+			A square also fits the definition of a rectangle (all angles are 90°), a rhombus (all sides are equal length), a parallelogram (opposite sides parallel and equal in length) and a regular polygon(all angles equal and all sides equal). What a hero!
+			<br>
+		</p>
+	</div>
+	<div class="col-1"></div>' />
+	<input type="text" id="user-caption4" value='<div class=" col-12 text-left">
+		<h5 class=" col-12 text-left">Area of Square:</h5>
+	</div>
+
+	<div class="col-10 ml-5">
+		<div class="row">
+			<div class="col-5 text-right ">
+				<img src="/static/student/images/squar2.gif">
+			</div>
+			<div class="col-6 my-3">
+				<p>
+				The Area is the <b>side length squared</b>:
+				<span ><h5 class="text-center">Area = a<sup>2</sup> = a × a</h5></span>
+				</p>
+			</div>
+			<br>
+		</div>
+	</div>
+	<div class="col-1"></div>
+
+	<div class="col-1"></div>
+	<div class="col-10">
+	<div class="card mb-3">
+		<div class="card-header bg-white"><h6>Example: A square has a side length of 6 m, what is its Area?</h6></div>
+		<div class="card-body bg-light">
+		  <h5 class="card-title"><p>Area = 6 m × 6 m = <b>36 m<sup>2</sup></b></p></h5>
+		</div>
+	  </div>
+	</div>
+	<div class="col-1"></div>
+
+	<div class="col-1"></div>
+	<div class="col-10">
+		<div class="row">
+			<div class="col-4 text-right my-auto">
+				<img src="/static/student/images/square-diag.gif" >
+			</div>
+			<div class="col-8 my-3">
+				<p>
+					The Area is also <b>half of the diagonal squared:</b>
+				<span ><h5 class="text-center">Area = d<sup>2</sup>/2</h5></span>
+				</p>
+			</div>
+			<br>
+		</div>
+	</div>
+	<div class="col-1"></div>' />
+	<input type="text" id="user-caption5" value='<div class=" col-12 text-left">
+		<h5 class=" col-12 text-left">Perimeter of a Square:</h5>
+	</div>
+	<div class="col-1"></div>
+	<div class="col-10">
+		<p>
+			The Perimeter is the distance around the edge.
+			<br>
+		</p>
+	</div>
+	<div class="col-1"></div>
+
+	<div class="col-1"></div>
+	<div class="col-10">
+		<div class="row">
+			<div class="col-4 text-right my-auto">
+				<img src="/static/student/images/square-perim.gif">
+			</div>
+			<div class="col-8 my-3">
+				<p>
+					The Perimeter is <b>4 times the side length:</b>
+				<span ><h5 class="text-center">Perimeter = 4a</h5></span>
+				</p>
+			</div>
+			<br>
+		</div>
+	</div>
+	<div class="col-1"></div>
+
+	<div class="col-1"></div>
+	<div class="col-10">
+	<div class="card mb-3">
+		<div class="card-header bg-white"><h6>Example: A square has a side length of 12 cm, what is its Perimeter?</h6></div>
+		<div class="card-body bg-light">
+		  <h5 class="card-title"><p>Perimeter = 4 × 12 cm = <b>48 cm</b></p></h5>
+		</div>
+	  </div>
+	</div>
+	<div class="col-1"></div>' />
+	<input type="text" id="user-caption6" value='<div class=" col-12 text-left">
+		<h5 class=" col-12 text-left">Diagonals of a Square:</h5>
+	</div>
+	<div class="col-1"></div>
+	<div class="col-10">
+		<p>
+			A square has two diagonals, they are equal in length and intersect in the middle.
+			<br>
+		</p>
+	</div>
+	<div class="col-1"></div>
+
+	<div class="col-1"></div>
+	<div class="col-10">
+		<div class="row">
+			<div class="col-4 text-right my-auto">
+				<img src="/static/student/images/square-diag.gif">
+			</div>
+			<div class="col-8 my-3">
+				<p>
+					The Diagonal is the <b>side length times the square root of 2:</b>
+				<span ><h5 class="text-center">Diagonal "d" = a × √2</h5></span>
+				</p>
+			</div>
+			<br>
+		</div>
+	</div>
+	<div class="col-1"></div>
+
+	<div class="col-1"></div>
+	<div class="col-10">
+	<div class="card mb-3">
+		<div class="card-header bg-white"><h6>Example: A square has a side length of 5 m, what is the length of a diagonal?</h6></div>
+		<div class="card-body bg-light">
+		  <h5 class="card-title">
+			<div class="row">
+				<div class="col-4 text-right mt-4">
+					<img src="/static/student/images/square-diag-ex.gif">
+				</div>
+				<div class="col-8 my-3">
+				<p>Diagonal Length =	a × √2</p>
+				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=	5 × 1.41421...</p>
+				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=	<b>7.071 m</b> (to 3 decimals)</p>
+			</div>
+		</h5>
+			</div>
+		</div>
+	  </div>' />
+	
+	
+  
+
+	<div id="data" class="row px-4">
+		<!-- <div class=" col-12 text-center">
+		<input type="button" class="btn btn-primary" value="hello">
+	</div> -->
+		<div class=" col-12 text-center">
+			<h2 class=" col-12 text-center">Area of square and rectangle:</h2><br><br>
+			<input type="button" class="btn btn-info" id="test-typing1" value="Start Learning!!" />
+		</div>
+		
+	</div>
+	<div class="col-12 text-center mb-5 mt-1">
+		<input type="button" class="btn btn-info" id="test-typing2" value="Properties of squares" />
+	</div>
+	<div class="col-12 text-center mb-5 mt-1">
+		<input type="button" class="btn btn-info" id="test-typing3" value="About Squares" />
+	</div>
+	<div class="col-12 text-center mb-5 mt-1">
+		<input type="button" class="btn btn-info" id="test-typing4" value="Area of Squares" />
+	</div>
+	<div class="col-12 text-center mb-5 mt-1"> 
+		<input type="button" class="btn btn-info" id="test-typing5" value="Perimeter of Squares" />
+	</div>
+	<div class="col-12 text-center mb-5 mt-1">
+		<input type="button" class="btn btn-info" id="test-typing6" value="Diagonals of Squares" />
+	</div>
+	<div class="col-12 text-center mb-5 mt-3">
+		<input type="button" class="btn btn-info" id="test-typing-1" value="Submit the work!! Congrats!!" />
+	</div>
+	</div>
+    <div id="caption1" class="row px-4"></div><span id="cursor">|</span>
+
+</div>
+<script>
+	var captionLength = 0;
+	var caption = '';
+	var kk = 0
+	var count = 1;
+	var btn = 1;
+	var datta = $("#data");
+	// $("#test-typing2").hide();
+	// $("#cursor").hide();
+	$("#user-caption1").hide();
+	$("#user-caption2").hide();
+	$("#user-caption3").hide();
+	$("#user-caption4").hide();
+	$("#user-caption5").hide();
+	$("#user-caption6").hide();
+	$("#test-typing-1").hide();
+	$("#test-typing2").hide();
+	$("#test-typing3").hide();
+	$("#test-typing4").hide();
+	$("#test-typing5").hide();
+	$("#test-typing6").hide();
+	
+	
+	$(document).ready(function() {
+		setInterval ('cursorAnimation()', 600);
+		// captionEl = $('#caption1');
+		
+		$('#test-typing1').click(function(){
+			captionEl = $('#caption1');
+			$("#test-typing1").hide();
+			// $("#test-typing2").show();
+			testTypingEffect();
+		});
+		$('#test-typing2').click(function(){
+			// captionEl = $('#caption2');
+			$("#test-typing2").hide();
+			testTypingEffect();
+		});
+		$('#test-typing3').click(function(){
+			// captionEl = $('#caption3');
+			$("#test-typing3").hide();
+			testTypingEffect();
+		});
+		$('#test-typing4').click(function(){
+			// captionEl = $('#caption3');
+			$("#test-typing4").hide();
+			testTypingEffect();
+		});
+		$('#test-typing5').click(function(){
+			// captionEl = $('#caption3');
+			$("#test-typing5").hide();
+			testTypingEffect();
+		});
+		$('#test-typing6').click(function(){
+			// captionEl = $('#caption3');
+			$("#test-typing6").hide();
+			testTypingEffect();
+		});
+	
+		// $('#test-erasing').click(function(){
+		// 	testErasingEffect();
+		// });
+	});
+	
+	function testTypingEffect() {
+		if (count == 1) {
+			caption = $('input#user-caption1').val();
+			console.log("beforeeeeeeeeeeeeerrrrr");
+			type();
+			console.log("afterrrrrrrrrrrr");
+			count = 2;
+			var prev = datta.html();
+			datta.html(prev  + '<div id="caption2" class="row px-4"></div>');
+			captionEl = $('#caption2');
+			
+			}
+		else if (count == 2) {
+			caption = $('input#user-caption2').val();
+			type();
+			count = 3
+			var prev = datta.html();
+			datta.html(prev + $('input#user-caption1').val() + '<div id="caption3" class="row px-4"></div>');
+			captionEl = $('#caption3');
+		}
+		else if (count == 3) {
+			caption = $('input#user-caption3').val();
+			type();
+			count = 4
+			var prev = datta.html();
+			datta.html(prev + $('input#user-caption2').val() + '<div id="caption4" class="row px-4"></div>');
+			captionEl = $('#caption4');
+		}
+		else if (count == 4) {
+			caption = $('input#user-caption4').val();
+			type();
+			count = 5
+			var prev = datta.html();
+			datta.html(prev + $('input#user-caption3').val() + '<div id="caption5" class="row px-4"></div>');
+			captionEl = $('#caption5');
+		}
+		else if (count == 5) {
+			caption = $('input#user-caption5').val();
+			type();
+			count = 6
+			var prev = datta.html();
+			datta.html(prev + $('input#user-caption4').val() + '<div id="caption6" class="row px-4"></div>');
+			captionEl = $('#caption6');
+		}
+		else if (count == 6) {
+			caption = $('input#user-caption6').val();
+			type();
+			count = 7
+			var prev = datta.html();
+			datta.html(prev + $('input#user-caption5').val() + '<div id="caption7" class="row px-4"></div>');
+			captionEl = $('#caption7');
+		}
+		else {
+			alert("Completed");
+		}
+	}
+	
+	function type() {
+		console.log("innnnnnnnnnnnnnnnnnnnnnns");
+		console.log(captionLength);
+		captionEl.html(caption.substr(0, captionLength++));
+		if(captionLength < caption.length+1) {
+			setTimeout('type()', 5);
+		} else {
+			console.log("elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+			if (count == 2) {
+				$("#test-typing2").show();
+			}
+			else if(count == 3){
+				$("#test-typing3").show();
+			}
+			else if(count == 4){
+				$("#test-typing4").show();
+			}
+			else if(count == 5){
+				$("#test-typing5").show();
+			}
+			else if(count == 6){
+				$("#test-typing6").show();
+			} else {
+				$("#test-typing-1").show();
+			}
+			
+			// console.log(caption)
+			// var prev = captionEl.html()
+			// captionEl.html(prev + caption);
+			captionLength = 0;
+			caption = '';
+		}
+	}
+	
+	function testErasingEffect() {
+		caption = captionEl.html();
+		captionLength = caption.length;
+		if (captionLength>0) {
+			erase();
+		} else {
+			$('#caption').html("You didn't write anything to erase, but that's ok!");
+			setTimeout('testErasingEffect()', 1000);
+		}
+	}
+	
+	function erase() {
+		captionEl.html(caption.substr(0, captionLength--));
+		if(captionLength >= 0) {
+			setTimeout('erase()', 5);
+		} else {
+			captionLength = 0;
+			caption = '';
+		}	
+	}
+	
+	function cursorAnimation() {
+		$('#cursor').animate({
+			opacity: 0
+		}, 'fast', 'swing').animate({
+			opacity: 1
+		}, 'fast', 'swing');
+	}
+	</script>
+		{% endif %}
+</div>
+
+{% elif sid == 2 %}
+
+<div id="triangle">	
+	
+	<div id="content"><p>
+		<input type="text" id="user-caption" value="Type something here!" />
+		<input type="button" id="test-typing" value="Test Typing Effect" />
+		<input type="button" id="test-erasing" value="Test Erasing Effect" />  
+	</p>
+	<p class="console">
+		<span>>></span><span id="caption"></span><span id="cursor">|</span>
+	</p>
+	</div>
+	<script>
+		var captionLength = 0;
+		var caption = '';
+		
+		
+		$(document).ready(function() {
+			setInterval ('cursorAnimation()', 600);
+			captionEl = $('#caption');
+			
+			$('#test-typing').click(function(){
+				testTypingEffect();
+			});
+		
+			$('#test-erasing').click(function(){
+				testErasingEffect();
+			});
+		});
+		
+		function testTypingEffect() {
+			caption = $('input#user-caption').val();
+			type();
+		}
+		
+		function type() {
+			captionEl.html(caption.substr(0, captionLength++));
+			if(captionLength < caption.length+1) {
+				setTimeout('type()', 5);
+			} else {
+				captionLength = 0;
+				caption = '';
+			}
+		}
+		
+		function testErasingEffect() {
+			caption = captionEl.html();
+			captionLength = caption.length;
+			if (captionLength>0) {
+				erase();
+			} else {
+				$('#caption').html("You didn't write anything to erase, but that's ok!");
+				setTimeout('testErasingEffect()', 1000);
+			}
+		}
+		
+		function erase() {
+			captionEl.html(caption.substr(0, captionLength--));
+			if(captionLength >= 0) {
+				setTimeout('erase()', 5);
+			} else {
+				captionLength = 0;
+				caption = '';
+			}	
+		}
+		
+		function cursorAnimation() {
+			$('#cursor').animate({
+				opacity: 0
+			}, 'fast', 'swing').animate({
+				opacity: 1
+			}, 'fast', 'swing');
+		}
+		</script>
+	</div>
+
+	{% else %}	
+
+	<div id="circle">
+	
+		<div id="content"><p>
+			<input type="text" id="user-caption" value="Type something here!" />
+			<input type="button" id="test-typing" value="Test Typing Effect" />
+			<input type="button" id="test-erasing" value="Test Erasing Effect" />  
+		</p>
+		<p class="console">
+			<span>>></span><span id="caption"></span><span id="cursor">|</span>
+		</p>
+		</div>
+		<script>
+			var captionLength = 0;
+			var caption = '';
+			
+			
+			$(document).ready(function() {
+				setInterval ('cursorAnimation()', 600);
+				captionEl = $('#caption');
+				
+				$('#test-typing').click(function(){
+					testTypingEffect();
+				});
+			
+				$('#test-erasing').click(function(){
+					testErasingEffect();
+				});
+			});
+			
+			function testTypingEffect() {
+				caption = $('input#user-caption').val();
+				type();
+			}
+			
+			function type() {
+				captionEl.html(caption.substr(0, captionLength++));
+				if(captionLength < caption.length+1) {
+					setTimeout('type()', 5);
+				} else {
+					captionLength = 0;
+					caption = '';
+				}
+			}
+			
+			function testErasingEffect() {
+				caption = captionEl.html();
+				captionLength = caption.length;
+				if (captionLength>0) {
+					erase();
+				} else {
+					$('#caption').html("You didn't write anything to erase, but that's ok!");
+					setTimeout('testErasingEffect()', 1000);
+				}
+			}
+			
+			function erase() {
+				captionEl.html(caption.substr(0, captionLength--));
+				if(captionLength >= 0) {
+					setTimeout('erase()', 5);
+				} else {
+					captionLength = 0;
+					caption = '';
+				}	
+			}
+			
+			function cursorAnimation() {
+				$('#cursor').animate({
+					opacity: 0
+				}, 'fast', 'swing').animate({
+					opacity: 1
+				}, 'fast', 'swing');
+			}
+			</script>
+		</div>
+	
+		{% endif %}
 
 <script type="text/javascript">
 	    TimeMe.initialize({

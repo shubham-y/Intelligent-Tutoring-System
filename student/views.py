@@ -151,7 +151,9 @@ for i in perm:
         break
 
 def learning_resource(request):
-    return render(request,'student/learning_resource.html')
+    subtp_id = 1
+    st_com = 1
+    return render(request,'student/learning_resource.html',{"sid":subtp_id,"s":st_com})
 
 def login(request):
     return render(request,'student/signin.html')
