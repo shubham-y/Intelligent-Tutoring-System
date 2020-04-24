@@ -351,16 +351,27 @@ Learning test
         {{wrong.0}}, {{wrong.0}}, {{wrong.0}} and {{wrong.0}} were
         {% endif %}
 
-            !!&#128578</h2>
+            wrong !!&#128578</h2>
             You havn't checked the hint. Hint helps a lot to find the proper direction of solution. Always try to Grab the opportunity..!!<br>
         Here, You Have Following Options: <hr>
     {% endif %}
-            
+            <div class="row">
+                <div class="col-4">
             <button class="btn btn-inverse" data-toggle="modal" data-target="#exampleModal">
                 View Solution
               </button>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-3 justify-content-center">
+              <form class="form justify-content-center"  method="get" action="{% url 'test' aid qid %}">
+                {% csrf_token %}
+            <button type="submit" class="btn btn-primary block"> Next </button>
+            </form>
+        </div>
+        <div class="col-4">
             <a href="#" class="btn btn-inverse pull-right">Learn Site </a>
-            
+        </div>
+        </div>
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -380,10 +391,7 @@ Learning test
             </div> 
         </div>
         </div>
-        <form class="form"  method="get" action="{% url 'test' aid qid %}">
-            {% csrf_token %}
-        <button type="submit" ></button>
-        </form>    
+            
     {% elif k == 111 %}
     <input type="text" id="ifelse" name="elif" value="1">
     <div class="col-md-10">

@@ -111,3 +111,16 @@ class Forum_reply(models.Model):
     username =  models.CharField(max_length=100 , null=False)
     email =  models.CharField(max_length=100,default='')
     date = models.CharField(max_length = 20)
+
+class Subtopic(models.Model):
+    subtop_id = models.IntegerField(primary_key=True)
+    subtop_name = models.CharField(max_length=1000 , null=False)
+    top_id = models.IntegerField()
+    kcid = models.CharField(max_length=1000 , null=False)
+
+class St_ana(models.Model):
+    stana_id = models.IntegerField(primary_key=True)
+    complete_per = models.IntegerField(default=0)
+    user_id = models.IntegerField(null=True)
+    topic_id = models.IntegerField(null=True)
+    time = models.IntegerField(null=True)
