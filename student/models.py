@@ -54,6 +54,7 @@ class Motivation(models.Model):
 class Kc(models.Model):
     kc_id = models.IntegerField(primary_key=True)
     priority = models.IntegerField()
+    kc_name = models.CharField(max_length=1000 , null=False)
 
 class Kc_ana(models.Model):
     stu_id = models.IntegerField()

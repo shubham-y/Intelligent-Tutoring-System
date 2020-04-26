@@ -1,0 +1,865 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'student/assets/images/favicon.png' %}" rel="stylesheet">
+    <title>ITS</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'student/assets/plugins/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- chartist CSS -->
+    <link href="{% static 'student/assets/plugins/chartist-js/dist/chartist.min.css' %}" rel="stylesheet">
+    <link href="{% static 'student/assets/plugins/chartist-js/dist/chartist-init.css' %}" rel="stylesheet">
+    <link href="{% static 'student/assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css' %}" rel="stylesheet">
+    <link href="{% static 'student/assets/plugins/css-chart/css-chart.css' %}" rel="stylesheet">
+    <!--This page css - Morris CSS -->
+    <link href="{% static 'student/assets/plugins/c3-master/c3.min.css' %}" rel="stylesheet">
+    <!-- Vector CSS -->
+    <link href="{% static 'student/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css' %}" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="{% static 'student/css/style.css' %}" rel="stylesheet">
+    <!-- You can change the theme colors from here -->
+    <link href="{% static 'student/css/colors/blue.css' %}" id="theme" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+<style>
+@keyframes card1 {
+    from{transform: translateX(540px);}
+    to{transform: translateX(0px);}
+}
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+#d1{
+    animation: card1;
+    animation-delay: 2s;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+
+}
+#d2{
+    animation: shake;
+    animation-duration: 0.5s;
+    animation-iteration-count:4;
+}
+.btn{
+    backface-visibility: hidden;
+    transition: transform 50ms ease-in-out;
+}
+.btn:hover{
+    
+    background: linear-gradient(90deg,#1E88E5, #7460EE);
+    color: linear-gradient(90deg,#ffffff, rgb(65, 64, 70));
+    transform:translateY(-1px) scale(1.005);
+}
+.btn:hover::after{
+    content: " >>";
+}
+.navbar{
+    animation: navv;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    transition: ease;
+    
+}
+@keyframes navv {
+    0%{background: linear-gradient(-90deg,#1E88E5, #7460EE);}
+    100%{background: linear-gradient(90deg,#1E88E5, #7460EE);}
+}
+
+#lgo{
+    transform: translate(0%,30%);
+    stroke-dasharray:140px;
+    stroke-dashoffset: 0px;
+    animation: str 2s ease 4s,fill 0.5s ease 6s infinite;
+
+}
+@keyframes str {
+    to{stroke-dashoffset: 140px;}
+}
+
+@keyframes fill {
+    to{fill:white;}
+}
+
+
+
+</style>
+<!-- <style>
+    .toolbar{
+    width: 100%;
+    background-color: #444444;
+    overflow: auto;
+}
+
+.toolbar a {
+    float: left;
+    width: 11%;
+    text-align: center;
+    padding: 6px 5px;
+    transition: all 0.5s ease;
+    color: white;
+}
+
+/* Change color on hover */
+.toolbar a:hover {
+    background-color: #000;
+  }
+
+/* Change color on selected icon */
+.selected {
+    background-color: #000; 
+}
+
+#my-canvas{
+    width: 100%;
+    border: 3px solid #000000;
+}
+
+#img-data-div{
+    width: 100%;
+    max-width: 900px;
+    height: 200px;
+}
+
+/* Resize image to container */
+.toolbar a img{
+    max-width:100%;
+    height:auto;
+}
+</style> -->
+
+<body class="fix-header fix-sidebar card-no-border">
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-light">
+                <!-- ============================================================== -->
+                <!-- Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-header">
+                    
+                    <a class="navbar-brand" href="#">
+                         <!-- Logo icon  -->
+                         <b id="ulg">
+                            <svg id="lgo" width="83" height="31" viewBox="0 0 83 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17.375 17.1699H18.375V16.1699V13.4102V12.4102H17.375H7.2832V6.18359H18.9922H19.9922V5.18359V2.40625V1.40625H18.9922H2.9082H1.9082V2.40625V28V29H2.9082H19.168H20.168V28V25.2402V24.2402H19.168H7.2832V17.1699H17.375ZM26.9902 29H27.9902V28V2.40625V1.40625H26.9902H23.6152H22.6152V2.40625V28V29H23.6152H26.9902ZM36.7988 29H37.7988V28V2.40625V1.40625H36.7988H33.4238H32.4238V2.40625V28V29H33.4238H36.7988ZM60.1426 6.18359H61.1426V5.18359V2.40625V1.40625H60.1426H40.3496H39.3496V2.40625V5.18359V6.18359H40.3496H47.5586V28V29H48.5586H51.916H52.916V28V6.18359H60.1426ZM64.1906 14.266L64.1906 14.266L71.1992 16.5918L70.9213 17.5524C70.9215 17.5524 70.9216 17.5525 70.9218 17.5526C73.2159 18.2164 74.6464 18.8537 75.3622 19.4168L75.3687 19.4219C75.969 19.8861 76.2988 20.5416 76.2988 21.5312C76.2988 22.4916 75.9554 23.1811 75.2672 23.7079C74.5595 24.2495 73.4437 24.5918 71.7793 24.5918C70.0239 24.5918 68.7332 24.1842 67.8086 23.469C66.9314 22.7707 66.4863 21.8448 66.4863 20.582V19.582H65.4863H62.0938H61.0938V20.582C61.0938 22.2667 61.5621 23.7987 62.505 25.1457L62.5088 25.1512C63.4601 26.4911 64.7897 27.5221 66.45 28.2629L66.4559 28.2654C68.113 28.992 69.8912 29.3516 71.7793 29.3516C74.6347 29.3516 77.0333 28.6958 78.8748 27.2813L78.8784 27.2786C80.7437 25.8322 81.6914 23.8745 81.6914 21.4961C81.6914 20.0423 81.3626 18.7265 80.6685 17.5864C79.9906 16.4539 78.966 15.5095 77.6551 14.7323C76.3509 13.9405 74.5917 13.2497 72.4189 12.6408C70.3351 12.0536 68.9919 11.4425 68.2624 10.8594C67.593 10.3039 67.3125 9.69305 67.3125 8.98047C67.3125 7.94978 67.662 7.2414 68.3186 6.72612L68.3199 6.72509C69.023 6.17133 70.0769 5.83203 71.6035 5.83203C73.2366 5.83203 74.3544 6.23613 75.0986 6.90952L75.1035 6.91391C75.8383 7.56994 76.2461 8.49076 76.2461 9.80664V10.8066H77.2461H80.6387H81.6387V9.80664C81.6387 8.19931 81.204 6.70704 80.341 5.35173C79.4837 3.98691 78.2711 2.93062 76.7395 2.1775C75.2115 1.42038 73.4918 1.05469 71.6035 1.05469C68.85 1.05469 66.5116 1.76504 64.677 3.26731C62.8474 4.76333 61.9023 6.7079 61.9023 9.0332C61.9023 11.0943 62.6757 12.8592 64.1906 14.266Z" stroke="white" stroke-width="2"/>
+                                </svg>
+                                
+                        </b>
+                        <!-- End Logo icon -->
+                        <!-- Logo text  -->
+                        <!-- <span> -->
+                         <!-- dark Logo text -->
+                         <!-- <img src="{% static 'student/assets/images/logo-text.png' %}" alt="homepage" class="dark-logo" /> -->
+                         <!-- Light Logo text     -->
+                         <!-- <img src="{% static 'student/assets/images/logo-light-text.png' %}" class="light-logo" alt="homepage" /> -->
+                     <!-- </span>  -->
+                     </a>
+                    <!-- <p class="text-white">ITS</p> -->
+                </div>
+                
+                <!-- End Logo-->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav mr-auto mt-md-0">
+                        <!-- This is  -->
+                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="mdi mdi-menu"></i></a> </li>
+                        <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                        <!-- ============================================================== -->
+                        <!-- Search -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item hidden-sm-down search-box">
+                            <a class="nav-link hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
+                            <form class="app-search">
+                                <input type="text" class="form-control" placeholder="Search & enter"> <a class="srh-btn"><i class="ti-close"></i></a> </form>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- Messages -->
+                        <!-- ============================================================== -->
+                        
+                        <li class="nav-item dropdown mega-dropdown"> <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-view-grid"></i></a>
+                            <div class="dropdown-menu scale-up-left">
+                                <ul class="mega-dropdown-menu row">
+                                    <li class="col-lg-3 col-xlg-2 m-b-30">
+                                        <h4 class="m-b-20">Facts</h4>
+                                        <!-- CAROUSEL -->
+                                        {% block carousel %}
+                                        {% endblock %}
+                                        
+                                        <!-- End CAROUSEL -->
+                                    </li>
+                                    <!-- Accordian -->
+                                    <li class="col-lg-3 m-b-30">
+                                        {% block tricks %}
+                                        
+                                        
+                                        
+                                        {% endblock %}
+                                        
+                                        <!-- END ACCORDIAN.. -->
+                                    </li>
+                                    <li class="col-lg-3  m-b-30">
+                                        <h4 class="m-b-20">CHANGE IF NEEDED</h4>
+                                        <!-- Contact -->
+                                        {% block change %}
+                                        {% endblock %}
+                                        
+                                        <!-- END Contact -->
+                                    </li>
+                                    <li class="col-lg-3 col-xlg-4 m-b-30">
+                                        <h4 class="m-b-20">IMPORTANT LINKS</h4>
+                                        <!-- List style -->
+                                        {% block links %}
+                                        {% endblock %}
+                                        
+                                        <!-- END List style -->
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    
+                        <!-- ==============================================================
+                        <!-- End Messages -->
+                        <!-- ============================================================== -->
+                        
+                        
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- User profile and search -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav my-lg-0">
+                        <!-- ============================================================== -->
+                        <!-- Comment -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item">
+                            <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href=""  aria-haspopup="true" aria-expanded="false"> 
+                                {% block time %}
+                            {% endblock %}
+                            </a>
+                        
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-message"></i>
+                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right mailbox scale-up">
+                                <ul>
+                                    <li>
+                                        <div class="drop-title">Notifications</div>
+                                    </li>
+                                    <li>
+                                        <!-- <div class="message-center">
+                                            Message
+                                            <a href="#">
+                                                <div class="btn btn-danger btn-circle"><i class="fa fa-link"></i></div>
+                                                <div class="mail-contnet">
+                                                    <h5>Luanch Admin</h5> <span class="mail-desc">Just see the my new admin!</span> <span class="time">9:30 AM</span> </div>
+                                            </a>
+                                            Message
+                                            <a href="#">
+                                                <div class="btn btn-success btn-circle"><i class="ti-calendar"></i></div>
+                                                <div class="mail-contnet">
+                                                    <h5>Event today</h5> <span class="mail-desc">Just a reminder that you have event</span> <span class="time">9:10 AM</span> </div>
+                                            </a>
+                                            Message
+                                            <a href="#">
+                                                <div class="btn btn-info btn-circle"><i class="ti-settings"></i></div>
+                                                <div class="mail-contnet">
+                                                    <h5>Settings</h5> <span class="mail-desc">You can customize this template as you want</span> <span class="time">9:08 AM</span> </div>
+                                            </a>
+                                            Message
+                                            <a href="#">
+                                                <div class="btn btn-primary btn-circle"><i class="ti-user"></i></div>
+                                                <div class="mail-contnet">
+                                                    <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
+                                            </a>
+                                        </div> -->
+                                    </li>
+                                    <li>
+                                        <a class="nav-link text-center" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- End Comment -->
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- Messages -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-email"></i>
+                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                            </a>
+                            <div class="dropdown-menu mailbox dropdown-menu-right scale-up" aria-labelledby="2">
+                                <ul>
+                                    <li>
+                                        <div class="drop-title">You have 4 new messages</div>
+                                    </li>
+                                    <li>
+                                        <!--div class="message-center">
+                                            Message 
+                                            <a href="#">
+                                                <div class="user-img"> <img src="{% static 'student/assets/images/users/1.jpg' %}" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>
+                                                <div class="mail-contnet">
+                                                    <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:30 AM</span> </div>
+                                            </a>
+                                            Message
+                                            <a href="#">
+                                                <div class="user-img"> <img src="{% static 'student/assets/images/users/2.jpg' %}" alt="user" class="img-circle"> <span class="profile-status busy pull-right"></span> </div>
+                                                <div class="mail-contnet">
+                                                    <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span> <span class="time">9:10 AM</span> </div>
+                                            </a>
+                                            Message
+                                            <a href="#">
+                                                <div class="user-img"> <img src="{% static 'student/assets/images/users/3.jpg' %}" alt="user" class="img-circle"> <span class="profile-status away pull-right"></span> </div>
+                                                <div class="mail-contnet">
+                                                    <h5>Arijit Sinh</h5> <span class="mail-desc">I am a singer!</span> <span class="time">9:08 AM</span> </div>
+                                            </a>
+                                             Message
+                                            <a href="#">
+                                                <div class="user-img"> <img src="{% static 'student/assets/images/users/4.jpg' %}" alt="user" class="img-circle"> <span class="profile-status offline pull-right"></span> </div>
+                                                <div class="mail-contnet">
+                                                    <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
+                                            </a>
+                                        </div-->
+                                    </li>
+                                    <li>
+                                        <a class="nav-link text-center" href="javascript:void(0);"> <strong>See all e-Mails</strong> <i class="fa fa-angle-right"></i> </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- End Messages -->
+                        <!-- ============================================================== -->
+                        
+                        <!-- ============================================================== -->
+                        <!-- Profile -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static 'student/assets/images/users/1.jpg' %}" alt="user" class="profile-pic" /></a>
+                            <div class="dropdown-menu dropdown-menu-right scale-up">
+                                <ul class="dropdown-user">
+                                    <li>
+                                        <div class="dw-user-box">
+                                            <div class="u-img"><img src="{% static 'student/assets/images/users/1.jpg' %}" alt="user"></div>
+                                            <div class="u-text">
+                                                <h4>{{username}}</h4>
+                                                <p class="text-muted">{{useremail}}</p><!-- <a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a> --></div>
+                                        </div>
+                                    </li>
+                                    <!-- <li role="separator" class="divider"></li>
+                                    <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
+                                    <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
+                                    <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
+                                    <li role="separator" class="divider"></li> -->
+                                    <li><a href="{% url 'logout' %}"><i class="fa fa-power-off"></i> Logout</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- Language -->
+                        <!-- ============================================================== -->
+                        <!-- <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flag-icon flag-icon-us"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right scale-up"> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-in"></i> India</a> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-fr"></i> French</a> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-cn"></i> China</a> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-de"></i> Dutch</a> </div>
+                        </li> -->
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- User profile -->
+                <div class="user-profile" style="background: url({% static 'student/assets/images/background/user-info.jpg' %}) no-repeat;">
+                    <!-- User profile image -->
+                    <div class="profile-img"> <img src="{% static 'student/assets/images/users/profile.png' %}"  alt="user" /> </div>
+                    <!-- User profile text-->
+                    <div class="profile-text"> <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">{{username}}</a>
+                        <div class="dropdown-menu animated flipInY">
+                            <!-- <a href="#" class="dropdown-item"><i class="ti-user"></i> My Profile</a> -->
+                            <!-- <a href="#" class="dropdown-item"><i class="ti-wallet"></i> My Balance</a> -->
+                            <!-- <a href="#" class="dropdown-item"><i class="ti-email"></i> Inbox</a> -->
+                            <!-- <div class="dropdown-divider"></div> <a href="#" class="dropdown-item"><i class="ti-settings"></i> Account Setting</a> -->
+                            <!-- <div class="dropdown-divider"></div> --> <a href="{% url 'logout' %}" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- End User profile text-->
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <!-- <li class="nav-small-cap">PERSONAL</li> -->
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="{% url 'home1' %}" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Home</span></a>
+                            <!-- <ul aria-expanded="false" class="collapse">
+                                <li><a href="index.html">Dashboard 1</a></li>
+                                <li><a href="index2.html">Dashboard 2</a></li>
+                                <li><a href="index3.html">Dashboard 3</a></li>
+                                <li><a href="index4.html">Dashboard 4</a></li>
+                                <li><a href="index5.html">Dashboard 5</a></li>
+                                <li><a href="index6.html">Dashboard 6</a></li>
+                            </ul> -->
+                        </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="{% url 'add_user' %}" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Add User</span></a>
+                        </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="{% url 'add_subject' %}" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Add Subjects</span></a>
+                        </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="{% url 'add_topic' %}" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Add Topics</span></a>
+                        </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="{% url 'add_questions' %}" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Add Questions</span></a>
+                        </li>
+                        <!-- <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-laptop-windows"></i><span class="hide-menu">Template Demos</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="{% static 'student/minisidebar/index.html' %}">Minisidebar</a></li>
+                                <li><a href="{% static 'student/horizontal/index2.html' %}">Horizontal</a></li>
+                                <li><a href="{% static 'student/dark/index3.html' %}">Dark Version</a></li>
+                                <li><a href="{% static 'student/material-rtl/index4.html' %}">RTL Version</a></li>
+                                <li><a href="javascript:angular">Anuglar-CLI Starter kit</a></li>
+                            </ul>
+                        </li> -->
+                        
+                        <!-- <li>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">Inbox</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="app-email.html">Mailbox</a></li>
+                                <li><a href="app-email-detail.html">Mailbox Detail</a></li>
+                                <li><a href="app-compose.html">Compose Mail</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Ui Elements</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="ui-cards.html">Cards</a></li>
+                                <li><a href="ui-user-card.html">User Cards</a></li>
+                                <li><a href="ui-buttons.html">Buttons</a></li>
+                                <li><a href="ui-modals.html">Modals</a></li>
+                                <li><a href="ui-tab.html">Tab</a></li>
+                                <li><a href="ui-tooltip-popover.html">Tooltip &amp; Popover</a></li>
+                                <li><a href="ui-tooltip-stylish.html">Tooltip stylish</a></li>
+                                <li><a href="ui-sweetalert.html">Sweet Alert</a></li>
+                                <li><a href="ui-notification.html">Notification</a></li>
+                                <li><a href="ui-progressbar.html">Progressbar</a></li>
+                                <li><a href="ui-nestable.html">Nestable</a></li>
+                                <li><a href="ui-range-slider.html">Range slider</a></li>
+                                <li><a href="ui-timeline.html">Timeline</a></li>
+                                <li><a href="ui-typography.html">Typography</a></li>
+                                <li><a href="ui-horizontal-timeline.html">Horizontal Timeline</a></li>
+                                <li><a href="ui-session-timeout.html">Session Timeout</a></li>
+                                <li><a href="ui-session-ideal-timeout.html">Session Ideal Timeout</a></li>
+                                <li><a href="ui-bootstrap.html">Bootstrap Ui</a></li>
+                                <li><a href="ui-breadcrumb.html">Breadcrumb</a></li>
+                                <li><a href="ui-bootstrap-switch.html">Bootstrap Switch</a></li>
+                                <li><a href="ui-list-media.html">List Media</a></li>
+                                <li><a href="ui-ribbons.html">Ribbons</a></li>
+                                <li><a href="ui-grid.html">Grid</a></li>
+                                <li><a href="ui-carousel.html">Carousel</a></li>
+                                <li><a href="ui-date-paginator.html">Date-paginator</a></li>
+                                <li><a href="ui-dragable-portlet.html">Dragable Portlet</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-devider"></li>
+                        <li class="nav-small-cap">FORMS, TABLE &amp; WIDGETS</li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-file"></i><span class="hide-menu">Forms</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="form-basic.html">Basic Forms</a></li>
+                                <li><a href="form-layout.html">Form Layouts</a></li>
+                                <li><a href="form-addons.html">Form Addons</a></li>
+                                <li><a href="form-material.html">Form Material</a></li>
+                                <li><a href="form-float-input.html">Floating Lable</a></li>
+                                <li><a href="form-pickers.html">Form Pickers</a></li>
+                                <li><a href="form-upload.html">File Upload</a></li>
+                                <li><a href="form-mask.html">Form Mask</a></li>
+                                <li><a href="form-validation.html">Form Validation</a></li>
+                                <li><a href="form-dropzone.html">File Dropzone</a></li>
+                                <li><a href="form-icheck.html">Icheck control</a></li>
+                                <li><a href="form-img-cropper.html">Image Cropper</a></li>
+                                <li><a href="form-bootstrapwysihtml5.html">HTML5 Editor</a></li>
+                                <li><a href="form-typehead.html">Form Typehead</a></li>
+                                <li><a href="form-wizard.html">Form Wizard</a></li>
+                                <li><a href="form-xeditable.html">Xeditable Editor</a></li>
+                                <li><a href="form-summernote.html">Summernote Editor</a></li>
+                                <li><a href="form-tinymce.html">Tinymce Editor</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-table"></i><span class="hide-menu">Tables</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="table-basic.html">Basic Tables</a></li>
+                                <li><a href="table-layout.html">Table Layouts</a></li>
+                                <li><a href="table-data-table.html">Data Tables</a></li>
+                                <li><a href="table-footable.html">Footable</a></li>
+                                <li><a href="table-jsgrid.html">Js Grid Table</a></li>
+                                <li><a href="table-responsive.html">Responsive Table</a></li>
+                                <li><a href="table-bootstrap.html">Bootstrap Tables</a></li>
+                                <li><a href="table-editable-table.html">Editable Table</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-widgets"></i><span class="hide-menu">Widgets</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="widget-apps.html">Widget Apps</a></li>
+                                <li><a href="widget-data.html">Widget Data</a></li>
+                                <li><a href="widget-charts.html">Widget Charts</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-devider"></li>
+                        <li class="nav-small-cap">EXTRA COMPONENTS</li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-book-multiple"></i><span class="hide-menu">Page Layout</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="layout-single-column.html">1 Column</a></li>
+                                <li><a href="layout-fix-header.html">Fix header</a></li>
+                                <li><a href="layout-fix-sidebar.html">Fix sidebar</a></li>
+                                <li><a href="layout-fix-header-sidebar.html">Fixe header &amp; Sidebar</a></li>
+                                <li><a href="layout-boxed.html">Boxed Layout</a></li>
+                                <li><a href="layout-logo-center.html">Logo in Center</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-book-open-variant"></i><span class="hide-menu">Sample Pages</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="starter-kit.html">Starter Kit</a></li>
+                                <li><a href="pages-blank.html">Blank page</a></li>
+                                <li><a href="#" class="has-arrow">Authentication <span class="label label-rounded label-success">6</span></a>
+                                    <ul aria-expanded="false" class="collapse">
+                                        <li><a href="pages-login.html">Login 1</a></li>
+                                        <li><a href="pages-login-2.html">Login 2</a></li>
+                                        <li><a href="pages-register.html">Register</a></li>
+                                        <li><a href="pages-register2.html">Register 2</a></li>
+                                        <li><a href="pages-lockscreen.html">Lockscreen</a></li>
+                                        <li><a href="pages-recover-password.html">Recover password</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="pages-profile.html">Profile page</a></li>
+                                <li><a href="pages-animation.html">Animation</a></li>
+                                <li><a href="pages-fix-innersidebar.html">Sticky Left sidebar</a></li>
+                                <li><a href="pages-fix-inner-right-sidebar.html">Sticky Right sidebar</a></li>
+                                <li><a href="pages-invoice.html">Invoice</a></li>
+                                <li><a href="pages-treeview.html">Treeview</a></li>
+                                <li><a href="pages-utility-classes.html">Helper Classes</a></li>
+                                <li><a href="pages-search-result.html">Search result</a></li>
+                                <li><a href="pages-scroll.html">Scrollbar</a></li>
+                                <li><a href="pages-pricing.html">Pricing</a></li>
+                                <li><a href="pages-lightbox-popup.html">Lighbox popup</a></li>
+                                <li><a href="pages-gallery.html">Gallery</a></li>
+                                <li><a href="pages-faq.html">Faqs</a></li>
+                                <li><a href="#" class="has-arrow">Error Pages</a>
+                                    <ul aria-expanded="false" class="collapse">
+                                        <li><a href="pages-error-400.html">400</a></li>
+                                        <li><a href="pages-error-403.html">403</a></li>
+                                        <li><a href="pages-error-404.html">404</a></li>
+                                        <li><a href="pages-error-500.html">500</a></li>
+                                        <li><a href="pages-error-503.html">503</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-file-chart"></i><span class="hide-menu">Charts</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="chart-morris.html">Morris Chart</a></li>
+                                <li><a href="chart-chartist.html">Chartis Chart</a></li>
+                                <li><a href="chart-echart.html">Echarts</a></li>
+                                <li><a href="chart-flot.html">Flot Chart</a></li>
+                                <li><a href="chart-knob.html">Knob Chart</a></li>
+                                <li><a href="chart-chart-js.html">Chartjs</a></li>
+                                <li><a href="chart-sparkline.html">Sparkline Chart</a></li>
+                                <li><a href="chart-extra-chart.html">Extra chart</a></li>
+                                <li><a href="chart-peity.html">Peity Charts</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-brush"></i><span class="hide-menu">Icons</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="icon-material.html">Material Icons</a></li>
+                                <li><a href="icon-fontawesome.html">Fontawesome Icons</a></li>
+                                <li><a href="icon-themify.html">Themify Icons</a></li>
+                                <li><a href="icon-linea.html">Linea Icons</a></li>
+                                <li><a href="icon-weather.html">Weather Icons</a></li>
+                                <li><a href="icon-simple-lineicon.html">Simple Lineicons</a></li>
+                                <li><a href="icon-flag.html">Flag Icons</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-map-marker"></i><span class="hide-menu">Maps</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="map-google.html">Google Maps</a></li>
+                                <li><a href="map-vector.html">Vector Maps</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-arrange-send-backward"></i><span class="hide-menu">Multi level dd</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="#">item 1.1</a></li>
+                                <li><a href="#">item 1.2</a></li>
+                                <li>
+                                    <a class="has-arrow" href="#" aria-expanded="false">Menu 1.3</a>
+                                    <ul aria-expanded="false" class="collapse">
+                                        <li><a href="#">item 1.3.1</a></li>
+                                        <li><a href="#">item 1.3.2</a></li>
+                                        <li><a href="#">item 1.3.3</a></li>
+                                        <li><a href="#">item 1.3.4</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">item 1.4</a></li>
+                            </ul>
+                        </li> -->
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+            <!-- Bottom points-->
+            <div class="sidebar-footer">
+                <!-- item-->
+                <a href="#" class="link" data-toggle="tooltip" title="Settings"><i class="ti-settings"></i></a>
+                <!-- item-->
+                <a href="{% url 'home1' %}" class="link" data-toggle="tooltip" title="Home"><i class="mdi mdi-home"></i></a>
+                <!-- item-->
+                <a href="{% url 'logout' %}" class="link" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
+            </div>
+            <!-- End Bottom points-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <div class="row page-titles">
+                    <div class="col-md-5 col-8 align-self-center">
+                        <h3 class="text-themecolor">Dashboard</h3>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'home1' %}">Home</a></li>
+                            <li class="breadcrumb-item active">
+                                {% block breadcrum %}
+                                {% endblock %}
+                            </li>
+                        </ol>
+                    </div>
+                    <!-- <div class="col-md-7 col-4 align-self-center">
+                        <div class="d-flex m-t-10 justify-content-end">
+                            <div class="d-flex m-r-20 m-l-10 hidden-md-down">
+                                <div class="chart-text m-r-10">
+                                    <h6 class="m-b-0"><small>THIS MONTH</small></h6>
+                                    <h4 class="m-t-0 text-info">$58,356</h4></div>
+                                <div class="spark-chart">
+                                    <div id="monthchart"></div>
+                                </div>
+                            </div>
+                            <div class="d-flex m-r-20 m-l-10 hidden-md-down">
+                                <div class="chart-text m-r-10">
+                                    <h6 class="m-b-0"><small>LAST MONTH</small></h6>
+                                    <h4 class="m-t-0 text-primary">$48,356</h4></div>
+                                <div class="spark-chart">
+                                    <div id="lastmonthchart"></div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <button class="right-side-toggle waves-effect waves-light btn-success btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+
+
+                {% block content %}
+                {% endblock %}
+                
+                
+                
+                <!-- Row -->
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <div class="right-sidebar">
+                    <div class="slimscrollright">
+                        <div class="rpanel-title"> Service Panel <span><i class="ti-close right-side-toggle"></i></span> </div>
+                        <div class="r-panel-body">
+                            <ul id="themecolors" class="m-t-20">
+                                <li><b>With Light sidebar</b></li>
+                                <li><a href="javascript:void(0)" data-theme="default" class="default-theme">1</a></li>
+                                <li><a href="javascript:void(0)" data-theme="green" class="green-theme">2</a></li>
+                                <li><a href="javascript:void(0)" data-theme="red" class="red-theme">3</a></li>
+                                <li><a href="javascript:void(0)" data-theme="blue" class="blue-theme working">4</a></li>
+                                <li><a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a></li>
+                                <li><a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a></li>
+                                <li class="d-block m-t-30"><b>With Dark sidebar</b></li>
+                                <li><a href="javascript:void(0)" data-theme="default-dark" class="default-dark-theme">7</a></li>
+                                <li><a href="javascript:void(0)" data-theme="green-dark" class="green-dark-theme">8</a></li>
+                                <li><a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a></li>
+                                <li><a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a></li>
+                                <li><a href="javascript:void(0)" data-theme="purple-dark" class="purple-dark-theme">11</a></li>
+                                <li><a href="javascript:void(0)" data-theme="megna-dark" class="megna-dark-theme ">12</a></li>
+                            </ul>
+                            <ul class="m-t-20 chatonline">
+                                <li><b>Chat option</b></li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="{% static 'student/assets/images/users/1.jpg' %}" alt="user-img" class="img-circle"> <span>Varun Dhavan <small class="text-success">online</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="{% static 'student/assets/images/users/2.jpg' %}" alt="user-img" class="img-circle"> <span>Genelia Deshmukh <small class="text-warning">Away</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="{% static 'student/assets/images/users/3.jpg' %}" alt="user-img" class="img-circle"> <span>Ritesh Deshmukh <small class="text-danger">Busy</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="{% static 'student/assets/images/users/4.jpg' %}" alt="user-img" class="img-circle"> <span>Arijit Sinh <small class="text-muted">Offline</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="{% static 'student/assets/images/users/5.jpg' %}" alt="user-img" class="img-circle"> <span>Govinda Star <small class="text-success">online</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="{% static 'student/assets/images/users/6.jpg' %}" alt="user-img" class="img-circle"> <span>John Abraham<small class="text-success">online</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="{% static 'student/assets/images/users/7.jpg' %}" alt="user-img" class="img-circle"> <span>Hritik Roshan<small class="text-success">online</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="{% static 'student/assets/images/users/8.jpg' %}" alt="user-img" class="img-circle"> <span>Pwandeep rajan <small class="text-success">online</small></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer">
+                © 2020 ITS
+            </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    {% block js %}
+    {% endblock %}
+    <script src="{% static 'student/assets/plugins/jquery/jquery.min.js' %}"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="{% static 'student/assets/plugins/bootstrap/js/popper.min.js' %}"></script>
+    <script src="{% static 'student/assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="{% static 'student/js/jquery.slimscroll.js' %}"></script>
+    <!--Wave Effects -->
+    <script src="{% static 'student/js/waves.js' %}"></script>
+    <!--Menu sidebar -->
+    <script src="{% static 'student/js/sidebarmenu.js' %}"></script>
+    <!--stickey kit -->
+    <script src="{% static 'student/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js' %}"></script>
+    <script src="{% static 'student/assets/plugins/sparkline/jquery.sparkline.min.js' %}"></script>
+    <!--stickey kit -->
+    <script src="{% static 'student/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js' %}"></script>
+    <script src="{% static 'student/assets/plugins/sparkline/jquery.sparkline.min.js' %}"></script>
+    <script src="{% static 'student/assets/plugins/sparkline/jquery.sparkline.min.js' %}"></script>
+    <!--Custom JavaScript -->
+    <script src="{% static 'student/js/custom.min.js' %}"></script>
+    <!-- ============================================================== -->
+    <!-- This page plugins -->
+    <!-- ============================================================== -->
+    <!-- chartist chart -->
+    
+
+    <!--c3 JavaScript -->
+    <script src="{% static 'student/assets/plugins/d3/d3.min.js' %}"></script>
+    <script src="{% static 'student/assets/plugins/c3-master/c3.min.js' %}"></script>
+    <!-- Vector map JavaScript -->
+    <script src="{% static 'student/assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js' %}"></script>
+    <script src="{% static 'student/assets/plugins/vectormap/jquery-jvectormap-us-aea-en.js' %}"></script>
+    <script src="{% static 'student/js/dashboard2.js' %}"></script>
+    <!-- ============================================================== -->
+    <!-- Style switcher -->
+    <!-- ============================================================== -->
+    <script src="{% static 'student/assets/plugins/styleswitcher/jQuery.style.switcher.js' %}"></script>
+</body>
+
+</html>
