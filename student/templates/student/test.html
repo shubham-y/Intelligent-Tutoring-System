@@ -449,12 +449,13 @@ Learning test
     
 </div>
 <div id="callll" class="row justify-content-center">
-<div class="col-md-10">
+<div id="ccll" class="col-md-10">
     <div class="card card-outline-inverse">
         <div class="card-header">
             <h4 class="m-b-0 text-white">Calculations:</h4></div>
         <div class="card-body row">
         <div class="col-5">
+            <label><b>>>[1]</b></label>
             <input type="text" onclick ="appendRoww()" id="i1"><br ><br >
         <div id="d2">
             <input type="text" onclick ="appendRoww()" id="i2"  hide><br ><br >
@@ -534,16 +535,16 @@ Learning test
         </div>
 
 
-        <div class="col-5">
+        <div class="col-7">
             <div class="toolbar">
-                <a class="selected" href="#" id="open" onclick="OpenImage()"><img src="{% static 'student/images/open-icon.png' %}"></a>
-                <a href="#" id="save" onclick="SaveImage()"><img src="save-icon.png"></a>
-                <a href="#" id="brush" onclick="ChangeTool('brush')"><img src="brush-icon.png"></a>
-                <a href="#" id="line" onclick="ChangeTool('line')"><img src="line-icon.png"></a>
-                <a href="#" id="rectangle" onclick="ChangeTool('rectangle')"><img src="rectangle-icon.png"></a>
-                <a href="#" id="circle" onclick="ChangeTool('circle')"><img src="circle-icon.png"></a>
-                <a href="#" id="ellipse" onclick="ChangeTool('ellipse')"><img src="ellipse-icon.png"></a>
-                <a href="#" id="polygon" onclick="ChangeTool('polygon')"><img src="polygon-icon.png"></a>
+                <a class="selected"  id="open" onclick="OpenImage()"><img src="{% static 'student/images/open-icon.png' %}"></a>
+                <a id="save" onclick="SaveImage()"><img src="{% static 'student/images/save-icon.png' %}"></a>
+                <a  id="brush" onclick="ChangeTool('brush')"><img src="{% static 'student/images/brush-icon.png' %}"></a>
+                <a id="line" onclick="ChangeTool('line')"><img src="{% static 'student/images/line-icon.png' %}"></a>
+                <a  id="rectangle" onclick="ChangeTool('rectangle')"><img src="{% static 'student/images/rectangle-icon.png' %}"></a>
+                <a  id="circle" onclick="ChangeTool('circle')"><img src="{% static 'student/images/circle-icon.png' %}"></a>
+                <a  id="ellipse" onclick="ChangeTool('ellipse')"><img src="{% static 'student/images/ellipse-icon.png' %}"></a>
+                <a  id="polygon" onclick="ChangeTool('polygon')"><img src="{% static 'student/images/polygon-icon.png' %}"></a>
             </div><br>
 <canvas id="my-canvas"></canvas>
             <div id="img-data-div">
@@ -568,11 +569,11 @@ let dragging = false;
 let strokeColor = 'black';
 let fillColor = 'black';
 let line_Width = 1;
-let polygonSides = 6;
+let polygonSides = 3;
 // Tool currently using
 let currentTool = 'brush';
-let canvasWidth = 327.14;
-let canvasHeight = 327.14;
+let canvasWidth = 400;
+let canvasHeight = 400;
  
 // Stores whether I'm currently using brush
 let usingBrush = false;
