@@ -135,7 +135,7 @@ def calthres(corr,prev_pred,pred_list):
     print(av)
     return kcidd
 
-perm = [1,1,0,1,0,0,1,0,1]
+perm = [1,0,1,0,1]
 pred_list = [0.6]
 kcdi = [0.6,1]
 # pred_list = [0.676]
@@ -369,7 +369,7 @@ def home(request):
             path.append(i.location)
         print(path)
 
-        return render(request,'student/dash.html',{"z":z,"sz":sz,"wz":wz,"sp":spd,"path":path,'username':request.session['name'],'useremail':request.session['email']})
+        return render(request,'student/dash.html',{"uid":u_id,"z":z,"sz":sz,"wz":wz,"sp":spd,"path":path,'username':request.session['name'],'useremail':request.session['email']})
 
 def start_test(request):
     if 'email' not in request.session:
@@ -451,10 +451,17 @@ def test(request,ana_id,que_id):
     aaaaid = ana_id
     ana = Analysis.objects.all().filter(id=ana_id)
     print(ana,ana_id)
+    ptt = ana[0].last_time
     subid = ana[0].sub_id
     topid = ana[0].topic_id
     userid = ana[0].user_id
     ele=Quetions.objects.all().filter(que_id=que_id)
+    if len(ele) == 0:
+        elebt=Quetions.objects.all().filter(que_id=que_id - 1)
+        sidd = elebt[0].sub_id
+        k = 0
+        print("hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+        return render(request,'student/test.html',{"k":k,"sid":sidd,"ptt":ptt})
     sidd = ele[0].sub_id
     qn = ele[0].que_no
     qn_kc = ele[0].kcid
@@ -700,11 +707,11 @@ def test(request,ana_id,que_id):
     if ana_id == 0:
         k = 0
         print("hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-        return render(request,'student/test.html',{"k":k,"sid":sidd})
+        return render(request,'student/test.html',{"k":k,"sid":sidd,"ptt":ptt})
     elif ana_id == 1111111111:
         k = -1
         print("hereeeeeeeeeeeeeeeeeeeeeeeeee","-11111111111111")
-        return render(request,'student/test.html',{"k":k,"sid":sidd})
+        return render(request,'student/test.html',{"k":k,"sid":sidd,"ptt":ptt})
     elif ana_id == -111:
         wrr = []
         for i in range(len(wr)):
@@ -730,10 +737,10 @@ def test(request,ana_id,que_id):
             k=1116
         m = 1
         print(m,k,hhin,wr,wrr)
-        return render(request,'student/test.html',{"k":k,"aid":aaaaid + 1,"qid":que_id + 1,"m":m,"corr":corrr,"lwr":len(wrr),"wrong":wrr,"sid":sidd,"so":sol,'username':request.session['name'],'useremail':request.session['email']})
+        return render(request,'student/test.html',{"ptt":ptt,"k":k,"aid":aaaaid + 1,"qid":que_id + 1,"m":m,"corr":corrr,"lwr":len(wrr),"wrong":wrr,"sid":sidd,"so":sol,'username':request.session['name'],'useremail':request.session['email']})
     print(qn,"at lastttttttttttttttttttttttttttttttttttttttttt")
 
-    return render(request,'student/test.html',{"z":z,"m":m,"msg":msg,"x":x,"nkc":len(kc_qn),"rkc":range(1,(len(kc_qn) + 1)),"step1":stepv1,"step2":stepv2,"step3":stepv3,'username':request.session['name'],'useremail':request.session['email']})
+    return render(request,'student/test.html',{"ptt":ptt,"z":z,"m":m,"msg":msg,"x":x,"nkc":len(kc_qn),"rkc":range(1,(len(kc_qn) + 1)),"step1":stepv1,"step2":stepv2,"step3":stepv3,'username':request.session['name'],'useremail':request.session['email']})
 
 
 
@@ -1478,7 +1485,7 @@ def analyse(request,sub_id):
                     if i.que_id == 1 or i.que_id == 16 or i.que_id == 31 or i.que_id == 46:
                         q.append(i.que_id)
         print(q,max(q))
-        mx.append(max(q))
+        mx.append(max(q) - 1)
     print(mx,"hereeeeeeeeeeeeeeeeeeeeeeee")
     lstt = []
     corr = []
@@ -1491,7 +1498,7 @@ def analyse(request,sub_id):
             cor = cor + h.correct
         corr.append(cor)
         lstt.append(lst)
-    print("lasttttttttttt timeeeeeeeee",lstt)
+    print("lasttttttttttt timeeeeeeeee",lstt,corr)
     mxx = []
     for i in mx:
         que1 = Analysis.objects.all().filter(user_id = u_id,que_id = i,test_id = 0)
@@ -1544,7 +1551,7 @@ def analyse(request,sub_id):
                 qte.append(qt)
         avtt.append(avt)
         quet.append(qte)
-    # print(quet)
+    print(avtt)
     sub = Subject.objects.all().filter(sub_id = sub_id).values("sub_name")
     sub_nm = sub[0]["sub_name"]
     print(sub_nm)
@@ -1569,6 +1576,39 @@ def ajax_load_action(request):
     t=topic.objects.filter(sub_id=subid)
     # print(t)
     return render(request, 'student/topic_ajax.html', {'t': t})
+
+def time_ajax(request):
+    # print("AJax")
+    time=request.GET.get('time1')
+    table=request.GET.get('table')
+    detail=request.GET.get('detail')
+    # print()
+    print(time,table,detail)
+    if table == "analysis":
+        print("ana")
+        ana = Analysis.objects.get(id=int(detail))
+        # print
+        queid = ana.que_id
+        ana.last_time = int(time)
+        ana.time = int(time)
+        ana.save()
+        que = Quetions.objects.get(id=int(queid))
+        que.avg_time = int(time)
+        que.save()
+
+    return render(request, 'student/time_ajax.html', {'t': time})
+
+def dash_ajax(request):
+    speed=1
+    # print("AJax")
+    sid=request.GET.get('sid')
+    table=request.GET.get('table')
+    spd=request.GET.get('spd')
+    print(sid,table,spd)
+    stu = Student.objects.get(id=int(sid))
+    stu.speed = int(spd)
+    stu.save()
+    return render(request, 'student/dash_ajax.html', {'speed': speed})
 
 def forum(request):
     if 'email' not in request.session:

@@ -235,7 +235,8 @@
 </nav>
 
 <div id="vertical">
-	
+	<input type="text" data-url="{% url 'time_ajax' %}" id="detaill" value="{{sta_ana}}">
+    <input type="text" id="prevtime" value="{{ptt}}">
 </div>
 <button id="topic"><span id="topic-text">Areas of Squares and Rectangles </span></button>
 <div id="horizontal">
@@ -1052,6 +1053,8 @@ line-height: 22px;">Areas of Circles</span></a></div>
 		{% endif %}
 
 <script type="text/javascript">
+var secc = 0;
+var prev_time = $("#prevtime").val();
 	    TimeMe.initialize({
 	    	currentPageName: "my-home-page", // current page
 	    	 // seconds
@@ -1063,10 +1066,11 @@ line-height: 22px;">Areas of Circles</span></a></div>
 	        var timeSpentOnPage1 = TimeMe.getTimeOnCurrentPageInSeconds();
 	        window.onload = function(){
 					setInterval(function(){
-	                    var timeSpentOnPage = TimeMe.getTimeOnCurrentPageInSeconds();
+	                    var timeSpentOnPage = TimeMe.getTimeOnCurrentPageInSeconds() + parseInt(prev_time);
 	                    var sec = timeSpentOnPage.toFixed(0);
 	                    Number(sec);
 	                    var min = sec/60;
+						secc = sec;
 	                    var minu = parseInt(min);
 	                    let minu2 = minu.toString().padStart(2, "0");
 	                    var minu1 = sec % 60;
@@ -1077,6 +1081,37 @@ line-height: 22px;">Areas of Circles</span></a></div>
 	                }, 25);
 	        
 	            }
+
+$("#detaill").hide();
+$("#prevtime").hide();
+
+function timelyy()
+{
+    // console.log("ajaxx")
+      var url = $("#detaill").attr("data-url");  // get the url of the `load_cities` view
+      var time1 = secc; 
+      var detail = $("#detaill").val();
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'time1': time1,       // add the country id to the GET parameters
+          'table':"analysis",
+          'detail': detail
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+        // console.log(data)
+        //   $("#topic").html(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+
+    setTimeout(timelyy, 1000);
+}
+
+
+timelyy(); // execute function
+
+
 </script>
 
 

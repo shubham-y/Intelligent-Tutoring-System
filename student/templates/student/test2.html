@@ -149,6 +149,8 @@ Confidence test
     {% else %}
     
     <div class="col-md-10">
+<input type="text" id="detaill" value="{{sid}},{{tid}}">
+<input type="text" id="prevtime" value="{{ptt}}">
                 <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
                 <form class="form" id="ttt" method="post" action="{% url 'test2' sid tid %}">
                         {% csrf_token %}
@@ -224,6 +226,7 @@ Confidence test
 </div>
 </div>
 </div>
+
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
@@ -265,6 +268,8 @@ document.addEventListener("fullscreenchange", function() {
     }
 });
 
+var secc = 0;
+var prev_time = $("#prevtime").val();
     // Initialize library and start tracking time
     TimeMe.initialize({
     	currentPageName: "my-home-page", // current page
@@ -275,9 +280,10 @@ document.addEventListener("fullscreenchange", function() {
 
 	    // Retrieve time spent on current page
         var timeSpentOnPage1 = TimeMe.getTimeOnCurrentPageInSeconds();
+        console.log(timeSpentOnPage1,"khsiusfiun");
         window.onload = function(){
 				setInterval(function(){
-                    var timeSpentOnPage = TimeMe.getTimeOnCurrentPageInSeconds();
+                    var timeSpentOnPage = TimeMe.getTimeOnCurrentPageInSeconds() + parseInt(prev_time);
                     var sec = timeSpentOnPage.toFixed(0);
                     Number(sec);
                     var min = sec/60;
@@ -286,11 +292,33 @@ document.addEventListener("fullscreenchange", function() {
                     var minu1 = sec % 60;
                     let minu3 = minu1.toString().padStart(2, "0");
                     var minute = String(minu2) + " : " + String(minu3);
+                    secc = sec
+                    // console.log(sec);
+                    // console.log(minute);
                     document.getElementById('timeInSeconds').textContent = minute;
+                    // ajax start
+                    // console.log(sec);
+                    // console.log("ajaxx");
+                    // var url = $("#ttt").attr("data-url");  // get the url of the `load_cities` view
+                    // var time1 = sec; 
+
+                    // $.ajax({                       // initialize an AJAX request
+                    //     url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+                    //     data: {
+                    //     'time1': time1       // add the country id to the GET parameters
+                    //     },
+                    //     success: function (data) {   // `data` is the return of the `load_cities` view function
+                    //     console.log(data);
+                    //     //   $("#topic").html(data);  // replace the contents of the city input with the data that came from the server
+                    //     }
+                    // });
+
+                    // ajax end
                     $("#ttt").on("submit", function (e) {
         // alert(minute);
-        // alert(sec);
+        console.log(sec);
         document.getElementById("time").value = sec;//change input
+
     });
                 }, 25);
         
@@ -303,6 +331,33 @@ $(document).ready(function(){
   });
 });
 
+$("#detaill").hide();
+$("#prevtime").hide();
 
+function timelyy()
+{
+    // console.log("ajaxx")
+      var url = $("#ttt").attr("data-url");  // get the url of the `load_cities` view
+      var time1 = secc; 
+      var detail = $("#detaill").val();
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'time1': time1,       // add the country id to the GET parameters
+          'table':"confi",
+          'detail': detail
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+        // console.log(data)
+        //   $("#topic").html(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+
+    setTimeout(timelyy, 1000);
+}
+
+
+timelyy(); // execute function
 </script>
 </html>

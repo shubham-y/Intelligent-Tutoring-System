@@ -147,7 +147,7 @@
 
 
 {% block change %}
-<form>
+<form id="spd" data-url="{% url 'dash_ajax' %}">
     <div class="form-group">
         <select class="form-control" id="exampleInputname1" name="speed"> 
             {% if sp == 1 %}
@@ -165,8 +165,31 @@
             {% endif %}
         </select>
         </div>
-    <button type="submit" class="btn btn-info">Change</button>
+    <button type="button" id="changee" class="btn btn-info">Change</button>
+    <input id="spdd" type="text" value="{{uid}}">
 </form>
+<script>
+        $("#spdd").hide();
+    $("#changee").click(function(){
+// console.log("ajaxx")
+      var url = $("#spd").attr("data-url");  // get the url of the `load_cities` view 
+      var sid = $("#spdd").val();
+      var speedd = $("#exampleInputname1").val();
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'sid': sid,       // add the country id to the GET parameters
+          'table':"student",
+          'spd': speedd
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+        // console.log(data)
+        //   $("#topic").html(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+    });
+    </script>
 {% endblock %}
 
 

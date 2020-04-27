@@ -68,6 +68,7 @@ Learning test
           'subid': subid       // add the country id to the GET parameters
         },
         success: function (data) {   // `data` is the return of the `load_cities` view function
+        console.log(data)
           $("#topic").html(data);  // replace the contents of the city input with the data that came from the server
         }
       });
