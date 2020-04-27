@@ -5,47 +5,45 @@
 {% block content %}
 
 <div class="container">
-  <div class="container-fluid justify-content-center">
-    
+  <div class="container-fluid">
 
-          <div class="row  ">
-                  <div class="col-lg-12 my-auto ">
-                      <div class="card card-outline-info   ">
+          <div class="row">
+                  <div class="col-lg-12">
+                      <div class="card card-outline-info">
                           <div class="card-header card text-center">
                               <h2 class="m-b-0 text-white ">Add Students</h2>
                           </div>
-                          
-      <div class="col-sm-8">
+                          <div class="card-body">
         <form role="form"  method="post" action="{% url 'add_user' %}">
           {% csrf_token %}
           
-          <div class="form-group row has-success justify-content-center" >
-            <div class="col-2 my-auto mr-4 ">
+          <div class="form-group row has-success" >
+            <div class="col-2 my-auto ">
             <label class="control-label my-auto">Username:</label></div>
                 <input class="form-control custom-select col-9" type="text"   name="uname" >
             </div>
-            <div class="form-group row has-success justify-content-center" >
-              <div class="col-2 my-auto mr-4 ">
+            <div class="form-group row has-success" >
+              <div class="col-2 my-auto ">
               <label class="control-label my-auto">Password:</label></div>
                 <input class="form-control custom-select col-9" type="password"   name="password" >
             </div>
-            <div class="form-group row has-success justify-content-center" >
-              <div class="col-2 my-auto mr-4 ">
+            <div class="form-group row has-success" >
+              <div class="col-2 my-auto ">
               <label class="control-label my-auto">Email Id:</label></div>
                 <input class="form-control custom-select col-9" type="email"   name="email" >
               </div>
-              <div class="form-group row has-success justify-content-center" >
-                <div class="col-2 my-auto mr-4 ">
+              <div class="form-group row has-success" >
+                <div class="col-2 my-auto ">
                 <label class="control-label my-auto">Institute:</label></div>
                 <input class="form-control custom-select col-9" type="text"   name="institute" >
               </div>
-              <div class="form-group row has-success justify-content-center" >
-                <div class="col-2 my-auto mr-4 ">
+              <div class="form-group row has-success" >
+                <div class="col-2 my-auto ">
                 <label class="control-label my-auto">Standard:</label></div>
                 <input class="form-control custom-select col-9" type="text"   name="std" >
               </div>
-              <div class="form-group row has-success justify-content-center" >
-                <div class="col-2 my-auto mr-4 ">
+              <div class="form-group row has-success" >
+                <div class="col-2 my-auto ">
                 <label class="control-label my-auto">Age:</label></div>
                 <input class="form-control custom-select col-9" type="text"  name="age" >
               </div>

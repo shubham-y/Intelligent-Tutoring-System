@@ -61,40 +61,40 @@
           </select>
       </div>
 
-      <div id="kc2" class="form-group row has-success" >
+        <div id="kc2" class="form-group row has-success" >
+            <div class="col-2 my-auto ">
+                <label class="control-label my-auto"></label>Knowledge Component2:</label></div>
+    <select data-placeholder="Action Points..." class="form-control chosen-select col-9" name="kc2" required>
+
+        <option value="0" style="display:none;"></option>
+        {% for l,k in kc22 %}
+            
+        <option value="{{l}}">{{k}}</option>
+
+        {% endfor %}
+
+        </select>
+    </div>
+
+    <div id="kc3" class="form-group row has-success" >
         <div class="col-2 my-auto ">
-            <label class="control-label my-auto"></label>Knowledge Component2:</label></div>
-  <select data-placeholder="Action Points..." class="form-control chosen-select col-9" name="kc2" required>
+            <label class="control-label my-auto"></label>Knowledge Component3:</label></div>
+    <select data-placeholder="Action Points..." class="form-control chosen-select col-9" name="kc3" >
 
     <option value="0" style="display:none;"></option>
-    {% for l,k in kc22 %}
+    {% for y,n3 in kc33 %}
         
-    <option value="{{l}}">{{k}}</option>
+    <option value="{{y}}">{{n3}}</option>
 
     {% endfor %}
 
-      </select>
-  </div>
+    </select>
+    </div>
 
-  <div id="kc3" class="form-group row has-success" >
-    <div class="col-2 my-auto ">
-        <label class="control-label my-auto"></label>Knowledge Component3:</label></div>
-<select data-placeholder="Action Points..." class="form-control chosen-select col-9" name="kc3" >
-
-<option value="0" style="display:none;"></option>
-{% for y,n3 in kc33 %}
-    
-<option value="{{y}}">{{n3}}</option>
-
-{% endfor %}
-
-  </select>
-</div>
-
-    
-<div class="justify-content-center col-6"><button type="submit" class="btn btn-info btn-block text-white">Add</button></div>
-</div>   
-</form>
+    <div class="row justify-content-center">
+    <div class="justify-content-center col-6"><button type="submit" class="btn btn-info btn-block text-white">Add</button></div>
+    </div>   
+    </form>
     
         <!-- end form-->
     </div>

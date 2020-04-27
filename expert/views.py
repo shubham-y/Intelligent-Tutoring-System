@@ -42,7 +42,15 @@ def add_user(request):
         institute=request.POST.get('institute')
         standard=request.POST.get('std')
         age=request.POST.get('age')
-        sdata = Student(age=age,email=email,institute=institute,standard=standard,name=username,password=password,speed=1)
+        u_id = Student.objects.all()
+        user_id = []
+        for i in u_id:
+            user_id.append(i.id)
+        print(user_id)
+        uid = max(user_id)
+        print(uid)
+        
+        sdata = Student(id = uid + 1,age=age,email=email,institute=institute,standard=standard,name=username,password=password,speed=1)
         sdata.save()
     return render(request,'expert/user.html',{"sp":1})
 
@@ -113,14 +121,36 @@ def add_topic(request):
     return render(request,'expert/topic.html',{"sp":1,"s":subject,"kc":kcid,"kc22":kcid1,"kc33":kcid2})
 
 def add_questions(request):
-    if request.method == 'POST':
+     print("gettttttttttttttMyyyyyyyyyy")
+     sb = Subject.objects.all()
+     print(sb,sb[0])
+     sb_name = []
+     sb_id = []
+     for i in sb:
+        print(i)
+        sb_name.append(i.sub_name)
+        sb_id.append(i.id)
+     print(sb_name,sb_id)
+     subject = zip(sb_name,sb_id)
+     tp = topic.objects.all()
+     print(tp,tp[0])
+     tp_name = []
+     tp_id = []
+     for i in tp:
+        print(i)
+        print(i.top_name,i.top_id)
+        tp_name.append(i.top_name)
+        tp_id.append(i.top_id)
+     print(tp_id,tp_name)
+     tpp = zip(tp_id,tp_name)
+     if request.method == 'POST':
         questions = request.POST.get('que')
         option1=request.POST.get('op1')
         option2=request.POST.get('op2')
         option3=request.POST.get('op3')
         option4=request.POST.get('op4')
-        subject_id=request.POST.get('sub_id')
-        topic_id=request.POST.get('topic_id')
+        subject_id=request.POST.get('subject')
+        topic_id=request.POST.get('topic')
         hint=request.POST.get('hint')
         ans=request.POST.get('ans')
         step1=request.POST.get('step1')
@@ -132,4 +162,4 @@ def add_questions(request):
         que = Quetions(que_id = 1, question= questions,opt_1="dssfsf",opt_2="dssfsf",opt_3="dssfsf",opt_4="dssfsf",sub_id=1,top_id= 1,hint="sfsdfd",level=1,ans=1,solution="reggdf",
         avg_time=1,best_time=1,que_no=1,attempt=0,test_id=0,speed=1,kcid=kcid,step1=step1,step2=step2,step3=step3)
         que.save()
-    return render(request,'expert/question.html',{"sp":1})
+     return render(request,'expert/question.html')
