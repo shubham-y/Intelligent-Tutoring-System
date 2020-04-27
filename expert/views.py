@@ -92,8 +92,8 @@ def add_topic(request):
         kc_id.append(i.kc_id)
     print(kc_id,kc_name)
     kcid = zip(kc_id,kc_name)
-    kcid1 = kcid
-    kcid2 = kcid
+    kcid1 = zip(kc_id,kc_name)
+    kcid2 = zip(kc_id,kc_name)
     if request.method == 'POST':
         top_name=request.POST['name']
         sub_name=request.POST['subject']
