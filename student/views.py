@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
-from student.models import Quetions,Subject,topic,Analysis,Student,Imaged,Forum,Forum_reply,Kc_ana
+from student.models import Quetions,Subject,topic,Analysis,Student,Imaged,Forum,Forum_reply,Kc_ana,Subtopic,St_ana
 from django.contrib.auth import authenticate, login, logout
 import datetime
 import pytesseract
@@ -129,7 +129,7 @@ def calthres(corr,prev_pred,pred_list):
     av = avg
     # print(av)
     # print(pred_list)
-    if av > 0.75 and len(pred_list) >= 4:
+    if av > 0.75 and len(pred_list) >= 3:
         jj = 1
     kcidd[1] = jj
     print(av)
@@ -150,10 +150,85 @@ for i in perm:
         print("Pass",ct,perm)
         break
 
-def learning_resource(request):
-    subtp_id = 1
-    st_com = 1
-    return render(request,'student/learning_resource.html',{"sid":subtp_id,"s":st_com})
+def start_learning(request):
+    if 'email' not in request.session:
+        return HttpResponseRedirect(reverse('login'))
+    print(request.session['email'])
+    uid = Student.objects.all().filter(email = request.session['email'])
+    print(uid[0].email,uid[0].id)
+    u_id = uid[0].id
+    subject = Subject.objects.all()
+    sid = []
+    sname = []
+    for i in subject:
+        sid.append(i.sub_id)
+        sname.append(i.sub_name)
+    # print(sid,sname)
+    sub = zip(sid,sname)
+    topics = topic.objects.all()
+    tid = []
+    tname = []
+    for i in topics:
+        tid.append(i.top_id)
+        tname.append(i.top_name)
+    # print(tid,tname)
+    top = zip(tid,tname)
+    # subjj = Subject.objects.get(id = 2)
+    # subjj.sub_name = "MATHEMATICS-dumdum"
+    # subjj.save()
+
+    if request.method == 'POST':
+        sub_name = request.POST.get('subject', '')
+        top_name = request.POST.get('topic', '')
+        print(sub_name,top_name)
+        student_id = u_id
+        return HttpResponseRedirect(reverse('learning_resource', args=(student_id,0,int(top_name))))
+
+    return render(request,'student/start_learnin.html',{"sub":sub,"top":top,'username':request.session['name'],'useremail':request.session['email']})
+
+def learning_resource(request,student_id,subtopic_id,topic_id):
+    st_com = 0
+    st_full = 0
+    if subtopic_id == 0:
+        print("0000000000000000000000")
+        stp = St_ana.objects.filter(user_id = student_id)
+        if len(stp):
+            sp = []
+            tp = []
+            for i in stp:
+                if int(i.complete_per) < 100:
+                    subtopic_id = i.topic_id
+                    break
+                else:
+                    st_full = 1
+        else:
+            subtop = Subtopic.objects.filter(top_id = topic_id)
+            sub_top = []
+            for i in subtop:
+                sub_top.append(int(i.subtop_id))
+            subtopic_id = min(sub_top)
+    stopic = St_ana.objects.filter(user_id = student_id,topic_id = subtopic_id)
+    print("khbbikbkjbkjbkjbkj")
+    print(subtopic_id)
+    if len(stopic):
+        com_per = stopic[0].complete_per
+        if int(com_per) == 100:
+            st_com = 100 # if fully completed subtopic
+        else:
+            st_com = com_per
+        time_spent = stopic[0].time
+        print(com_per,st_com,time_spent)
+    else:
+        print(sub_top)
+        count = St_ana.objects.all()
+        lengg = len(count)
+        for i in sub_top:
+            print(i)
+            lengg = lengg + 1
+            print(lengg)
+            new = St_ana(stana_id = lengg,user_id = student_id,topic_id= i,complete_per=0,time=0)
+            new.save()
+    return render(request,'student/learning_resource.html',{"sid":student_id,"stid":int(subtopic_id),"s":st_com,"ptt":time_spent,"tid":topic_id})
 
 def login(request):
     return render(request,'student/signin.html')
@@ -1595,6 +1670,13 @@ def time_ajax(request):
         que = Quetions.objects.get(id=int(queid))
         que.avg_time = int(time)
         que.save()
+    elif table == "st":
+        print("subtopic")
+        detailed = detail.split(",")
+        print(detailed)
+        stp = St_ana.objects.get(user_id = detailed[0],topic_id = detailed[1])
+        stp.time = int(time)
+        stp.save()
 
     return render(request, 'student/time_ajax.html', {'t': time})
 
@@ -1609,6 +1691,17 @@ def dash_ajax(request):
     stu.speed = int(spd)
     stu.save()
     return render(request, 'student/dash_ajax.html', {'speed': speed})
+
+def learn_ajax(request):
+    print("AJax")
+    complete=request.GET.get('comp')
+    detail=request.GET.get('detail')
+    detailed = detail.split(",")
+    print(complete,detailed)
+    stp = St_ana.objects.get(user_id = detailed[0],topic_id = detailed[1])
+    stp.complete_per = int(complete)
+    stp.save()
+    return render(request, 'student/lear_comp_ajax.html', {'complete': int(complete)})
 
 def forum(request):
     if 'email' not in request.session:

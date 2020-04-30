@@ -21,8 +21,10 @@ urlpatterns = [
     path('forum_reply/<int:forum_id>', views.forum_reply,name="forum_reply"),
     path('doubt/', views.doubt,name="doubt"),
     path('analyze/', views.analyze,name="analyze"),
-    path('learning_resource/', views.learning_resource,name = "learning_resource"),
+    path('start_learning/', views.start_learning,name="start_learning"),
+    path('learning_resource/<int:student_id>/<int:subtopic_id>/<int:topic_id>', views.learning_resource,name = "learning_resource"),
     path('time_ajax/', views.time_ajax, name='time_ajax'),
     path('dash_ajax/', views.dash_ajax, name='dash_ajax'),
+    path('learn_ajax/', views.learn_ajax, name='learn_ajax'),
     # path("sele/",views.sele,name="sele"),
 ]
