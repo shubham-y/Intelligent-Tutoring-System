@@ -12,9 +12,7 @@ import datetime
 def login(request):
     print("skhbisvvbiubfvudbuyb")
     if request.method == 'POST':
-        print("innnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
         email=request.POST['email']
-        print("email milaaaaaaaaaaaaa")
         password=request.POST['password']
 
         l=Expert.objects.filter(email=email,password=password)
@@ -28,7 +26,15 @@ def login(request):
     return render(request,'expert/signin.html')
 
 def home1(request):
-    return render(request,'expert/dash.html',{"sp":1})
+    st = Student.objects.all()
+    std = len(st)
+    subb = Subject.objects.all()
+    subj = len(subb)
+    topi = topic.objects.all()
+    top = len(topi)
+    kcss = Kc.objects.all()
+    kcc = len(kcss)
+    return render(request,'expert/dash.html',{"sp":1,"stu":std,"sub":subj,"top":top,"kcs":kcc})
 
 def logout(request):
     request.session.flush()
@@ -142,24 +148,69 @@ def add_questions(request):
         tp_name.append(i.top_name)
         tp_id.append(i.top_id)
      print(tp_id,tp_name)
+     print("svsf")
      tpp = zip(tp_id,tp_name)
+     kcs = Kc.objects.all()
+     kc_name = []
+     kc_id = []
+     for i in kcs:
+        print(i)
+        print(i.kc_name,i.kc_id)
+        kc_name.append(i.kc_name)
+        kc_id.append(i.kc_id)
+     print(kc_id,kc_name)
+     kcs = zip(kc_id,kc_name)
+     kcs2 = zip(kc_id,kc_name)
+     kcs3 = zip(kc_id,kc_name)
      if request.method == 'POST':
-        questions = request.POST.get('que')
+        questions = request.POST.get('ques')
         option1=request.POST.get('op1')
         option2=request.POST.get('op2')
         option3=request.POST.get('op3')
         option4=request.POST.get('op4')
-        subject_id=request.POST.get('subject')
-        topic_id=request.POST.get('topic')
+        sb_name=request.POST.get('subject')
+        tp_name=request.POST.get('topic')
         hint=request.POST.get('hint')
         ans=request.POST.get('ans')
-        step1=request.POST.get('step1')
-        step2=request.POST.get('step2')
-        step3=request.POST.get('step3')
+        kcid=request.POST.get('numkc')
+        kc1=request.POST['kcc1']
+        kc2=request.POST['kcc2']
+        kc3=request.POST['kcc3']
+        print("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")
+        kcidd=""
+        if int(kcid) == 1:
+            print("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")
+            step1=request.POST.get('step1','-1')
+            print(step1)
+            step2= -1
+            step3= -1
+            kcidd= kc1
+            print(kcidd) 
+        elif int(kcid) == 2:
+            step1=request.POST.get('step1')
+            print(step1)
+            step2= request.POST.get('step2')
+            print(step2)
+            step3= -1
+            kcidd=kc1+ ","+ kc2
+            print(kcidd)
+        else:
+            step1=request.POST.get('step1','-1')
+            step2= request.POST.get('step2','-1')
+            step3= request.POST.get('step3','-1')
+            kcidd=kc1 + ","+kc2+ ","+kc3
         solution=request.POST.get('solution')
-        kcid=request.POST.get('kcid')
-        print(kcid)
-        que = Quetions(que_id = 1, question= questions,opt_1="dssfsf",opt_2="dssfsf",opt_3="dssfsf",opt_4="dssfsf",sub_id=1,top_id= 1,hint="sfsdfd",level=1,ans=1,solution="reggdf",
-        avg_time=1,best_time=1,que_no=1,attempt=0,test_id=0,speed=1,kcid=kcid,step1=step1,step2=step2,step3=step3)
+        
+        print(questions,option1,option2,option3,option4,sb_name,tp_name,hint,ans,solution,kcid,step1,step2,step3)
+        qq = Quetions.objects.all()
+        qid = []
+
+        for i in qq:
+            qid.append(i.que_id)
+        
+        q_id = max(qid)
+        
+        que = Quetions(id=q_id+1,que_id =q_id+1, question= questions,opt_1=option1,opt_2=option2,opt_3=option3,opt_4=option4,sub_id=int(sb_name),top_id=int(tp_name),hint=hint,level=1,ans=ans,
+        solution=solution,avg_time=1,best_time=1,que_no=1,attempt=0,test_id=0,speed=1,kcid=kcidd,step1=int(step1),step2=int(step2),step3=int(step3))
         que.save()
-     return render(request,'expert/question.html')
+     return render(request,'expert/question.html',{"sp":1,"subb":subject,"topp":tpp,"kcs":kcs,"kcs2":kcs2,"kcs3":kcs3})

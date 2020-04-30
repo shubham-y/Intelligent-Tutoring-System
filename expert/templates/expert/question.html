@@ -13,7 +13,7 @@
                                 <h2 class="m-b-0 text-white ">Add Questions</h2>
                             </div>
                             <div class="card-body">
-        <form role="form"  method="post" action="{% url 'add_questions' %}">
+        <form role="form"  onsubmit="stepProblem()"  method="post" action="{% url 'add_questions' %}">
           {% csrf_token %}
           <div class="form-group row has-success" >
             <div class="col-2 my-auto ">
@@ -46,7 +46,7 @@
           <select data-placeholder="Action Points..." class="form-control chosen-select col-9" name="subject">
 
             <option value="" style="display:none;"></option>
-            {% for name1,id1 in subject %}
+            {% for name1,id1 in subb %}
                 
             <option value="{{id1}}">{{name1}}</option>
 
@@ -60,7 +60,7 @@
     <select data-placeholder="Action Points..." class="form-control chosen-select col-9" name="topic">
 
         <option value="" style="display:none;"></option>
-        {% for nn,ii in tpp %}
+        {% for ii,nn in topp %}
             
         <option value="{{ii}}">{{nn}}</option>
 
@@ -82,8 +82,9 @@
         <div class="form-group row has-success" >
             <div class="col-2 my-auto ">
                 <label class="control-label my-auto"></label>Solution:</label></div>
-                <input class="form-control custom-select col-9" type="text"   name="solution" >
+                <textarea class="form-control chosen-select col-9" rows="5" id="comment" name="solution"></textarea>
          </div>
+         
 
             <div class="form-group row has-success" >
                 <div class="col-2 my-auto ">
@@ -99,23 +100,63 @@
                         
                       </select>
                   </div>
-                        
+                  <div id="kcc1" class="form-group row has-success" >
+                    <div class="col-2 my-auto ">
+                        <label class="control-label my-auto"></label>Select Kc1:</label></div>
+                        <select id="numkc" class="form-control chosen-select col-9" name="kcc1">
+            
+                            <option value="" style="display:none;"></option>
+                            {% for ii,nn in kcs %}
+                                
+                            <option value="{{ii}}">{{nn}}</option>
+                    
+                            {% endfor %}
+                                
+                              </select>
+                     </div>
                     <div id="kc1" class="form-group row has-success" >
                         <div class="col-2 my-auto ">
                             <label class="control-label my-auto"></label>Step1:</label></div>
-                            <input class="form-control custom-select col-9" type="text"   name="step1" >
+                            <input class="form-control custom-select col-9" type="text"  name="step1" >
                          </div>
-              
-                         <div id="kc2" class="form-group row has-success" >
+                         <div id="kcc2" class="form-group row has-success" >
                             <div class="col-2 my-auto ">
-                                <label class="control-label my-auto"></label>Step2:</label></div>
-                                <input class="form-control custom-select col-9" type="text"   name="step2" >
+                                <label class="control-label my-auto"></label>Select Kc2:</label></div>
+                                <select id="numkc" class="form-control chosen-select col-9" name="kcc2">
+            
+                                    <option value="" style="display:none;"></option>
+                                    {% for i,n in kcs2 %}
+                                        
+                                    <option value="{{i}}">{{n}}</option>
+                            
+                                    {% endfor %}
+                                        
+                                      </select>
                              </div>
-        
+                             <div id="kc2" class="form-group row has-success" >
+                                <div class="col-2 my-auto ">
+                                    <label class="control-label my-auto"></label>Step2:</label></div>
+                                    <input class="form-control custom-select col-9" type="text"  name="step2" >
+                             </div>
+
+                             <div id="kcc3" class="form-group row has-success" >
+                                <div class="col-2 my-auto ">
+                                    <label class="control-label my-auto"></label>Select Kc3:</label></div>
+                                    <select id="numkc" class="form-control chosen-select col-9" name="kcc3">
+            
+                                        <option value="" style="display:none;"></option>
+                                        {% for pq,nn in kcs3 %}
+                                            
+                                        <option value="{{pq}}">{{nn}}</option>
+                                
+                                        {% endfor %}
+                                            
+                                          </select>
+                                 </div>
                              <div id="kc3" class="form-group row has-success" >
                                 <div class="col-2 my-auto ">
                                     <label class="control-label my-auto"></label>Step3:</label></div>
-                                    <input class="form-control custom-select col-9" type="text"   name="step3" >
+                                    <input class="form-control custom-select col-9" type="text"  name="step3" >
                              </div>
 
                             
@@ -137,14 +178,60 @@
     $("#kc1").hide();
     $("#kc2").hide();
     $("#kc3").hide();
+    $("#kcc1").hide();
+    $("#kcc2").hide();
+    $("#kcc3").hide();
     $("#numkc").on('change', function() {
         var cou = $("#numkc").val();
         if (cou == "1") {
             $("#kc1").show();
+            $("#kcc1").show();
+            $("#kc2").hide();
+            $("#kcc2").hide();
+            $("#kc3").hide();
+            $("#kcc3").hide();
+        }
+        else if(cou == "2"){
+            $("#kc1").show();
+            $("#kcc1").show();
+            $("#kc2").show();
+            $("#kcc2").show();
+            $("#kc3").hide();
+            $("#kcc3").hide();
+        }
+        else if(cou == "3") {
+            $("#kc1").show();
+            $("#kc2").show();
+            $("#kc3").show();
+            $("#kcc1").show();
+            $("#kcc2").show();
+            $("#kcc3").show();
+        }
+        else {
+            $("#kc1").hide();
+            $("#kc2").hide();
+            $("#kc3").hide();
+            $("#kcc1").hide();
+            $("#kcc2").hide();
+            $("#kcc3").hide();
+        }
+        }
+    );
+
+    function myFunction() {
+            $("#kc1").show();
+            $("#kc2").show();
+            $("#kc3").show();
+        var cou = $("#numkc").val();
+        if (cou == "1") {
+            $("#kc1").show();
+            $("#kc2").val() = "-1";
+            $("#kc3").val() = "-1";
         }
         else if(cou == "2"){
             $("#kc1").show();
             $("#kc2").show();
+            $("#kc3").val() = "-1";
         }
         else if(cou == "3") {
             $("#kc1").show();
@@ -152,11 +239,11 @@
             $("#kc3").show();
         }
         else {
-            $("#kc1").hide();
-            $("#kc2").hide();
-            $("#kc3").hide();
+            $("#kc1").val() = "-1";
+            $("#kc2").val() = "-1";
+            $("#kc3").val() = "-1";
         }
-    });
+}
 
 </script>
 {% endblock %}
